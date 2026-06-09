@@ -7,6 +7,7 @@ import { FunnyAnalogy } from "@/components/ui/FunnyAnalogy";
 import { InteractiveQuiz } from "@/components/ui/InteractiveQuiz";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { ComparisonBattle } from "@/components/ui/ComparisonBattle";
+import { AnimatedDiagram } from "@/components/diagrams/AnimatedDiagram";
 import { cn } from "@/lib/utils";
 import { Plus, Shuffle } from "lucide-react";
 
@@ -424,6 +425,36 @@ export default function DatabaseShardingPage() {
             Keep adding to trigger a hot shard, then reshard to fix it.
           </p>
           <ShardingSimulation />
+        </Section>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <Section kicker="The wiring" title="A router in front of N independent databases">
+          <p className="mb-4 text-ink-secondary">
+            Sharding splits one logical table across many physical databases. A{" "}
+            <strong className="text-neon-purple">shard router</strong> computes which shard a row lives on from its{" "}
+            <strong className="text-white">shard key</strong>, then talks only to that shard. Each shard is a full,
+            independent database holding ~1/N of the data. Click each box.
+          </p>
+          <AnimatedDiagram
+            height={380}
+            nodes={[
+              { id: "app", type: "server", label: "App", position: { x: 8, y: 50 }, status: "busy", info: "Issues a query for user_id = 88. Doesn't know which shard — that's the router's job." },
+              { id: "router", type: "gateway", label: "Shard Router", position: { x: 34, y: 50 }, status: "active", info: "Maps the shard key to a shard: e.g. shard = hash(user_id) % 4, or by range. Routes to exactly one shard." },
+              { id: "s0", type: "database", label: "Shard 0 · A–F", position: { x: 70, y: 14 }, status: "active", info: "Independent DB with its own CPU, disk, and replicas. Holds only keys in its range." },
+              { id: "s1", type: "database", label: "Shard 1 · G–M", position: { x: 70, y: 38 }, status: "active", info: "Add shards → add write capacity. This is how you scale writes beyond one machine." },
+              { id: "s2", type: "database", label: "Shard 2 · N–S", position: { x: 70, y: 62 }, status: "active", info: "A query touching only one key hits one shard — fast. A query spanning shards must scatter-gather — slow." },
+              { id: "s3", type: "database", label: "Shard 3 · T–Z", position: { x: 70, y: 86 }, status: "active", info: "Pick a shard key with even distribution, or one shard becomes a hotspot while others idle." },
+            ]}
+            edges={[
+              { from: "app", to: "router", animated: true, label: "user_id = 88" },
+              { from: "router", to: "s0", dashed: true, color: "var(--neon-purple)" },
+              { from: "router", to: "s1", animated: true, color: "var(--neon-purple)", label: "hash → shard 1" },
+              { from: "router", to: "s2", dashed: true, color: "var(--neon-purple)" },
+              { from: "router", to: "s3", dashed: true, color: "var(--neon-purple)" },
+            ]}
+          />
+          <p className="mt-3 text-xs text-ink-muted">Tip: the shard key choice is everything. Shard orders by user_id and &ldquo;all orders this week&rdquo; must hit every shard. Pick the key your hottest queries filter on.</p>
         </Section>
       </ScrollReveal>
 

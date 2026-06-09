@@ -6,6 +6,7 @@ import { ConceptPage, Section } from "@/components/ui/ConceptPage";
 import { FunnyAnalogy } from "@/components/ui/FunnyAnalogy";
 import { InteractiveQuiz } from "@/components/ui/InteractiveQuiz";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { AnimatedDiagram } from "@/components/diagrams/AnimatedDiagram";
 
 // ===================== TOKEN BUCKET =====================
 function TokenBucket() {
@@ -573,6 +574,35 @@ export default function RateLimitingPage() {
               </tbody>
             </table>
           </div>
+        </Section>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <Section kicker="In the flow" title="The gatekeeper and its shared counter">
+          <p className="mb-4 text-ink-secondary">
+            The limiter lives at the <strong className="text-neon-orange">gateway</strong>, before any real work
+            happens. Allowed requests pass to your services; over-limit ones get bounced with a{" "}
+            <strong className="text-neon-red">429 Too Many Requests</strong>. The counts live in{" "}
+            <strong className="text-neon-yellow">Redis</strong> so <em>every</em> gateway instance shares one
+            limit. Click each box.
+          </p>
+          <AnimatedDiagram
+            height={340}
+            nodes={[
+              { id: "client", type: "client", label: "Clients", position: { x: 8, y: 50 }, status: "busy", info: "Some well-behaved, some hammering the API. The limiter can't tell intent — only count." },
+              { id: "gw", type: "gateway", label: "Gateway + Limiter", position: { x: 40, y: 50 }, status: "active", info: "On each request: read the caller's counter, decide allow/reject, increment. Cheapest place to say no." },
+              { id: "redis", type: "cache", label: "Redis (counters)", position: { x: 40, y: 88 }, status: "active", info: "Holds per-user request counts/tokens. Shared so 10 gateway pods enforce ONE global limit, not 10 separate ones." },
+              { id: "svc", type: "server", label: "Service", position: { x: 78, y: 28 }, status: "busy", info: "Only ever sees traffic that's within budget — protected from overload and abuse." },
+              { id: "reject", type: "client", label: "429 response", position: { x: 78, y: 72 }, status: "down", info: "Over-limit requests are rejected instantly with HTTP 429 and a Retry-After header. No service work wasted." },
+            ]}
+            edges={[
+              { from: "client", to: "gw", animated: true },
+              { from: "gw", to: "redis", dashed: true, color: "var(--neon-yellow)", label: "count++" },
+              { from: "gw", to: "svc", animated: true, color: "var(--neon-green)", label: "allow" },
+              { from: "gw", to: "reject", dashed: true, color: "var(--neon-red)", label: "429" },
+            ]}
+          />
+          <p className="mt-3 text-xs text-ink-muted">Tip: the counter MUST be shared (Redis), not in-memory. A per-instance counter means N gateways allow N× your intended limit — a classic bug.</p>
         </Section>
       </ScrollReveal>
 

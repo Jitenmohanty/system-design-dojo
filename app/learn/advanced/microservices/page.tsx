@@ -7,6 +7,7 @@ import { FunnyAnalogy } from "@/components/ui/FunnyAnalogy";
 import { InteractiveQuiz } from "@/components/ui/InteractiveQuiz";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { ComparisonBattle } from "@/components/ui/ComparisonBattle";
+import { AnimatedDiagram } from "@/components/diagrams/AnimatedDiagram";
 import { cn } from "@/lib/utils";
 import { Zap, AlertTriangle, CheckCircle, XCircle } from "lucide-react";
 
@@ -363,6 +364,43 @@ export default function MicroservicesPage() {
               </div>
             ))}
           </div>
+        </Section>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <Section kicker="The reference shape" title="Gateway, services, a database each">
+          <p className="mb-4 text-ink-secondary">
+            The defining rule: <strong className="text-white">each service owns its own database</strong> — no shared
+            tables. An <strong className="text-neon-orange">API gateway</strong> fronts them all, and they
+            coordinate asynchronously through an <strong className="text-neon-orange">event bus</strong> instead of
+            chatty direct calls. Click each box.
+          </p>
+          <AnimatedDiagram
+            height={400}
+            nodes={[
+              { id: "client", type: "client", label: "Client", position: { x: 6, y: 50 }, status: "active", info: "Talks to one address — the gateway. It has no idea how many services live behind it." },
+              { id: "gw", type: "gateway", label: "API Gateway", position: { x: 22, y: 50 }, status: "busy", info: "Single entry point. Handles auth, routing, and rate limits, then forwards to the right service." },
+              { id: "s1", type: "server", label: "Users Svc", position: { x: 46, y: 18 }, status: "busy", info: "Owns everything about users. Deployed, scaled, and released independently of the others." },
+              { id: "s2", type: "server", label: "Orders Svc", position: { x: 46, y: 50 }, status: "busy", info: "Owns orders. To learn a user's name it calls the Users API — it cannot read the Users DB directly." },
+              { id: "s3", type: "server", label: "Payments Svc", position: { x: 46, y: 82 }, status: "busy", info: "Owns payments. A bug here can't corrupt orders or users — blast radius is contained." },
+              { id: "db1", type: "database", label: "Users DB", position: { x: 70, y: 18 }, status: "active", info: "Private to the Users service. This isolation is what lets each team pick its own schema and tech." },
+              { id: "db2", type: "database", label: "Orders DB", position: { x: 70, y: 50 }, status: "active", info: "Private to Orders. No shared database = no hidden coupling between teams." },
+              { id: "db3", type: "database", label: "Payments DB", position: { x: 70, y: 82 }, status: "active", info: "Private to Payments. The trade-off: cross-service queries now need API calls or events, not JOINs." },
+              { id: "bus", type: "queue", label: "Event Bus", position: { x: 92, y: 50 }, status: "active", info: "Services publish events (OrderPlaced, PaymentCaptured) here so others react without direct coupling." },
+            ]}
+            edges={[
+              { from: "client", to: "gw", animated: true },
+              { from: "gw", to: "s1", animated: true, color: "var(--neon-orange)" },
+              { from: "gw", to: "s2", animated: true, color: "var(--neon-orange)" },
+              { from: "gw", to: "s3", animated: true, color: "var(--neon-orange)" },
+              { from: "s1", to: "db1", animated: true, color: "var(--neon-green)" },
+              { from: "s2", to: "db2", animated: true, color: "var(--neon-green)" },
+              { from: "s3", to: "db3", animated: true, color: "var(--neon-green)" },
+              { from: "s2", to: "bus", dashed: true, color: "var(--neon-orange)", label: "events" },
+              { from: "s3", to: "bus", dashed: true, color: "var(--neon-orange)" },
+            ]}
+          />
+          <p className="mt-3 text-xs text-ink-muted">Tip: &ldquo;database per service&rdquo; is the line between real microservices and a distributed monolith. Share a database and you get all the operational pain with none of the independence.</p>
         </Section>
       </ScrollReveal>
 

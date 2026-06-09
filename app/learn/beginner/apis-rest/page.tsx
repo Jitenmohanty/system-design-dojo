@@ -6,6 +6,7 @@ import { ConceptPage, Section } from "@/components/ui/ConceptPage";
 import { FunnyAnalogy } from "@/components/ui/FunnyAnalogy";
 import { InteractiveQuiz } from "@/components/ui/InteractiveQuiz";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { AnimatedDiagram } from "@/components/diagrams/AnimatedDiagram";
 import { cn } from "@/lib/utils";
 
 type Method = "GET" | "POST" | "PUT" | "DELETE";
@@ -123,6 +124,32 @@ export default function ApisRestPage() {
             &ldquo;created&rdquo;, <span className="mono text-neon-red">204</span> for &ldquo;deleted, nothing to
             return&rdquo;.
           </p>
+        </Section>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <Section kicker="The path" title="Where your request actually goes">
+          <p className="mb-4 text-ink-secondary">
+            <span className="mono text-neon-blue">GET /users</span> isn&apos;t magic — it travels a real path. An{" "}
+            <strong className="text-neon-orange">API gateway</strong> is the single entry point that checks your
+            auth token and rate limits, then routes to the right service, which reads from the database. Click each
+            box to see its role.
+          </p>
+          <AnimatedDiagram
+            height={320}
+            nodes={[
+              { id: "client", type: "client", label: "Client", position: { x: 8, y: 50 }, status: "active", info: "Your app or browser. Sends GET /users with an Authorization header." },
+              { id: "gw", type: "gateway", label: "API Gateway", position: { x: 36, y: 50 }, status: "busy", info: "The front door for the API. Verifies the token, enforces rate limits, then forwards the request." },
+              { id: "svc", type: "server", label: "Users Service", position: { x: 64, y: 50 }, status: "busy", info: "Owns the /users resource. Turns the REST call into a database query and shapes the JSON response." },
+              { id: "db", type: "database", label: "Database", position: { x: 90, y: 50 }, status: "active", info: "Stores the user records. Returns rows the service serializes into JSON." },
+            ]}
+            edges={[
+              { from: "client", to: "gw", animated: true, label: "GET /users" },
+              { from: "gw", to: "svc", animated: true, color: "var(--neon-orange)", label: "route" },
+              { from: "svc", to: "db", animated: true, color: "var(--neon-green)", label: "query → 200 + JSON" },
+            ]}
+          />
+          <p className="mt-3 text-xs text-ink-muted">Tip: the URL is the contract (the resource), the HTTP verb is the intent, and the status code is the result — the gateway and service are just the machinery that honors that contract.</p>
         </Section>
       </ScrollReveal>
 

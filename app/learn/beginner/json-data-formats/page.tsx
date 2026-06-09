@@ -7,6 +7,7 @@ import { ConceptPage, Section } from "@/components/ui/ConceptPage";
 import { FunnyAnalogy } from "@/components/ui/FunnyAnalogy";
 import { InteractiveQuiz } from "@/components/ui/InteractiveQuiz";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { AnimatedDiagram } from "@/components/diagrams/AnimatedDiagram";
 
 type Fmt = "JSON" | "XML" | "YAML" | "Protobuf";
 
@@ -191,6 +192,31 @@ export default function JsonFormatsPage() {
               </BarChart>
             </ResponsiveContainer>
           </div>
+        </Section>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <Section kicker="Why a format at all" title="Serialize → wire → deserialize">
+          <p className="mb-4 text-ink-secondary">
+            A format only exists because two computers can&apos;t share memory — they can only send{" "}
+            <strong className="text-white">bytes</strong>. The sender <strong className="text-neon-blue">serializes</strong>{" "}
+            its objects into text/binary, ships them across the network, and the receiver{" "}
+            <strong className="text-neon-green">deserializes</strong> them back into objects. Both sides must agree
+            on the format. Click each box.
+          </p>
+          <AnimatedDiagram
+            height={300}
+            nodes={[
+              { id: "client", type: "client", label: "Client", position: { x: 10, y: 50 }, status: "busy", info: "Has an in-memory object { name: 'Neo' }. Serializes it to a JSON string before sending — bytes are all the network understands." },
+              { id: "net", type: "gateway", label: "Network", position: { x: 50, y: 50 }, status: "active", info: "Carries raw bytes. The fewer bytes (Protobuf < JSON < XML), the faster and cheaper the trip." },
+              { id: "server", type: "server", label: "Server", position: { x: 90, y: 50 }, status: "busy", info: "Receives the bytes and deserializes (parses) them back into an object it can work with. Same format on both ends = no garbled data." },
+            ]}
+            edges={[
+              { from: "client", to: "net", animated: true, color: "var(--neon-blue)", label: "serialize →" },
+              { from: "net", to: "server", animated: true, color: "var(--neon-green)", label: "→ deserialize" },
+            ]}
+          />
+          <p className="mt-3 text-xs text-ink-muted">Tip: JSON wins for APIs because it&apos;s human-readable and every language can parse it. Protobuf wins inside high-traffic backends because those smaller bytes add up at scale.</p>
         </Section>
       </ScrollReveal>
 

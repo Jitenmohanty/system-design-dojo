@@ -6,6 +6,7 @@ import { ConceptPage, Section } from "@/components/ui/ConceptPage";
 import { FunnyAnalogy } from "@/components/ui/FunnyAnalogy";
 import { InteractiveQuiz } from "@/components/ui/InteractiveQuiz";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { AnimatedDiagram } from "@/components/diagrams/AnimatedDiagram";
 import { cn } from "@/lib/utils";
 import { WifiOff, AlertTriangle, CheckCircle } from "lucide-react";
 
@@ -533,6 +534,32 @@ export default function CAPTheoremPage() {
             The CA corner is mostly theoretical — in practice, network partitions happen whether you want them to or not.
           </p>
           <CAPTriangle />
+        </Section>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <Section kicker="What a 'partition' is" title="The moment you're forced to choose">
+          <p className="mb-4 text-ink-secondary">
+            CAP only bites during a <strong className="text-neon-red">partition</strong> — when the network link
+            between replicas breaks. A write lands on Replica A but can&apos;t reach Replica B. Now a reader on B is
+            stuck: serve <strong className="text-neon-green">stale data (AP)</strong> or refuse to answer until it
+            heals <strong className="text-neon-purple">(CP)</strong>. You cannot have both. Click each box.
+          </p>
+          <AnimatedDiagram
+            height={340}
+            nodes={[
+              { id: "w", type: "client", label: "Writer", position: { x: 8, y: 28 }, status: "active", info: "Writes x = 1. It reaches Replica A successfully." },
+              { id: "r", type: "client", label: "Reader", position: { x: 8, y: 72 }, status: "active", info: "Reads x from Replica B — which never received the update because the link is down." },
+              { id: "a", type: "database", label: "Replica A", position: { x: 50, y: 28 }, status: "active", info: "Has the fresh value x = 1. Wants to share it with B but the network is cut." },
+              { id: "b", type: "database", label: "Replica B", position: { x: 50, y: 72 }, status: "busy", info: "Still holds the old x = 0. CP: reject the read (stay consistent). AP: return stale x = 0 (stay available)." },
+            ]}
+            edges={[
+              { from: "w", to: "a", animated: true, color: "var(--neon-green)", label: "write x=1 ✓" },
+              { from: "r", to: "b", animated: true, color: "var(--neon-blue)", label: "read x?" },
+              { from: "a", to: "b", dashed: true, color: "var(--neon-red)", label: "✕ partition" },
+            ]}
+          />
+          <p className="mt-3 text-xs text-ink-muted">Tip: when there&apos;s NO partition you get both C and A — that&apos;s why PACELC adds &ldquo;else, latency vs consistency.&rdquo; CAP is only about the failure moment.</p>
         </Section>
       </ScrollReveal>
 

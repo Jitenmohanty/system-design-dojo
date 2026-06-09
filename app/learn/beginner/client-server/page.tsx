@@ -7,6 +7,7 @@ import { ConceptPage, Section } from "@/components/ui/ConceptPage";
 import { FunnyAnalogy } from "@/components/ui/FunnyAnalogy";
 import { InteractiveQuiz } from "@/components/ui/InteractiveQuiz";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { AnimatedDiagram } from "@/components/diagrams/AnimatedDiagram";
 
 const ENDPOINTS: Record<string, { status: number; emoji: string; quip: string; body: string }> = {
   "/menu": { status: 200, emoji: "✅", quip: "200 OK — here's your data, chef's kiss.", body: '{ "items": ["pizza", "ramen", "tacos"] }' },
@@ -183,6 +184,39 @@ export default function ClientServerPage() {
       <ScrollReveal>
         <Section kicker="Try it" title="A tiny browser you can poke">
           <FakeBrowser />
+        </Section>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <Section kicker="The bigger picture" title="What 'the server' really is">
+          <p className="mb-4 text-ink-secondary">
+            One browser, one server is the mental model — but real sites serve <em>millions</em> of clients at
+            once. A <strong className="text-neon-purple">load balancer</strong> spreads requests across a fleet
+            of identical servers, and those servers share one <strong className="text-neon-green">database</strong>.
+            Hover an edge to trace a request; click any box for what it does.
+          </p>
+          <AnimatedDiagram
+            height={360}
+            nodes={[
+              { id: "c1", type: "client", label: "Phone", position: { x: 8, y: 22 }, status: "active", info: "A client — your browser, phone, or app. Sends a request and waits for the response." },
+              { id: "c2", type: "client", label: "Laptop", position: { x: 8, y: 50 }, status: "active", info: "Clients don't talk to each other — each one independently asks the server." },
+              { id: "c3", type: "client", label: "App", position: { x: 8, y: 78 }, status: "active", info: "Millions of clients can hit the same backend at the same time." },
+              { id: "lb", type: "loadbalancer", label: "Load Balancer", position: { x: 38, y: 50 }, status: "active", info: "The public front door. Accepts every request and forwards it to whichever server is least busy." },
+              { id: "s1", type: "server", label: "Server A", position: { x: 66, y: 28 }, status: "busy", info: "An always-on machine that runs your code, does the work, and builds a response." },
+              { id: "s2", type: "server", label: "Server B", position: { x: 66, y: 72 }, status: "busy", info: "Identical to Server A. Adding more servers is how you handle more traffic (horizontal scaling)." },
+              { id: "db", type: "database", label: "Database", position: { x: 90, y: 50 }, status: "active", info: "Shared source of truth. Every server reads and writes the same data here." },
+            ]}
+            edges={[
+              { from: "c1", to: "lb", animated: true },
+              { from: "c2", to: "lb", animated: true },
+              { from: "c3", to: "lb", animated: true },
+              { from: "lb", to: "s1", animated: true, color: "var(--neon-purple)" },
+              { from: "lb", to: "s2", animated: true, color: "var(--neon-purple)" },
+              { from: "s1", to: "db", animated: true, color: "var(--neon-green)" },
+              { from: "s2", to: "db", animated: true, color: "var(--neon-green)" },
+            ]}
+          />
+          <p className="mt-3 text-xs text-ink-muted">Tip: the request/response cycle is the same — there are just more servers behind the curtain. The client never knows (or cares) which server answered.</p>
         </Section>
       </ScrollReveal>
 

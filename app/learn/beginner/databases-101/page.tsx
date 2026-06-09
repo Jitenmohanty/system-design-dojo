@@ -7,6 +7,7 @@ import { ConceptPage, Section } from "@/components/ui/ConceptPage";
 import { FunnyAnalogy } from "@/components/ui/FunnyAnalogy";
 import { InteractiveQuiz } from "@/components/ui/InteractiveQuiz";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { AnimatedDiagram } from "@/components/diagrams/AnimatedDiagram";
 import { cn } from "@/lib/utils";
 
 interface Row { id: number; name: string; belt: string; flash?: "green" | "blue" | "yellow" | "red" }
@@ -166,6 +167,33 @@ export default function Databases101Page() {
             to find a match. With it, it jumps straight there. Click to compare:
           </p>
           <div className="mt-4"><IndexDemo /></div>
+        </Section>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <Section kicker="Where it lives" title="The database in the stack">
+          <p className="mb-4 text-ink-secondary">
+            Your code never touches the disk directly. App servers send <strong className="text-neon-blue">queries</strong>{" "}
+            (SELECT / INSERT / UPDATE / DELETE) to the database, which stores everything safely on disk and sends
+            rows back. Many servers, <em>one</em> shared database — that&apos;s why it&apos;s the source of truth.
+            Click each box.
+          </p>
+          <AnimatedDiagram
+            height={340}
+            nodes={[
+              { id: "u", type: "client", label: "Users", position: { x: 8, y: 50 }, status: "active", info: "People clicking around your app, each triggering reads and writes." },
+              { id: "a1", type: "server", label: "App Server 1", position: { x: 36, y: 28 }, status: "busy", info: "Runs your code. Turns a button click into a SQL query like SELECT * FROM users WHERE id = 7." },
+              { id: "a2", type: "server", label: "App Server 2", position: { x: 36, y: 72 }, status: "busy", info: "Stateless — holds no data itself. That's why it can ask the same database as App Server 1." },
+              { id: "db", type: "database", label: "Database", position: { x: 72, y: 50 }, status: "active", info: "Stores tables of rows on disk, enforces primary keys, and uses indexes to find rows fast." },
+            ]}
+            edges={[
+              { from: "u", to: "a1", animated: true },
+              { from: "u", to: "a2", animated: true },
+              { from: "a1", to: "db", animated: true, color: "var(--neon-green)", label: "SQL" },
+              { from: "a2", to: "db", animated: true, color: "var(--neon-green)", label: "SQL" },
+            ]}
+          />
+          <p className="mt-3 text-xs text-ink-muted">Tip: app servers are interchangeable and hold no data — the database is the one place the truth lives. Lose a server, no data lost; lose the database, you lose everything (which is why we replicate it later).</p>
         </Section>
       </ScrollReveal>
 

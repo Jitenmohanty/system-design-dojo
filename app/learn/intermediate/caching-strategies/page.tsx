@@ -7,6 +7,7 @@ import { FunnyAnalogy } from "@/components/ui/FunnyAnalogy";
 import { InteractiveQuiz } from "@/components/ui/InteractiveQuiz";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { ComparisonBattle } from "@/components/ui/ComparisonBattle";
+import { AnimatedDiagram } from "@/components/diagrams/AnimatedDiagram";
 
 // ── Strategy data ─────────────────────────────────────────────────────────────
 const STRATEGIES = [
@@ -163,6 +164,31 @@ export default function CachingStrategiesPage() {
               <StrategyCard key={x.key} s={x} active={active === x.key} onClick={() => setActive(x.key as StrategyKey)} />
             ))}
           </div>
+        </Section>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <Section kicker="The layout" title="What the strategies are really choosing">
+          <p className="mb-4 text-ink-secondary">
+            Every strategy is just a different answer to one question: <em>which arrows fire, and in what order?</em>{" "}
+            The pieces are always the same — app, <strong className="text-neon-yellow">cache</strong>, and{" "}
+            <strong className="text-neon-green">database</strong>. Read paths (blue) and write paths (orange/green)
+            differ per strategy. Click each box.
+          </p>
+          <AnimatedDiagram
+            height={340}
+            nodes={[
+              { id: "app", type: "server", label: "App", position: { x: 10, y: 50 }, status: "busy", info: "Talks to the cache and DB. The strategy decides whether IT manages the cache (cache-aside) or the cache does (read/write-through)." },
+              { id: "cache", type: "cache", label: "Cache", position: { x: 50, y: 26 }, status: "active", info: "Fast in-memory layer. The question each strategy answers: on a write, update this now, later, or skip it?" },
+              { id: "db", type: "database", label: "Database", position: { x: 50, y: 80 }, status: "active", info: "Source of truth. Write-through hits it synchronously; write-back hits it later (faster writes, risk of loss)." },
+            ]}
+            edges={[
+              { from: "app", to: "cache", animated: true, color: "var(--neon-blue)", label: "read" },
+              { from: "cache", to: "db", dashed: true, color: "var(--neon-red)", label: "miss → load / write-back" },
+              { from: "app", to: "db", animated: true, color: "var(--neon-green)", label: "write" },
+            ]}
+          />
+          <p className="mt-3 text-xs text-ink-muted">Tip: read strategies (cache-aside vs read-through) decide WHO loads on a miss; write strategies (write-through vs write-back vs write-around) decide WHEN the database gets updated. Same boxes, different arrows.</p>
         </Section>
       </ScrollReveal>
 

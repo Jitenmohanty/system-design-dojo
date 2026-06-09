@@ -7,6 +7,7 @@ import { ConceptPage, Section } from "@/components/ui/ConceptPage";
 import { FunnyAnalogy } from "@/components/ui/FunnyAnalogy";
 import { InteractiveQuiz } from "@/components/ui/InteractiveQuiz";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { AnimatedDiagram } from "@/components/diagrams/AnimatedDiagram";
 
 function SplitRace() {
   const [run, setRun] = useState(0);
@@ -157,6 +158,33 @@ export default function CachingBasicsPage() {
       <ScrollReveal>
         <Section kicker="Hit or miss" title="Feel the cache working">
           <CacheDemo />
+        </Section>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <Section kicker="The pattern" title="Cache-aside: check fast, fall back to slow">
+          <p className="mb-4 text-ink-secondary">
+            Here&apos;s the wiring almost every app uses. The server asks the <strong className="text-neon-yellow">cache</strong>{" "}
+            first. On a <strong className="text-neon-green">hit</strong> it returns instantly. On a{" "}
+            <strong className="text-neon-red">miss</strong> it goes to the slow database, then{" "}
+            <em>stores the answer in the cache</em> so the next request is fast too. Click each box.
+          </p>
+          <AnimatedDiagram
+            height={320}
+            nodes={[
+              { id: "client", type: "client", label: "Client", position: { x: 8, y: 50 }, status: "active", info: "Asks for some data — say, a user's profile." },
+              { id: "server", type: "server", label: "App Server", position: { x: 35, y: 50 }, status: "busy", info: "Checks the cache first. Only touches the database if the cache doesn't have it." },
+              { id: "cache", type: "cache", label: "Cache (Redis)", position: { x: 64, y: 24 }, status: "active", info: "In-memory store. Returns in ~1ms on a hit. Holds recently-used data with a TTL." },
+              { id: "db", type: "database", label: "Database", position: { x: 64, y: 78 }, status: "idle", info: "The slow source of truth (~50ms). Only hit on a cache miss — then the result is written back to the cache." },
+            ]}
+            edges={[
+              { from: "client", to: "server", animated: true },
+              { from: "server", to: "cache", animated: true, color: "var(--neon-yellow)", label: "1. check → hit ⚡" },
+              { from: "server", to: "db", dashed: true, color: "var(--neon-red)", label: "2. on miss → fetch" },
+              { from: "db", to: "cache", dashed: true, color: "var(--neon-yellow)", label: "3. backfill" },
+            ]}
+          />
+          <p className="mt-3 text-xs text-ink-muted">Tip: a good cache turns ~95% of reads into 1ms hits, so the database only handles the rare miss. That single box is why huge sites feel instant.</p>
         </Section>
       </ScrollReveal>
 

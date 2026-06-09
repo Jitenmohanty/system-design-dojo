@@ -8,6 +8,7 @@ import { FunnyAnalogy } from "@/components/ui/FunnyAnalogy";
 import { InteractiveQuiz } from "@/components/ui/InteractiveQuiz";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { ComparisonBattle } from "@/components/ui/ComparisonBattle";
+import { AnimatedDiagram } from "@/components/diagrams/AnimatedDiagram";
 
 // --------------- SQL Schema Demo ---------------
 const SQL_INITIAL_ROWS = [
@@ -415,6 +416,36 @@ export default function SqlVsNoSqlPage() {
             SQL needs a migration; NoSQL doesn&apos;t even notice.
           </p>
           <SplitSchemaDemo />
+        </Section>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <Section kicker="The shape of scale" title="Why they grow differently">
+          <p className="mb-4 text-ink-secondary">
+            The deepest difference isn&apos;t syntax — it&apos;s <em>topology</em>.{" "}
+            <strong className="text-neon-green">SQL</strong> centralizes: one primary with read replicas, so it can
+            JOIN and guarantee ACID. <strong className="text-neon-purple">NoSQL</strong> spreads data across many
+            equal nodes by a shard key — near-infinite scale, but no cross-node joins. Click each box.
+          </p>
+          <AnimatedDiagram
+            height={360}
+            nodes={[
+              { id: "app", type: "server", label: "App", position: { x: 8, y: 50 }, status: "busy", info: "The same app could use either. The choice is about how the data layer underneath it grows." },
+              { id: "sqlp", type: "database", label: "SQL Primary", position: { x: 42, y: 20 }, status: "active", info: "One authoritative node. Enforces a schema, foreign keys, JOINs, and ACID transactions. Scales UP (bigger box)." },
+              { id: "sqlr", type: "database", label: "Read Replica", position: { x: 74, y: 20 }, status: "active", info: "Adds read capacity, but writes still funnel through the single primary — the eventual ceiling." },
+              { id: "n1", type: "database", label: "Shard A–H", position: { x: 42, y: 80 }, status: "active", info: "NoSQL node owning keys A–H. No schema enforced; each document/row self-contained (no joins needed)." },
+              { id: "n2", type: "database", label: "Shard I–P", position: { x: 61, y: 80 }, status: "active", info: "Another equal node. Writes scale because they spread across shards — add nodes to add capacity." },
+              { id: "n3", type: "database", label: "Shard Q–Z", position: { x: 80, y: 80 }, status: "active", info: "Scales OUT to hundreds of nodes. Trade-off: no cross-shard JOINs and usually eventual consistency." },
+            ]}
+            edges={[
+              { from: "app", to: "sqlp", animated: true, color: "var(--neon-green)", label: "JOINs · ACID" },
+              { from: "sqlp", to: "sqlr", dashed: true, label: "replicate" },
+              { from: "app", to: "n1", animated: true, color: "var(--neon-purple)", label: "shard by key" },
+              { from: "app", to: "n2", animated: true, color: "var(--neon-purple)" },
+              { from: "app", to: "n3", animated: true, color: "var(--neon-purple)" },
+            ]}
+          />
+          <p className="mt-3 text-xs text-ink-muted">Tip: pick SQL when relationships and correctness matter (orders, payments); pick NoSQL when scale and flexible shape matter more than joins (feeds, logs, sessions).</p>
         </Section>
       </ScrollReveal>
 

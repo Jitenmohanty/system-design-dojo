@@ -6,6 +6,7 @@ import { ConceptPage, Section } from "@/components/ui/ConceptPage";
 import { FunnyAnalogy } from "@/components/ui/FunnyAnalogy";
 import { InteractiveQuiz } from "@/components/ui/InteractiveQuiz";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { AnimatedDiagram } from "@/components/diagrams/AnimatedDiagram";
 import { cn } from "@/lib/utils";
 import { Play, Pause, RotateCcw, Zap, WifiOff } from "lucide-react";
 
@@ -670,6 +671,36 @@ export default function ConsensusAlgorithmsPage() {
               </motion.div>
             ))}
           </div>
+        </Section>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <Section kicker="The write path" title="One leader, a majority must agree">
+          <p className="mb-4 text-ink-secondary">
+            All writes go to the elected <strong className="text-neon-purple">leader</strong>. It appends the entry
+            to its log and replicates to the <strong className="text-neon-blue">followers</strong>. The entry only{" "}
+            <em>commits</em> once a <strong className="text-neon-green">majority</strong> (here 3 of 5) acknowledge —
+            so the system survives up to 2 dead nodes and never splits the truth. Click each box.
+          </p>
+          <AnimatedDiagram
+            height={380}
+            nodes={[
+              { id: "client", type: "client", label: "Client", position: { x: 8, y: 50 }, status: "active", info: "Sends a write. Only the leader accepts it — followers redirect clients to the leader." },
+              { id: "leader", type: "server", label: "Leader", position: { x: 35, y: 50 }, status: "active", info: "Appends to its log, then sends AppendEntries to all followers. Commits once a majority confirm." },
+              { id: "f1", type: "server", label: "Follower", position: { x: 72, y: 14 }, status: "busy", info: "Replicates the leader's log and ACKs. Votes in elections if the leader goes silent." },
+              { id: "f2", type: "server", label: "Follower", position: { x: 72, y: 38 }, status: "busy", info: "Part of the quorum. Leader + these two = 3/5 majority → entry commits." },
+              { id: "f3", type: "server", label: "Follower", position: { x: 72, y: 62 }, status: "idle", info: "Can be slow or briefly down — the write still commits as long as a majority responded." },
+              { id: "f4", type: "server", label: "Follower", position: { x: 72, y: 86 }, status: "idle", info: "5 nodes tolerate 2 failures. A bare majority (3) is enough to make progress." },
+            ]}
+            edges={[
+              { from: "client", to: "leader", animated: true, label: "write" },
+              { from: "leader", to: "f1", animated: true, color: "var(--neon-green)", label: "AppendEntries" },
+              { from: "leader", to: "f2", animated: true, color: "var(--neon-green)" },
+              { from: "leader", to: "f3", dashed: true, color: "var(--neon-blue)" },
+              { from: "leader", to: "f4", dashed: true, color: "var(--neon-blue)" },
+            ]}
+          />
+          <p className="mt-3 text-xs text-ink-muted">Tip: &ldquo;majority&rdquo; is why clusters are odd-sized (3, 5, 7). With 5 nodes you need 3 to agree — two can fail and the cluster keeps writing.</p>
         </Section>
       </ScrollReveal>
 

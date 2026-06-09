@@ -6,6 +6,7 @@ import { ConceptPage, Section } from "@/components/ui/ConceptPage";
 import { FunnyAnalogy } from "@/components/ui/FunnyAnalogy";
 import { InteractiveQuiz } from "@/components/ui/InteractiveQuiz";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { AnimatedDiagram } from "@/components/diagrams/AnimatedDiagram";
 import {
   LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend,
 } from "recharts";
@@ -219,6 +220,37 @@ export default function DatabaseScalingPage() {
               </div>
             ))}
           </div>
+        </Section>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <Section kicker="Read replicas, drawn" title="One writer, many readers">
+          <p className="mb-4 text-ink-secondary">
+            The most common first step. All <strong className="text-neon-green">writes</strong> go to a single{" "}
+            <strong className="text-neon-green">primary</strong>, which streams its changes to{" "}
+            <strong className="text-neon-blue">replicas</strong>. Reads (usually 90%+ of traffic) spread across the
+            replicas. Add replicas → add read capacity. Click each box.
+          </p>
+          <AnimatedDiagram
+            height={360}
+            nodes={[
+              { id: "app", type: "server", label: "App Servers", position: { x: 10, y: 50 }, status: "busy", info: "Send writes to the primary and reads to a replica (often via a proxy that splits the traffic)." },
+              { id: "primary", type: "database", label: "Primary (writer)", position: { x: 42, y: 50 }, status: "active", info: "The single source of truth for writes. Every INSERT/UPDATE/DELETE lands here, then replicates outward." },
+              { id: "r1", type: "database", label: "Replica 1", position: { x: 78, y: 18 }, status: "active", info: "Read-only copy. Serves SELECTs. May lag the primary by milliseconds (replication lag)." },
+              { id: "r2", type: "database", label: "Replica 2", position: { x: 78, y: 50 }, status: "active", info: "Another read copy. Need more read throughput? Add another replica." },
+              { id: "r3", type: "database", label: "Replica 3", position: { x: 78, y: 82 }, status: "active", info: "Replicas also act as warm standbys — promote one to primary if the primary dies." },
+            ]}
+            edges={[
+              { from: "app", to: "primary", animated: true, color: "var(--neon-green)", label: "writes" },
+              { from: "app", to: "r1", animated: true, color: "var(--neon-blue)", label: "reads" },
+              { from: "app", to: "r2", animated: true, color: "var(--neon-blue)" },
+              { from: "app", to: "r3", animated: true, color: "var(--neon-blue)" },
+              { from: "primary", to: "r1", dashed: true, label: "replicate" },
+              { from: "primary", to: "r2", dashed: true, label: "replicate" },
+              { from: "primary", to: "r3", dashed: true, label: "replicate" },
+            ]}
+          />
+          <p className="mt-3 text-xs text-ink-muted">Tip: this scales reads beautifully but not writes — there&apos;s still one primary. When write volume outgrows a single machine, that&apos;s when you reach for sharding.</p>
         </Section>
       </ScrollReveal>
 

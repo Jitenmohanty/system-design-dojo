@@ -6,6 +6,7 @@ import { ConceptPage, Section } from "@/components/ui/ConceptPage";
 import { FunnyAnalogy } from "@/components/ui/FunnyAnalogy";
 import { InteractiveQuiz } from "@/components/ui/InteractiveQuiz";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { AnimatedDiagram } from "@/components/diagrams/AnimatedDiagram";
 import { cn } from "@/lib/utils";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -457,6 +458,37 @@ export default function DistributedSystemsPage() {
               </div>
             ))}
           </div>
+        </Section>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <Section kicker="No single point of failure" title="The same app, spread across regions">
+          <p className="mb-4 text-ink-secondary">
+            Distribution means <em>every</em> box is redundant. A <strong className="text-neon-purple">global load
+            balancer</strong> sends users to their nearest region; each region runs its own servers and a{" "}
+            <strong className="text-neon-green">replicated</strong> copy of the data. Any single node can die and
+            the system keeps serving. Click each box.
+          </p>
+          <AnimatedDiagram
+            height={380}
+            nodes={[
+              { id: "users", type: "client", label: "Users", position: { x: 8, y: 50 }, status: "active", info: "Spread around the world. Routed by latency/geo to whichever region is closest and healthy." },
+              { id: "lb", type: "loadbalancer", label: "Global LB", position: { x: 28, y: 50 }, status: "active", info: "Anycast / geo-DNS. If a whole region goes dark, it reroutes traffic to a surviving one." },
+              { id: "us", type: "server", label: "US Region", position: { x: 54, y: 22 }, status: "busy", info: "A full stack of app servers in us-east. Serves nearby users in <50ms." },
+              { id: "eu", type: "server", label: "EU Region", position: { x: 54, y: 78 }, status: "busy", info: "An independent identical stack in eu-west. Kill US and EU keeps the business running." },
+              { id: "dbus", type: "database", label: "US Data", position: { x: 84, y: 22 }, status: "active", info: "Regional data store. Reads/writes locally for speed." },
+              { id: "dbeu", type: "database", label: "EU Data", position: { x: 84, y: 78 }, status: "active", info: "Replicated copy. Cross-region replication keeps both in sync (eventually) — the CAP trade-off in the wild." },
+            ]}
+            edges={[
+              { from: "users", to: "lb", animated: true },
+              { from: "lb", to: "us", animated: true, color: "var(--neon-purple)" },
+              { from: "lb", to: "eu", animated: true, color: "var(--neon-purple)" },
+              { from: "us", to: "dbus", animated: true, color: "var(--neon-green)" },
+              { from: "eu", to: "dbeu", animated: true, color: "var(--neon-green)" },
+              { from: "dbus", to: "dbeu", dashed: true, color: "var(--neon-yellow)", label: "replicate (cross-region)" },
+            ]}
+          />
+          <p className="mt-3 text-xs text-ink-muted">Tip: redundancy is the upside; the network between these boxes is the downside. Every arrow that crosses a region can be slow, drop, or partition — which is exactly what the 8 fallacies below warn about.</p>
         </Section>
       </ScrollReveal>
 

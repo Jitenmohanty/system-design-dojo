@@ -7,6 +7,7 @@ import { FunnyAnalogy } from "@/components/ui/FunnyAnalogy";
 import { InteractiveQuiz } from "@/components/ui/InteractiveQuiz";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { ComparisonBattle } from "@/components/ui/ComparisonBattle";
+import { AnimatedDiagram } from "@/components/diagrams/AnimatedDiagram";
 import { cn } from "@/lib/utils";
 import { Play, Pause, RotateCcw, AlertTriangle, WifiOff } from "lucide-react";
 
@@ -491,6 +492,36 @@ export default function ReplicationPage() {
               </div>
             ))}
           </div>
+        </Section>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <Section kicker="Single-leader, drawn" title="Where lag sneaks in">
+          <p className="mb-4 text-ink-secondary">
+            Writes hit the <strong className="text-neon-green">leader</strong>, which streams changes to followers.
+            A <strong className="text-neon-blue">sync</strong> follower must confirm before the write returns (safe,
+            slower); <strong className="text-neon-orange">async</strong> followers confirm later (fast, but can serve
+            <em> stale</em> reads). That gap is replication lag. Click each box.
+          </p>
+          <AnimatedDiagram
+            height={360}
+            nodes={[
+              { id: "w", type: "client", label: "Writer", position: { x: 8, y: 28 }, status: "active", info: "All writes go to the leader — there's only one writable copy in single-leader replication." },
+              { id: "rd", type: "client", label: "Reader", position: { x: 8, y: 78 }, status: "active", info: "Reads from a follower to offload the leader — but may see data that's milliseconds-to-seconds behind." },
+              { id: "leader", type: "database", label: "Leader", position: { x: 40, y: 28 }, status: "active", info: "Accepts writes, orders them, and ships the change log to every follower." },
+              { id: "s1", type: "database", label: "Sync Follower", position: { x: 76, y: 14 }, status: "active", info: "Leader waits for THIS one to ACK before confirming the write. Guarantees a durable copy; costs latency." },
+              { id: "s2", type: "database", label: "Async Follower", position: { x: 76, y: 50 }, status: "busy", info: "Receives changes after the fact. Fast, but a reader here might miss the latest write (replication lag)." },
+              { id: "s3", type: "database", label: "Async Follower", position: { x: 76, y: 86 }, status: "busy", info: "If the leader dies, an async follower promoted to leader can lose its last un-replicated writes." },
+            ]}
+            edges={[
+              { from: "w", to: "leader", animated: true, color: "var(--neon-green)", label: "write" },
+              { from: "leader", to: "s1", animated: true, color: "var(--neon-blue)", label: "sync" },
+              { from: "leader", to: "s2", dashed: true, color: "var(--neon-orange)", label: "async" },
+              { from: "leader", to: "s3", dashed: true, color: "var(--neon-orange)" },
+              { from: "rd", to: "s2", animated: true, color: "var(--neon-yellow)", label: "read (maybe stale)" },
+            ]}
+          />
+          <p className="mt-3 text-xs text-ink-muted">Tip: &ldquo;read-your-own-writes&rdquo; breaks here — you write to the leader, then read from a lagging follower and your change is gone. Fix: read from the leader for a few seconds after writing.</p>
         </Section>
       </ScrollReveal>
 

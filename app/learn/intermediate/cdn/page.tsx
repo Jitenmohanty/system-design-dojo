@@ -6,6 +6,7 @@ import { ConceptPage, Section } from "@/components/ui/ConceptPage";
 import { FunnyAnalogy } from "@/components/ui/FunnyAnalogy";
 import { InteractiveQuiz } from "@/components/ui/InteractiveQuiz";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { AnimatedDiagram } from "@/components/diagrams/AnimatedDiagram";
 
 // --------------- World Map CDN Demo ---------------
 
@@ -360,6 +361,36 @@ export default function CdnPage() {
             Latency numbers animate down. Origin load drops to ~10%.
           </p>
           <WorldMapSim />
+        </Section>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <Section kicker="The routing logic" title="Edge hit vs. origin fallback">
+          <p className="mb-4 text-ink-secondary">
+            The map shows <em>where</em> the edge nodes are; this shows the <em>decision</em> every request makes.
+            A nearby <strong className="text-neon-purple">edge (PoP)</strong> answers cached content in
+            milliseconds. Only on a <strong className="text-neon-red">miss</strong> does it reach all the way back
+            to the far-away <strong className="text-neon-green">origin</strong> — once. Click each box.
+          </p>
+          <AnimatedDiagram
+            height={340}
+            nodes={[
+              { id: "u1", type: "client", label: "User · Tokyo", position: { x: 8, y: 28 }, status: "active", info: "Routed (via anycast DNS) to the geographically closest edge — not the origin." },
+              { id: "u2", type: "client", label: "User · Berlin", position: { x: 8, y: 72 }, status: "active", info: "Hits a different edge near them. Each region is served locally." },
+              { id: "e1", type: "cdn", label: "Edge · Asia", position: { x: 38, y: 28 }, status: "active", info: "Point of Presence. Holds cached copies of static assets. ~10ms away — physics, not magic." },
+              { id: "e2", type: "cdn", label: "Edge · EU", position: { x: 38, y: 72 }, status: "active", info: "Another PoP. ~95% of requests are served right here without ever touching the origin." },
+              { id: "origin", type: "server", label: "Origin", position: { x: 74, y: 50 }, status: "busy", info: "Your single source server (e.g. us-east). Only sees the rare cache miss, so its load drops to ~10%." },
+              { id: "db", type: "database", label: "Origin DB", position: { x: 94, y: 50 }, status: "idle", info: "Backs the origin for dynamic, uncacheable content." },
+            ]}
+            edges={[
+              { from: "u1", to: "e1", animated: true, label: "~10ms" },
+              { from: "u2", to: "e2", animated: true, label: "~10ms" },
+              { from: "e1", to: "origin", dashed: true, color: "var(--neon-red)", label: "miss" },
+              { from: "e2", to: "origin", dashed: true, color: "var(--neon-red)", label: "miss" },
+              { from: "origin", to: "db", animated: true, color: "var(--neon-green)" },
+            ]}
+          />
+          <p className="mt-3 text-xs text-ink-muted">Tip: the win is twofold — users get a nearby (fast) copy, and the origin is shielded from the flood. The edge→origin trip happens once per asset, then it&apos;s cached at the edge until its TTL.</p>
         </Section>
       </ScrollReveal>
 

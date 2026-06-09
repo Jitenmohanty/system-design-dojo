@@ -7,6 +7,7 @@ import { FunnyAnalogy } from "@/components/ui/FunnyAnalogy";
 import { InteractiveQuiz } from "@/components/ui/InteractiveQuiz";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { ComparisonBattle } from "@/components/ui/ComparisonBattle";
+import { AnimatedDiagram } from "@/components/diagrams/AnimatedDiagram";
 import { cn } from "@/lib/utils";
 import { Plus, Minus, RotateCcw } from "lucide-react";
 
@@ -606,6 +607,33 @@ export default function ConsistentHashingPage() {
               { label: "Supports weighted servers", a: "No", b: "Yes (vnodes)", winner: "b" },
             ]}
           />
+        </Section>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <Section kicker="In the stack" title="Where the ring actually sits">
+          <p className="mb-4 text-ink-secondary">
+            The ring above is the algorithm; this is the deployment. Clients hash each{" "}
+            <strong className="text-white">key</strong> to find its owner node directly — no central coordinator.
+            When a node <strong className="text-neon-red">dies</strong>, only <em>its</em> keys move to the next
+            node clockwise; every other key stays put. Click each box.
+          </p>
+          <AnimatedDiagram
+            height={380}
+            nodes={[
+              { id: "client", type: "client", label: "Client", position: { x: 8, y: 50 }, status: "busy", info: "Runs the hashing in its own library (e.g. ketama). Computes hash(key) and walks the ring clockwise to the owner." },
+              { id: "n1", type: "cache", label: "Node A", position: { x: 60, y: 16 }, status: "active", info: "Owns the token range up to its position on the ring. Holds ~1/N of all keys." },
+              { id: "n2", type: "cache", label: "Node B", position: { x: 88, y: 50 }, status: "active", info: "When Node C dies, B (next clockwise) absorbs only C's slice — not the whole keyspace." },
+              { id: "n3", type: "cache", label: "Node C", position: { x: 60, y: 84 }, status: "down", info: "Crashed. Only the keys it owned remap to Node B. A, D, and the rest are untouched — that's the whole point." },
+              { id: "n4", type: "cache", label: "Node D", position: { x: 38, y: 50 }, status: "active", info: "Unaffected by C's death. Modulo hashing would have remapped nearly every key here; consistent hashing doesn't." },
+            ]}
+            edges={[
+              { from: "client", to: "n1", dashed: true, label: "hash('user:1')" },
+              { from: "client", to: "n2", animated: true, color: "var(--neon-green)", label: "hash('user:42')" },
+              { from: "client", to: "n4", dashed: true, label: "hash('user:7')" },
+            ]}
+          />
+          <p className="mt-3 text-xs text-ink-muted">Tip: with N nodes, adding or removing one remaps only ~1/N of keys. Naive hash(key) % N remaps almost ALL of them — a cache stampede that takes the database down.</p>
         </Section>
       </ScrollReveal>
 

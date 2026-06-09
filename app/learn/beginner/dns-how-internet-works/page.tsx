@@ -7,6 +7,7 @@ import { ConceptPage, Section } from "@/components/ui/ConceptPage";
 import { FunnyAnalogy } from "@/components/ui/FunnyAnalogy";
 import { InteractiveQuiz } from "@/components/ui/InteractiveQuiz";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { AnimatedDiagram } from "@/components/diagrams/AnimatedDiagram";
 import { cn } from "@/lib/utils";
 
 const STEPS = [
@@ -139,6 +140,36 @@ export default function DnsPage() {
           <div className="mt-4">
             <DnsFlow />
           </div>
+        </Section>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <Section kicker="The map" title="Who asks whom">
+          <p className="mb-4 text-ink-secondary">
+            The list above is the lookup in order; this is the same trip as a map. Your{" "}
+            <strong className="text-neon-purple">resolver</strong> does the legwork — walking down the hierarchy
+            (Root → TLD → Authoritative) — then hands the IP back so your browser can finally talk to the real
+            web server. Click any box to see its job.
+          </p>
+          <AnimatedDiagram
+            height={360}
+            nodes={[
+              { id: "client", type: "client", label: "Your Browser", position: { x: 8, y: 50 }, status: "active", info: "Knows the name (dojo.com) but needs the IP. Asks the resolver, then connects to the returned address." },
+              { id: "resolver", type: "gateway", label: "DNS Resolver", position: { x: 30, y: 50 }, status: "busy", info: "Usually your ISP's. Caches answers and does the recursive hunt down the hierarchy on your behalf." },
+              { id: "root", type: "server", label: "Root (.)", position: { x: 55, y: 18 }, status: "idle", info: "Top of the tree. Doesn't know dojo.com — but knows who runs .com. 'Ask the TLD →'" },
+              { id: "tld", type: "server", label: "TLD (.com)", position: { x: 55, y: 50 }, status: "idle", info: "Manages all .com names. Points the resolver to dojo.com's authoritative nameserver." },
+              { id: "auth", type: "server", label: "Authoritative", position: { x: 55, y: 82 }, status: "active", info: "Holds the real record. Returns the actual IP: 142.250.80.46." },
+              { id: "web", type: "server", label: "Web Server", position: { x: 86, y: 50 }, status: "active", info: "The destination at 142.250.80.46. Only NOW does your browser send the real HTTP request." },
+            ]}
+            edges={[
+              { from: "client", to: "resolver", animated: true, label: "dojo.com?" },
+              { from: "resolver", to: "root", animated: true, color: "var(--neon-orange)" },
+              { from: "resolver", to: "tld", animated: true, color: "var(--neon-orange)" },
+              { from: "resolver", to: "auth", animated: true, color: "var(--neon-orange)", label: "→ 142.250.80.46" },
+              { from: "client", to: "web", animated: true, color: "var(--neon-blue)", label: "GET / (after IP)" },
+            ]}
+          />
+          <p className="mt-3 text-xs text-ink-muted">Tip: all the orange hops happen once, then get cached. The blue arrow — actually loading the page — only fires after DNS hands back the IP.</p>
         </Section>
       </ScrollReveal>
 

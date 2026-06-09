@@ -6,6 +6,7 @@ import { ConceptPage, Section } from "@/components/ui/ConceptPage";
 import { FunnyAnalogy } from "@/components/ui/FunnyAnalogy";
 import { InteractiveQuiz } from "@/components/ui/InteractiveQuiz";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { AnimatedDiagram } from "@/components/diagrams/AnimatedDiagram";
 import { SimulationWrapper } from "@/components/simulations/SimulationWrapper";
 import {
   LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid,
@@ -251,6 +252,34 @@ export default function MessageQueuesPage() {
             A queue sits between them: A drops work in, B picks it up when ready. They&apos;re
             <strong className="text-white"> asynchronously decoupled</strong> — neither needs to know the other&apos;s address or availability.
           </p>
+        </Section>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <Section kicker="The shape" title="Producer → queue → consumers">
+          <p className="mb-4 text-ink-secondary">
+            The <strong className="text-neon-blue">producer</strong> writes a message and immediately moves on —
+            it never waits for the work to finish. The <strong className="text-neon-orange">queue</strong> buffers
+            messages durably. A pool of <strong className="text-neon-green">consumers</strong> pulls them at its own
+            pace; add consumers to drain faster. Click each box.
+          </p>
+          <AnimatedDiagram
+            height={340}
+            nodes={[
+              { id: "api", type: "server", label: "API (Producer)", position: { x: 10, y: 50 }, status: "busy", info: "Handles the user request, drops a job (e.g. 'send welcome email') onto the queue, and responds instantly. No waiting." },
+              { id: "queue", type: "queue", label: "Queue", position: { x: 42, y: 50 }, status: "active", info: "Durable buffer (Kafka/RabbitMQ/SQS). Holds messages in order until a consumer acknowledges them. Survives consumer crashes." },
+              { id: "w1", type: "server", label: "Worker 1", position: { x: 76, y: 22 }, status: "busy", info: "Pulls a message, does the slow work (send email, transcode, charge card), then ACKs it off the queue." },
+              { id: "w2", type: "server", label: "Worker 2", position: { x: 76, y: 50 }, status: "busy", info: "Consumers compete for messages — each message goes to exactly one worker. More workers = faster drain." },
+              { id: "dlq", type: "queue", label: "Dead-letter", position: { x: 76, y: 80 }, status: "idle", info: "Messages that fail repeatedly land here instead of blocking the queue, so you can inspect them later." },
+            ]}
+            edges={[
+              { from: "api", to: "queue", animated: true, color: "var(--neon-blue)", label: "enqueue" },
+              { from: "queue", to: "w1", animated: true, color: "var(--neon-green)", label: "consume" },
+              { from: "queue", to: "w2", animated: true, color: "var(--neon-green)" },
+              { from: "w2", to: "dlq", dashed: true, color: "var(--neon-red)", label: "give up" },
+            ]}
+          />
+          <p className="mt-3 text-xs text-ink-muted">Tip: the queue absorbs spikes. If 10k orders arrive in a second, the API stays snappy and the workers chew through the backlog steadily — that buffering is the whole point.</p>
         </Section>
       </ScrollReveal>
 

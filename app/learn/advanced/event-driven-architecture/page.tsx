@@ -6,6 +6,7 @@ import { ConceptPage, Section } from "@/components/ui/ConceptPage";
 import { FunnyAnalogy } from "@/components/ui/FunnyAnalogy";
 import { InteractiveQuiz } from "@/components/ui/InteractiveQuiz";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { AnimatedDiagram } from "@/components/diagrams/AnimatedDiagram";
 import { cn } from "@/lib/utils";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -480,6 +481,34 @@ export default function EventDrivenArchitecturePage() {
             that have subscribed to that event — not everyone, not no one.
           </p>
           <EventBusVisualizer />
+        </Section>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <Section kicker="The architecture" title="One event, many independent reactions">
+          <p className="mb-4 text-ink-secondary">
+            The producer doesn&apos;t call anyone — it just publishes <span className="mono text-neon-blue">OrderPlaced</span>{" "}
+            to the <strong className="text-neon-orange">broker</strong> and moves on. Each{" "}
+            <strong className="text-neon-green">consumer</strong> reacts on its own, owns its own data, and can fail
+            or scale without touching the others. Add a new consumer? The producer never changes. Click each box.
+          </p>
+          <AnimatedDiagram
+            height={360}
+            nodes={[
+              { id: "order", type: "server", label: "Order Service", position: { x: 8, y: 50 }, status: "busy", info: "The producer. Saves the order and emits an OrderPlaced event. It doesn't know or care who listens." },
+              { id: "bus", type: "queue", label: "Event Broker", position: { x: 36, y: 50 }, status: "active", info: "Kafka / SNS / EventBridge. Durably stores the event and delivers a copy to every subscriber (fan-out)." },
+              { id: "email", type: "server", label: "Email Svc", position: { x: 72, y: 16 }, status: "busy", info: "Subscribes to OrderPlaced → sends a confirmation email. If it's down, the event waits for it." },
+              { id: "inv", type: "server", label: "Inventory Svc", position: { x: 72, y: 50 }, status: "busy", info: "Subscribes to the same event → decrements stock. Completely unaware of the email service." },
+              { id: "analytics", type: "server", label: "Analytics Svc", position: { x: 72, y: 84 }, status: "busy", info: "Also subscribes → updates dashboards. Added last week without changing the producer at all." },
+            ]}
+            edges={[
+              { from: "order", to: "bus", animated: true, color: "var(--neon-blue)", label: "OrderPlaced" },
+              { from: "bus", to: "email", animated: true, color: "var(--neon-green)" },
+              { from: "bus", to: "inv", animated: true, color: "var(--neon-green)" },
+              { from: "bus", to: "analytics", animated: true, color: "var(--neon-green)" },
+            ]}
+          />
+          <p className="mt-3 text-xs text-ink-muted">Tip: contrast with direct calls — order service calling email, then inventory, then analytics in a chain. One slow call stalls the whole order. The broker breaks that coupling.</p>
         </Section>
       </ScrollReveal>
 
