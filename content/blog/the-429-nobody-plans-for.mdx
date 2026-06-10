@@ -1,0 +1,89 @@
+---
+title: "The 429 nobody plans for: rate limiting and the retry storm"
+description: "You added a rate limiter to protect the service. Then every rejected client retried at the same instant, and your defense became the attack. Why naive retries amplify outages — and how backoff, jitter, and Retry-After fix it."
+date: "2026-06-02"
+author: "System Design Dojo"
+emoji: "🚧"
+accent: "var(--neon-orange)"
+tags: ["war-story", "scaling", "reliability"]
+minutes: 6
+---
+
+The rate limiter worked exactly as designed. A traffic spike came in, the limiter started returning `429 Too Many Requests`, and the service stayed up instead of falling over.
+
+Then it fell over anyway.
+
+The clients that got a `429` did the "obvious" thing: they retried. Immediately. All of them. So the next instant brought the original traffic *plus* every rejected request from the moment before — which also got `429`'d, and retried again. The limiter was now rejecting more traffic than the service ever would have received unprotected. The defense had become a self-inflicted DDoS.
+
+## Why naive retries amplify, not absorb
+
+A retry policy of "if it fails, try again right away" has a vicious property: **every rejected request comes back, and they come back synchronized.**
+
+<AnimatedDiagram
+  height={320}
+  nodes={[
+    { id: "clients", type: "client", label: "Clients", position: { x: 8, y: 50 }, status: "busy", info: "Each one, on a 429, retries instantly. Rejected work doesn't go away — it bounces straight back, in lockstep with every other client." },
+    { id: "edge", type: "gateway", label: "Limiter", position: { x: 45, y: 50 }, status: "busy", info: "Rejecting over-limit traffic correctly. But the rejected requests immediately return, so offered load climbs each round instead of falling." },
+    { id: "svc", type: "server", label: "Service", position: { x: 82, y: 50 }, status: "down", info: "Protected from the allowed traffic — but the limiter itself is now drowning in retry volume, burning CPU saying 'no' millions of times." }
+  ]}
+  edges={[
+    { from: "clients", to: "edge", animated: true, color: "var(--neon-red)", label: "request + instant retries" },
+    { from: "edge", to: "clients", dashed: true, color: "var(--neon-red)", label: "429 → retry now!" },
+    { from: "edge", to: "svc", dashed: true, color: "var(--neon-green)", label: "trickle allowed" }
+  ]}
+/>
+
+Two things make it worse than the original spike:
+
+- **Amplification.** Rejected requests don't disappear — they re-enter the system. Offered load *grows* each round instead of draining.
+- **Synchronization (the thundering herd, again).** If everyone retries after a fixed "1 second", they all return on the same tick, creating a sharper spike than the one you started with. Same root cause as a [cache stampede](/blog/thundering-herd): independent clients accidentally acting in unison.
+
+<Callout type="danger" title="A 429 is a request for cooperation">
+Rate limiting is only half a protocol. The server says 'slow down,' but if clients don't actually slow down, you haven't limited anything — you've just added a rejection step in front of the same flood. The client's retry behavior is part of the system, not an afterthought.
+</Callout>
+
+## The client side: back off, and add jitter
+
+The fix is mostly on the **client**, and it's two ideas.
+
+**Exponential backoff** — wait longer after each successive failure (1s, 2s, 4s, 8s…), so persistent failures drain offered load instead of hammering.
+
+**Jitter** — randomize each wait so clients *de-synchronize*. This is the part people skip, and it's the part that actually breaks the herd. Backoff alone still lets everyone retry on the same doubling schedule; jitter spreads them across the window.
+
+```ts
+async function withRetry(fn, attempt = 0) {
+  try {
+    return await fn();
+  } catch (e) {
+    if (e.status !== 429 && e.status !== 503) throw e;     // only retry "slow down"
+    if (attempt >= 5) throw e;                              // give up eventually
+    const base = Math.min(1000 * 2 ** attempt, 30_000);    // exponential, capped
+    const wait = Math.random() * base;                     // full jitter — the key line
+    await sleep(wait);
+    return withRetry(fn, attempt + 1);
+  }
+}
+```
+
+That one `Math.random()` is the difference between clients returning as a wall and returning as a smooth trickle.
+
+## The server side: tell clients exactly when
+
+Don't make clients guess. On a `429`, send a **`Retry-After`** header so well-behaved clients wait the right amount instead of a hard-coded guess:
+
+```http
+HTTP/1.1 429 Too Many Requests
+Retry-After: 8
+```
+
+And enforce the limit at the **edge** — at the gateway or CDN, before the request reaches (and costs) your service. Rejecting at the edge is cheap; rejecting deep in the stack means you've already paid for auth, parsing, and a database connection just to say no. The layered "where to enforce" picture is in [Rate Limiting](/learn/intermediate/rate-limiting).
+
+<Callout type="tip" title="Don't retry what you shouldn't">
+Only retry on 'try again later' signals — 429, 503, timeouts. Retrying a 400 or 401 is pure amplification with zero chance of success. And cap total attempts: infinite retries turn one bad minute into a permanent outage.
+</Callout>
+
+## The takeaway
+
+A rate limiter protects you from clients only if clients cooperate when rejected. Naive instant retries turn your defense into an amplifier and re-create the thundering herd at the edge. Exponential backoff drains the load, **jitter** de-synchronizes it, and `Retry-After` tells clients exactly how long to wait. The limit and the retry policy are two halves of one design — ship them together.
+
+See where and how to enforce limits in [Rate Limiting](/learn/intermediate/rate-limiting), and the same synchronization trap in [The Thundering Herd](/blog/thundering-herd).

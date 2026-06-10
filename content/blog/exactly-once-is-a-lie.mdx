@@ -1,0 +1,91 @@
+---
+title: "Exactly-once is a lie (and what to do instead)"
+description: "Every messaging system promises 'exactly-once delivery,' and every senior engineer quietly knows it's impossible. Here's why the network forbids it, what the vendors actually mean, and the pattern that gives you the guarantee you really wanted."
+date: "2026-05-29"
+author: "System Design Dojo"
+emoji: "🎯"
+accent: "var(--neon-purple)"
+tags: ["opinion", "distributed", "reliability"]
+minutes: 7
+---
+
+Read enough message-queue marketing and you'll see the phrase everywhere: **exactly-once delivery.** It's the feature everyone wants and the promise nobody can keep. Exactly-once *delivery* across a network is impossible, and building on the belief that you have it is how data quietly corrupts.
+
+The good news: you never actually needed exactly-once delivery. You needed exactly-once *effect*, and that's very achievable — just not the way the slogan implies.
+
+## Why delivery can't be exactly-once
+
+It comes down to a single, unavoidable problem: after a consumer processes a message, it must **acknowledge** it so the broker stops redelivering. That ack travels over a network — and the network can lose it.
+
+<AnimatedDiagram
+  height={300}
+  nodes={[
+    { id: "broker", type: "queue", label: "Broker", position: { x: 12, y: 50 }, status: "active", info: "Delivers a message and waits for an ACK. If no ACK arrives, it must assume failure and redeliver — it cannot tell 'consumer died' from 'ACK got lost.'" },
+    { id: "consumer", type: "server", label: "Consumer", position: { x: 88, y: 50 }, status: "busy", info: "Processed the message successfully — then its ACK vanished on the way back. The work IS done; the broker just doesn't know it." }
+  ]}
+  edges={[
+    { from: "broker", to: "consumer", animated: true, color: "var(--neon-green)", label: "deliver" },
+    { from: "consumer", to: "broker", dashed: true, color: "var(--neon-red)", label: "ACK lost ✕" }
+  ]}
+/>
+
+Now the broker is stuck with the same impossible choice a [retrying client](/blog/idempotency-saves-payments) faces: a missing ack could mean "the consumer never processed it" *or* "it processed it and the ack got lost." The broker can't tell which, so it picks a behavior:
+
+- **Ack before processing** → if the consumer then crashes, the message is lost. This is **at-most-once**: never duplicated, sometimes dropped.
+- **Ack after processing** → if the ack is lost, the broker redelivers and the message is processed twice. This is **at-least-once**: never dropped, sometimes duplicated.
+
+There is no third option at the *delivery* layer. This is the [two generals problem](/learn/advanced/distributed-systems): two parties over an unreliable channel can never be *certain* the other received the last message. Exactly-once delivery would require exactly that certainty.
+
+<Callout type="info" title="Almost always pick at-least-once">
+Dropping a message is usually catastrophic and silent; processing one twice is usually recoverable. So real systems choose at-least-once and design for duplicates. If a vendor says 'exactly-once,' read the fine print — they mean something narrower than the words suggest.
+</Callout>
+
+## What the vendors actually mean
+
+"Exactly-once" products (Kafka's exactly-once semantics, for instance) aren't breaking physics. They're doing one of two things:
+
+- **Exactly-once *processing* within a closed system** — using transactions to tie "consume, compute, produce, commit offset" into one atomic step *inside their own boundary*. The moment an effect leaves that boundary (you call a payment API, send an email, write to an external DB), the guarantee evaporates.
+- **At-least-once delivery + automatic deduplication** — which is the real, honest pattern, just done for you.
+
+Either way, the durable guarantee you can rely on end-to-end is **at-least-once**, and the rest is built on top.
+
+## The pattern you actually want: effectively-once
+
+Stop trying to make delivery exactly-once. Instead, make **processing idempotent** so that duplicate deliveries have no additional effect. At-least-once delivery + idempotent consumer = **effectively-once**, which is indistinguishable from the thing you wanted.
+
+Every message carries a stable, unique ID. The consumer records which IDs it has already applied and ignores repeats — atomically, in the same transaction as the work:
+
+```ts
+async function handle(msg) {
+  await db.tx(async (t) => {
+    // claim the id first; UNIQUE constraint makes the duplicate fail
+    const fresh = await t.processed.insertIfAbsent(msg.id);
+    if (!fresh) return;            // already handled this message — no-op
+
+    await applyEffect(t, msg);     // do the real work in the SAME transaction
+  });                              // commit both, or neither
+  ack(msg);                        // a lost ack just causes a harmless re-handle
+}
+```
+
+The redelivered message hits the `processed` table, finds its ID already there, and does nothing. The duplicate was *delivered*, but its effect happened exactly once. This is the same idea as an [idempotency key](/blog/idempotency-saves-payments) — and it's why idempotency keeps showing up as the load-bearing primitive of reliable systems.
+
+<Callout type="tip" title="The reframe">
+Don't ask 'how do I stop duplicates from being delivered?' — you can't. Ask 'how do I make a duplicate harmless?' That question has a clean answer (a dedupe ID + idempotent apply), and it works no matter how many times the broker retries.
+</Callout>
+
+## Where this bites in practice
+
+This isn't academic — it shows up the moment you build [event-driven systems](/learn/advanced/event-driven-architecture):
+
+- A payment event redelivered → charge twice, unless the handler is idempotent.
+- An "order placed" event consumed by three services → each must dedupe independently.
+- A consumer redeploys mid-batch → it reprocesses uncommitted messages on restart, by design.
+
+Assume every consumer will see every message **more than once**, and the bugs never appear. Assume exactly-once, and they appear in production at 3 a.m.
+
+## The takeaway
+
+Exactly-once *delivery* is impossible because the network can always lose an acknowledgement — that's not a vendor limitation, it's the two generals problem. What you actually want is exactly-once *effect*, and you get it by accepting at-least-once delivery and making your consumers idempotent. Design for duplicates and "exactly-once" stops being a feature you buy and becomes a property you build.
+
+See the delivery trade-offs in [Message Queues](/learn/intermediate/message-queues), the broader pattern in [Event-Driven Architecture](/learn/advanced/event-driven-architecture), and the primitive that makes it work in [Idempotency](/blog/idempotency-saves-payments).

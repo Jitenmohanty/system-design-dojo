@@ -1,0 +1,97 @@
+---
+title: "The dual-write problem: why your cache and database silently drift"
+description: "You wrote to the database, then updated the cache. Two writes, no transaction between them — and sooner or later one lands and the other doesn't. Here's why dual writes are a trap, and the patterns that escape it."
+date: "2026-06-06"
+author: "System Design Dojo"
+emoji: "🔀"
+accent: "var(--neon-red)"
+tags: ["war-story", "caching", "databases"]
+minutes: 7
+---
+
+The code looked obviously correct:
+
+```ts
+await db.users.update(id, { name });   // 1. write the source of truth
+await cache.set(`user:${id}`, name);   // 2. keep the cache fresh
+```
+
+Update the database, update the cache. Ship it. For months it was fine. Then support started getting tickets: *"I changed my name and it changed back."* Not always. Not reproducibly. Just often enough to be maddening.
+
+This is the **dual-write problem**: any time you write the same fact to two systems without a shared transaction, they will eventually disagree.
+
+## Why two writes can't stay in sync
+
+A database transaction gives you atomicity *within* the database. But the cache is a **different system**. There's no transaction spanning both. So between line 1 and line 2, the world can interfere in two ways.
+
+**Failure:** line 1 succeeds, then the process crashes (or the cache is briefly down) before line 2. The database says "Trinity Anderson", the cache still says "Trinity". Every read is now wrong until that key expires.
+
+**A race:** two writers interleave. This one is sneakier — both writes "succeed", and you *still* end up corrupt:
+
+<AnimatedDiagram
+  height={340}
+  nodes={[
+    { id: "w1", type: "client", label: "Writer A", position: { x: 8, y: 28 }, status: "busy", info: "Sets name = 'Alice'. Writes DB first, then cache — but gets paused right after the DB write." },
+    { id: "w2", type: "client", label: "Writer B", position: { x: 8, y: 72 }, status: "busy", info: "Sets name = 'Bob' a moment later. Writes DB, then cache — and finishes before Writer A resumes." },
+    { id: "db", type: "database", label: "Database", position: { x: 50, y: 50 }, status: "active", info: "Ends correct: last write wins → 'Bob'. The source of truth is fine." },
+    { id: "cache", type: "cache", label: "Cache", position: { x: 88, y: 50 }, status: "down", info: "Ends WRONG: Writer A resumes last and writes 'Alice' to the cache. Cache says Alice, DB says Bob — drift, until TTL." }
+  ]}
+  edges={[
+    { from: "w1", to: "db", animated: true, color: "var(--neon-blue)", label: "1. DB=Alice" },
+    { from: "w2", to: "db", animated: true, color: "var(--neon-green)", label: "2. DB=Bob" },
+    { from: "w2", to: "cache", animated: true, color: "var(--neon-green)", label: "3. cache=Bob" },
+    { from: "w1", to: "cache", dashed: true, color: "var(--neon-red)", label: "4. cache=Alice (stale!)" }
+  ]}
+/>
+
+The database resolves the race correctly (last writer wins → Bob). The cache resolves it *backwards*, because Writer A's delayed cache write lands last. Now the two systems disagree, and they'll keep disagreeing until something clears the key. That's the "it changed back" ticket.
+
+<Callout type="danger" title="Ordering is not guaranteed">
+'Write A then write B' in your code does not mean they land in that order at two different systems. Threads pause, networks reorder, retries fire late. Any design that depends on two independent writes landing in a specific order is already broken — you just haven't seen it yet.
+</Callout>
+
+## Fix 1 — Invalidate, don't update
+
+The cheapest, highest-leverage change: on a write, **delete** the cache key instead of setting it.
+
+```ts
+await db.users.update(id, { name });   // write the truth
+await cache.del(`user:${id}`);         // just evict — let the next read repopulate
+```
+
+Now there's no stale value to race over. The next read misses, loads the current truth from the database, and backfills. A late, out-of-order *delete* is harmless — at worst it causes one extra cache miss. A late, out-of-order *set* corrupts. This single change kills the most common version of the bug.
+
+It's not perfect (a read can race with an invalidation), but it shrinks the danger window from "until the TTL" to "one request", and it's why "cache-aside + invalidate-on-write" is the default in [Caching Strategies](/learn/intermediate/caching-strategies).
+
+## Fix 2 — One write, then derive the rest (the outbox)
+
+The deeper fix is to **stop doing two writes at all.** Write to *one* system transactionally, and let the second system be driven *from* the first.
+
+The **transactional outbox** pattern: in the same DB transaction as your data change, insert a row into an `outbox` table. A separate process tails that table (or the DB's change log / CDC stream) and applies the change to the cache, search index, or downstream services.
+
+<AnimatedDiagram
+  height={320}
+  nodes={[
+    { id: "app", type: "server", label: "App", position: { x: 8, y: 50 }, status: "busy", info: "Does ONE atomic transaction: update the row AND insert an outbox event. Both commit or neither does." },
+    { id: "db", type: "database", label: "Database + outbox", position: { x: 42, y: 50 }, status: "active", info: "The single source of truth. The outbox row is now as durable as the data change itself." },
+    { id: "relay", type: "queue", label: "Relay / CDC", position: { x: 72, y: 50 }, status: "active", info: "Reads committed outbox events in order and publishes them. Retries safely because consumers are idempotent." },
+    { id: "cache", type: "cache", label: "Cache / index", position: { x: 94, y: 50 }, status: "idle", info: "Updated FROM the event stream, in commit order. It can lag, but it can't disagree about what happened." }
+  ]}
+  edges={[
+    { from: "app", to: "db", animated: true, color: "var(--neon-green)", label: "1 txn" },
+    { from: "db", to: "relay", animated: true, color: "var(--neon-blue)", label: "tail log" },
+    { from: "relay", to: "cache", animated: true, color: "var(--neon-yellow)", label: "apply" }
+  ]}
+/>
+
+Now there's exactly one authoritative write. The cache might be a few hundred milliseconds behind, but it can never hold a value that contradicts the database, because every change reaches it through the same ordered log. You've traded "two writes that disagree" for "one write, eventually propagated" — which is the [replication lag](/blog/read-replicas-lie) trade-off, and a far better one.
+
+<Callout type="tip" title="Pick by stakes">
+For a name on a profile, **invalidate-on-write** (Fix 1) is plenty. For data that fans out to a cache, a search index, AND three downstream services, do the **outbox** — hand-syncing four systems with N writes is the dual-write problem multiplied.
+</Callout>
+
+## The takeaway
+
+Two independent writes are two independent chances to fail or reorder, and no amount of careful ordering in your code can make them atomic. Either make the second write *idempotent and order-insensitive* (invalidate, don't set), or eliminate it entirely by deriving the second system from the first. The bug that "changes back" is always a dual write in disguise.
+
+Ground the cache mechanics in [Caching Strategies](/learn/intermediate/caching-strategies), and see the propagation trade-off in [Replication](/learn/advanced/replication).

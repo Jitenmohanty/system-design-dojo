@@ -1,0 +1,127 @@
+---
+title: "Idempotency: the one word that saves your payment system"
+description: "A network timeout doesn't mean the request failed — it means you don't know. Retry blindly and you charge the customer twice. Idempotency keys are how every serious payments API makes 'try again' safe."
+date: "2026-06-10"
+author: "System Design Dojo"
+emoji: "🔁"
+accent: "var(--neon-green)"
+tags: ["reliability", "api", "war-story"]
+minutes: 8
+---
+
+A customer taps **Pay**. Three seconds pass. The app shows a spinner, then a red error: *"Request timed out."* They tap **Pay** again. It works.
+
+Their statement shows **two** charges.
+
+Nothing here was a bug in the obvious sense. Every component did its job. The disaster came from a single, brutal fact of distributed systems: **a timeout is not a failure — it's an unknown.**
+
+## The two-generals problem, in miniature
+
+When the client's request times out, exactly one of these happened — and the client *cannot tell which*:
+
+<AnimatedDiagram
+  height={320}
+  nodes={[
+    { id: "client", type: "client", label: "App", position: { x: 8, y: 50 }, status: "busy", info: "Sent POST /charge, then the connection died before a response came back." },
+    { id: "server", type: "server", label: "Payment API", position: { x: 45, y: 50 }, status: "busy", info: "Maybe it never got the request. Maybe it charged the card and the RESPONSE got lost on the way back. The client has no way to know which." },
+    { id: "psp", type: "database", label: "Card Network", position: { x: 82, y: 50 }, status: "active", info: "The actual money movement. If the request reached here, the customer was charged — regardless of whether the app ever heard about it." }
+  ]}
+  edges={[
+    { from: "client", to: "server", animated: true, label: "POST /charge" },
+    { from: "server", to: "psp", dashed: true, color: "var(--neon-yellow)", label: "maybe charged?" },
+    { from: "server", to: "client", dashed: true, color: "var(--neon-red)", label: "✕ response lost" }
+  ]}
+/>
+
+The request may have failed *before* the charge, or it may have succeeded and only the **response** got lost. From the client's seat, both look identical: a timeout. So the client does the only sensible thing — it retries. And if the first attempt actually went through, the retry charges the card a second time.
+
+<Callout type="info" title="This isn't rare">
+Mobile networks drop connections constantly. Load balancers time out slow requests. Retries are not an edge case you can ignore — they are a *constant* in any real system. Your write endpoints will be called more than once for the same logical action. Plan for it.
+</Callout>
+
+## The fix: make "do it again" mean "do it once"
+
+An operation is **idempotent** if running it twice has the same effect as running it once. `GET` is naturally idempotent (reading twice changes nothing). So is `DELETE` (deleting an already-deleted thing is a no-op). The dangerous one is `POST` — *create a charge* — because naively, two POSTs create two charges.
+
+We make it idempotent by having the **client generate a unique key** for the logical action and send it with every attempt — including retries:
+
+```http
+POST /charge HTTP/1.1
+Idempotency-Key: a1b2c3d4-payment-9f8e
+Content-Type: application/json
+
+{ "amount": 4200, "currency": "usd", "source": "tok_visa" }
+```
+
+The key is the *same* on the retry. The server uses it to recognize "I've seen this exact action before" and refuses to do the work twice.
+
+## Server side: a dedupe table and a promise
+
+The server keeps an `idempotency_keys` table. The first time it sees a key it does the work and **stores the result against that key**. Any later request with the same key gets the *stored* result back — no second charge.
+
+<AnimatedDiagram
+  height={340}
+  nodes={[
+    { id: "client", type: "client", label: "App (retry)", position: { x: 8, y: 50 }, status: "busy", info: "Retries with the SAME Idempotency-Key it used the first time." },
+    { id: "server", type: "server", label: "Payment API", position: { x: 38, y: 50 }, status: "busy", info: "Before doing anything, looks up the key. Seen it? Return the saved result. New? Process once, then save." },
+    { id: "keys", type: "cache", label: "Key Store", position: { x: 70, y: 22 }, status: "active", info: "Maps idempotency-key → result. The retry finds a hit here and short-circuits — no charge happens." },
+    { id: "psp", type: "database", label: "Card Network", position: { x: 70, y: 78 }, status: "idle", info: "Only ever reached on the FIRST request for a key. The retry never gets here." }
+  ]}
+  edges={[
+    { from: "client", to: "server", animated: true, label: "same key" },
+    { from: "server", to: "keys", animated: true, color: "var(--neon-green)", label: "1. seen this key?" },
+    { from: "server", to: "psp", dashed: true, color: "var(--neon-red)", label: "only if new" }
+  ]}
+/>
+
+A first cut of the server logic:
+
+```ts
+async function charge(req: ChargeRequest, key: string) {
+  // 1. Have we already handled this exact action?
+  const existing = await db.idempotencyKeys.find(key);
+  if (existing) return existing.result;          // ← the retry stops here
+
+  // 2. New action: claim the key BEFORE doing the work
+  await db.idempotencyKeys.insert({ key, status: "pending" });
+
+  // 3. Do the dangerous, non-idempotent thing exactly once
+  const result = await cardNetwork.charge(req.amount, req.source);
+
+  // 4. Persist the result against the key
+  await db.idempotencyKeys.update(key, { status: "done", result });
+  return result;
+}
+```
+
+## The detail that bites everyone: the race
+
+Look at step 1 and step 2 again. What if the **retry arrives while the first request is still on step 3** (the slow network call to the card network)? Both see "no existing key", both proceed, both charge. You've recreated the exact bug you were trying to fix.
+
+The fix is to make **claiming the key atomic** — a unique constraint on the key column turns the second insert into an error instead of a duplicate:
+
+```sql
+-- the key column is UNIQUE; the second concurrent insert fails loudly
+INSERT INTO idempotency_keys (key, status) VALUES ($1, 'pending');
+-- → duplicate key violation on the racing request
+```
+
+The losing request catches that violation and waits for / returns the winner's result instead of charging again. Now exactly one request can ever be "the first."
+
+<Callout type="warn" title="Give keys a TTL — but a long one">
+Store keys for at least 24 hours, ideally longer than any client could plausibly retry. Expire them too early and a late retry sails through as 'new' and double-charges. This is a place where 'clean up aggressively' is the wrong instinct.
+</Callout>
+
+## Where this shows up beyond payments
+
+Idempotency keys aren't a payments trick — they're how you make *any* unsafe write retry-safe:
+
+- **Message queues.** Consumers must assume **at-least-once** delivery (covered in [Message Queues](/learn/intermediate/message-queues)) — the same message *will* be redelivered. A dedupe key on each message makes reprocessing a no-op.
+- **Webhooks.** Providers retry webhooks until you `200`. Dedupe on the event ID.
+- **"Create resource" APIs.** Any `POST` that creates something should accept an idempotency key, exactly like Stripe's and most serious APIs do.
+
+## The takeaway
+
+You cannot prevent retries — the network guarantees them. What you *can* do is make the second attempt harmless. A client-generated key, an atomic claim, and a dedupe table turn "I'm not sure if that went through, let me try again" from a double-charge into a no-op.
+
+Build the mental model first in [APIs & REST](/learn/beginner/apis-rest), then see why at-least-once delivery makes this non-optional in [Message Queues](/learn/intermediate/message-queues).

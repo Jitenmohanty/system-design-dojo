@@ -1,0 +1,104 @@
+---
+title: "The 5 follow-ups every system design interview asks"
+description: "The interview isn't the first question — it's what comes after. 'Now it's 100× the traffic.' 'Now that server died.' Here are the five pressure tests every interviewer applies, and how to see them coming."
+date: "2026-06-07"
+author: "System Design Dojo"
+emoji: "🥋"
+accent: "var(--neon-purple)"
+tags: ["interview", "scaling", "case-study"]
+minutes: 9
+---
+
+Candidates obsess over the opening prompt — *"Design a URL shortener"* — and under-prepare for the part that actually decides the interview: the **follow-ups**. The interviewer's job isn't to see if you can draw a box labeled "server." It's to push on that drawing until it breaks, and watch how you respond.
+
+The good news: the pushes are predictable. There are about five of them, and once you can name them, you can prepare answers in advance.
+
+## Where every design starts
+
+You'll almost always begin here — one server, one database. This is correct, and you should *say* it's correct: "I'd start simple and scale when the numbers demand it."
+
+<AnimatedDiagram
+  height={260}
+  nodes={[
+    { id: "client", type: "client", label: "Client", position: { x: 15, y: 50 }, status: "active", info: "Users hitting your app." },
+    { id: "server", type: "server", label: "App Server", position: { x: 50, y: 50 }, status: "busy", info: "One box runs the code. Fine for thousands of users. The interviewer is about to make it not fine." },
+    { id: "db", type: "database", label: "Database", position: { x: 85, y: 50 }, status: "active", info: "One database holds everything. Simple, and the right place to start." }
+  ]}
+  edges={[
+    { from: "client", to: "server", animated: true },
+    { from: "server", to: "db", animated: true, color: "var(--neon-green)" }
+  ]}
+/>
+
+Then the pushing starts.
+
+## Follow-up 1 — "Now it gets 100× the traffic"
+
+This is the scaling probe. The instinct to resist is "make the server bigger" (vertical scaling) — say it has a ceiling, then go **horizontal**: multiple stateless app servers behind a **load balancer**.
+
+The word that earns points here is **stateless**. If a server stores session state in memory, you can't freely route requests across the fleet. Push state into a shared store (a cache or the DB) so any server can handle any request. This is the core idea in [Load Balancing](/learn/intermediate/load-balancing).
+
+## Follow-up 2 — "The database is the bottleneck now"
+
+You scaled the app tier; the single database is now the choke point. Walk the standard ladder, cheapest first:
+
+1. **Cache the hot reads.** Put a cache in front (see [Caching Strategies](/learn/intermediate/caching-strategies)). Most reads never hit the DB. Mention the failure mode — the [thundering herd](/blog/thundering-herd) — to show depth.
+2. **Read replicas.** Send reads to replicas, writes to the primary. Name the catch yourself: [replication lag](/blog/read-replicas-lie) and stale reads.
+3. **Shard** when writes outgrow one machine. Talk about choosing a shard key and the risk of hot partitions ([Sharding](/learn/advanced/database-sharding)).
+
+Here's the architecture those two follow-ups push you toward:
+
+<AnimatedDiagram
+  height={380}
+  nodes={[
+    { id: "client", type: "client", label: "Clients", position: { x: 6, y: 50 }, status: "busy", info: "100× the original traffic." },
+    { id: "lb", type: "loadbalancer", label: "Load Balancer", position: { x: 24, y: 50 }, status: "active", info: "Follow-up 1: spreads requests across a fleet of stateless app servers." },
+    { id: "s1", type: "server", label: "App ×N", position: { x: 46, y: 28 }, status: "busy", info: "Stateless and horizontally scaled — add boxes to add capacity." },
+    { id: "s2", type: "server", label: "App ×N", position: { x: 46, y: 72 }, status: "busy", info: "Any server handles any request because no session state lives here." },
+    { id: "cache", type: "cache", label: "Cache", position: { x: 70, y: 24 }, status: "active", info: "Follow-up 2, step 1: absorbs the hot reads so the DB stays calm." },
+    { id: "primary", type: "database", label: "Primary", position: { x: 70, y: 60 }, status: "active", info: "Takes all writes." },
+    { id: "replica", type: "database", label: "Replica", position: { x: 90, y: 84 }, status: "idle", info: "Follow-up 2, step 2: serves reads. Watch for replication lag." }
+  ]}
+  edges={[
+    { from: "client", to: "lb", animated: true },
+    { from: "lb", to: "s1", animated: true, color: "var(--neon-purple)" },
+    { from: "lb", to: "s2", animated: true, color: "var(--neon-purple)" },
+    { from: "s1", to: "cache", animated: true, color: "var(--neon-yellow)" },
+    { from: "s2", to: "primary", animated: true, color: "var(--neon-green)" },
+    { from: "primary", to: "replica", dashed: true, label: "replicate" }
+  ]}
+/>
+
+## Follow-up 3 — "That component just died. What happens?"
+
+The availability probe. For **every** box you've drawn, the interviewer can ask "what if this one dies?" Have an answer ready for each:
+
+- App server dies → load balancer health-checks it out; traffic reroutes. No impact.
+- Cache dies → reads fall through to the DB (slower, but up). Watch the herd.
+- Primary DB dies → promote a replica (failover); note the writes that hadn't replicated may be lost.
+
+The phrase to reach for is **single point of failure**. Scan your own diagram for any box with no backup and call it out *before* they do. That's the move that signals seniority.
+
+<Callout type="tip" title="Interview tell">
+Junior answers add components. Senior answers also say how each one *fails* and what the blast radius is. Volunteer the failure modes — don't wait to be asked.
+</Callout>
+
+## Follow-up 4 — "This part is slow / spiky. Can we make it async?"
+
+Not everything needs to happen inside the request. Sending the welcome email, transcoding the video, updating analytics — push these onto a **queue** and let workers handle them. The user gets a fast response; the slow work happens in the background, and a traffic spike fills the queue instead of toppling the app ([Message Queues](/learn/intermediate/message-queues)).
+
+The senior caveat: queues are **at-least-once**, so consumers must be [idempotent](/blog/idempotency-saves-payments). Saying that unprompted is worth a lot.
+
+## Follow-up 5 — "What are the trade-offs of what you just proposed?"
+
+The meta-question, and the one that separates levels. There is no perfect design — only trade-offs. When you add a cache, *say* "now I have a consistency problem." When you add replicas, *say* "now I have lag." When you shard, *say* "now cross-shard queries are painful."
+
+This is [CAP](/learn/advanced/cap-theorem) thinking applied to your whole design: every box you add buys something and costs something. Naming both is the entire game.
+
+## How to practice
+
+Don't practice *designs* — practice *follow-ups*. Take any prompt, sketch the simple version, then run all five pushes against it yourself: 100× traffic, DB bottleneck, a dead component, an async opportunity, the trade-offs. The [expert design walkthroughs](/learn/expert/design-url-shortener) are built exactly this way — start simple, then apply pressure.
+
+## The takeaway
+
+The opening prompt is the easy part. The interview lives in the follow-ups, and they're the same five almost every time: **scale the traffic, scale the data, survive a failure, go async, name the trade-offs.** Prepare those, narrate your reasoning out loud, and volunteer the weaknesses in your own design — that's what a strong signal looks like.

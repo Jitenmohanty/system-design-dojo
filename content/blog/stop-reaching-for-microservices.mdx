@@ -1,0 +1,83 @@
+---
+title: "Stop reaching for microservices (you have three engineers)"
+description: "Microservices solve an organizational problem, not a technical one. Adopt them before you have the org to match and you get all of distributed systems' pain with none of the payoff — a distributed monolith."
+date: "2026-06-09"
+author: "System Design Dojo"
+emoji: "🪓"
+accent: "var(--neon-orange)"
+tags: ["opinion", "architecture", "scaling"]
+minutes: 7
+---
+
+There's a moment on most young teams where someone says: *"We should split this into microservices before it becomes a big ball of mud."* It sounds responsible. It's usually a mistake.
+
+Here's the uncomfortable thesis: **microservices are a solution to an organizational problem, not a technical one.** And if you adopt them before you have that problem, you don't get the benefits — you just import the costs.
+
+## What microservices actually buy you
+
+The real win of microservices isn't performance or "scalability" in the abstract. It's **independent teams shipping independently.** When you have 200 engineers, a single codebase becomes a coordination nightmare: merge conflicts, one team's bug blocking everyone's deploy, a release train nobody can board.
+
+Splitting into services with hard boundaries lets Team A deploy without asking Team B. That autonomy is the prize. The defining rule — covered in [Microservices](/learn/advanced/microservices) — is **database-per-service**: no shared tables, so teams can't secretly couple through the data layer.
+
+<Callout type="info" title="The tell">
+Microservices are an answer to 'too many people in one codebase.' If you don't have too many people, you don't have the question.
+</Callout>
+
+## What you actually build with three engineers
+
+Three engineers don't have a coordination problem. But split prematurely and here's what you get — the **distributed monolith**: services that *look* independent but are wired together so tightly they must be deployed in lockstep.
+
+<AnimatedDiagram
+  height={360}
+  nodes={[
+    { id: "gw", type: "gateway", label: "API Gateway", position: { x: 8, y: 50 }, status: "busy", info: "The front door. So far so good." },
+    { id: "s1", type: "server", label: "Users Svc", position: { x: 36, y: 22 }, status: "busy", info: "To render one screen it must synchronously call Orders, which calls Billing. One slow service stalls the whole request." },
+    { id: "s2", type: "server", label: "Orders Svc", position: { x: 36, y: 78 }, status: "busy", info: "Calls Users for names, Billing for status. A chain of blocking HTTP calls that used to be a function call." },
+    { id: "s3", type: "server", label: "Billing Svc", position: { x: 64, y: 50 }, status: "busy", info: "Everyone calls everyone. The 'services' can't be understood — or deployed — in isolation." },
+    { id: "db", type: "database", label: "Shared DB", position: { x: 90, y: 50 }, status: "down", info: "The fatal tell: all three services read and write the SAME database. Change a column and you must redeploy all three. This is a monolith wearing a costume." }
+  ]}
+  edges={[
+    { from: "gw", to: "s1", animated: true, color: "var(--neon-orange)" },
+    { from: "s1", to: "s2", animated: true, color: "var(--neon-red)", label: "sync call" },
+    { from: "s2", to: "s3", animated: true, color: "var(--neon-red)", label: "sync call" },
+    { from: "s1", to: "db", dashed: true, color: "var(--neon-red)" },
+    { from: "s2", to: "db", dashed: true, color: "var(--neon-red)" },
+    { from: "s3", to: "db", dashed: true, color: "var(--neon-red)", label: "shared!" }
+  ]}
+/>
+
+You now own *every* hard problem from the [Distributed Systems](/learn/advanced/distributed-systems) lesson — network failures between your own components, partial failures, distributed transactions, eventual consistency, tracing a request across five hops — and in exchange you got **zero** team autonomy, because the shared database means you still deploy everything together.
+
+That's the worst square on the grid: maximum operational pain, minimum benefit.
+
+## The costs you signed up for without noticing
+
+- **A function call became a network call.** In-process, it's nanoseconds and can't fail. Across services it's milliseconds, and it can time out, retry, and double-fire (hello, [idempotency](/blog/idempotency-saves-payments)).
+- **A stack trace became a detective case.** One user action spans five services and three queues. You now *need* distributed tracing just to answer "why was this slow?"
+- **A transaction became a saga.** `BEGIN; ...; COMMIT;` across two services doesn't exist. You hand-roll compensating actions and live with windows of inconsistency.
+- **Local dev needs Docker Compose and a prayer.** "Run the app" now means running eight things.
+
+## What to do instead: the modular monolith
+
+Start with **one deployable**, but keep clean module boundaries *inside* it — separate packages, a rule that modules talk through defined interfaces, ideally separate schemas in the same database. You get most of the conceptual tidiness of services with none of the network.
+
+```text
+monolith/
+  modules/
+    users/      ← owns user tables, exposes a UsersService interface
+    orders/     ← calls usersService.getName() — an in-process call, not HTTP
+    billing/
+  main.ts       ← one deploy, one log stream, one debugger
+```
+
+When a module genuinely needs to scale or ship on its own cadence — and you have a team to own it — *that* is when you extract it into a service. The boundaries are already there, so extraction is mechanical instead of archaeological.
+
+<Callout type="tip" title="The rule of thumb">
+Don't split by service until you're splitting by *team*. Conway's Law cuts both ways: design the architecture to match the org you have, not the org you imagine.
+</Callout>
+
+## The takeaway
+
+Microservices are a fine answer to "too many people, one codebase." They are a terrible answer to "our code is getting messy" — for that, the answer is *boundaries*, and you can have boundaries in a monolith. Earn the complexity before you pay for it.
+
+See the full trade-off, including when microservices genuinely win, in [Microservices](/learn/advanced/microservices) and [Monolith vs Microservices](/compare/monolith-vs-microservice).

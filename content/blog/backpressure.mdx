@@ -1,0 +1,82 @@
+---
+title: "Backpressure: what happens when consumers can't keep up"
+description: "A queue decouples producers from consumers — until producers outrun consumers and the queue grows without bound. Then memory fills, latency explodes, and the buffer you added for safety becomes the thing that kills you."
+date: "2026-06-04"
+author: "System Design Dojo"
+emoji: "🌊"
+accent: "var(--neon-orange)"
+tags: ["war-story", "scaling"]
+minutes: 7
+---
+
+The queue was supposed to be the safety net. Orders came in fast, workers processed them in the background, everything was decoupled and resilient. Then marketing ran a flash sale.
+
+Orders arrived at 50,000/sec. Workers drained 5,000/sec. The queue did exactly what a queue does: it buffered the difference. For about four minutes. Then the broker ran out of memory and the whole pipeline stopped — including the orders that were already safely enqueued.
+
+This is the failure mode nobody draws on the whiteboard: **the queue absorbed the spike right up until it couldn't, and then it failed worse than no queue at all.**
+
+## The arithmetic is unforgiving
+
+A queue only "decouples" producers and consumers when, *over time*, consumers keep up. The queue smooths bursts; it does not create throughput. If the **sustained** inflow exceeds the **sustained** drain rate, the backlog grows linearly forever:
+
+<AnimatedDiagram
+  height={320}
+  nodes={[
+    { id: "prod", type: "server", label: "Producers", position: { x: 8, y: 50 }, status: "busy", info: "Enqueuing 50k/sec during the sale. They don't know or care how fast consumers are — that's the point of decoupling, and also the danger." },
+    { id: "queue", type: "queue", label: "Queue (filling)", position: { x: 45, y: 50 }, status: "busy", info: "Growing by 45k messages every second. Memory/disk climbs, and the age of the oldest message — end-to-end latency — climbs with it." },
+    { id: "c1", type: "server", label: "Worker", position: { x: 82, y: 32 }, status: "busy", info: "Drains 2.5k/sec. Maxed out." },
+    { id: "c2", type: "server", label: "Worker", position: { x: 82, y: 68 }, status: "busy", info: "Another 2.5k/sec. Two workers = 5k/sec total, against 50k/sec inflow. The gap is the problem." }
+  ]}
+  edges={[
+    { from: "prod", to: "queue", animated: true, color: "var(--neon-red)", label: "50k/s in" },
+    { from: "queue", to: "c1", animated: true, color: "var(--neon-green)", label: "2.5k/s" },
+    { from: "queue", to: "c2", animated: true, color: "var(--neon-green)", label: "2.5k/s" }
+  ]}
+/>
+
+Two numbers to watch (and alert on): **queue depth** and **oldest-message age**. Depth tells you the backlog size; age tells you how stale the work is — a depth of 10M with a rising age means a customer's "order confirmed" email is now arriving an hour late, if at all.
+
+<Callout type="warn" title="An unbounded queue is a hidden memory leak">
+A queue with no size limit doesn't prevent overload — it just delays it and converts it into an out-of-memory crash. The most dangerous queue is the one configured to grow 'as needed,' because 'as needed' under a spike means 'until the broker dies.'
+</Callout>
+
+## Backpressure is the queue pushing back
+
+**Backpressure** is the mechanism by which a slow consumer (or a full queue) signals "slow down" back upstream, so the system degrades gracefully instead of collapsing. You have four levers, roughly in order of preference.
+
+### 1. Add consumers (scale the drain)
+
+The first and most obvious: if inflow is 50k/sec, you need enough workers to drain ~50k/sec. Autoscale the consumer pool on **queue depth**, not CPU — CPU looks fine while the backlog explodes. Because each unit of work is independent, adding workers scales the drain linearly (this is the whole shape of [Message Queues](/learn/intermediate/message-queues)).
+
+### 2. Bound the queue, then shed load
+
+Give the queue a hard limit. When it's full, you must *choose* what to sacrifice — and choosing is better than crashing:
+
+- **Reject** new work (return `429`/`503` to producers — and have them [back off](/blog/the-429-nobody-plans-for)).
+- **Drop** the lowest-value messages (sample analytics events; you don't need all of them).
+- **Shed** to a dead-letter queue for later, off the hot path.
+
+```python
+# bounded queue: refuse work instead of growing without limit
+if queue.depth() >= MAX_DEPTH:
+    raise TooBusy(retry_after=5)   # backpressure: tell the producer to wait
+queue.put(message)
+```
+
+### 3. Rate-limit the producers
+
+Sometimes the right answer is to not accept the firehose at all. A token bucket at ingress (see [Rate Limiting](/learn/intermediate/rate-limiting)) caps inflow to what the system can actually sustain, turning a cliff into a controlled queue.
+
+### 4. Prioritize
+
+Not all work is equal. A separate high-priority lane for "process payment" vs. "update recommendation model" means the important work drains even while the backlog of nice-to-haves grows.
+
+<Callout type="tip" title="Decoupled doesn't mean infinite">
+The mental model that bites people: 'we have a queue, so producers and consumers are independent.' They're independent *in the short term*. Over any sustained window, consumers set the ceiling. Size the consumer fleet for sustained peak, and bound the queue for the burst on top.
+</Callout>
+
+## The takeaway
+
+A queue buys you a buffer for *bursts*, not a license to ignore throughput. If consumers can't sustain the inflow, the queue doesn't save you — it just changes how you fail, from "drop some requests" to "crash everything at once." Bound the buffer, scale the drain on depth, and build a backpressure signal so the system can say "slow down" before it has to say nothing at all.
+
+See how queues decouple work in [Message Queues](/learn/intermediate/message-queues), and how to cap inflow in [Rate Limiting](/learn/intermediate/rate-limiting).

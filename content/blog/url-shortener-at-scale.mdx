@@ -1,0 +1,85 @@
+---
+title: "How URL shorteners survive 100,000 redirects per second"
+description: "A URL shortener looks trivial — store a mapping, look it up. The interesting part is the asymmetry: writes are rare, reads are enormous, and the whole design bends around making one key lookup as close to free as physics allows."
+date: "2026-06-03"
+author: "System Design Dojo"
+emoji: "🔗"
+accent: "var(--neon-blue)"
+tags: ["case-study", "caching", "scaling"]
+minutes: 8
+---
+
+"Design a URL shortener" is the system design equivalent of "reverse a linked list" — so common it feels beneath you. But the reason it endures as an interview staple is that the naive version (a table with two columns) hides a genuinely instructive constraint: it is one of the most **read-heavy** systems you'll ever build.
+
+Get the asymmetry and the rest falls out. Miss it, and you'll over-engineer the part that doesn't matter and under-build the part that does.
+
+## The numbers do the designing for you
+
+Say you create 100 short links per second and each link is clicked ~1,000 times over its life. That's **100 writes/sec and ~100,000 reads/sec** — a 1,000:1 read-to-write ratio. Two consequences follow immediately:
+
+- **Writes are a rounding error.** 100 inserts/sec is nothing; a single modest database handles it without breaking a sweat. Don't waste design budget here.
+- **Reads are the entire ballgame.** 100k lookups/sec is where every dollar and every millisecond goes.
+
+The read path is also dead simple: take a short code, find the original URL, issue a redirect. No joins, no computation — a pure **key → value** lookup. That simplicity is the gift. It means the hot path can be served almost entirely from memory.
+
+## The read path, optimized to the bone
+
+<AnimatedDiagram
+  height={360}
+  nodes={[
+    { id: "user", type: "client", label: "Browser", position: { x: 6, y: 50 }, status: "busy", info: "Hits sho.rt/aB3x9. Wants one thing: a redirect to the original URL, fast." },
+    { id: "cdn", type: "cdn", label: "CDN / Edge", position: { x: 26, y: 50 }, status: "active", info: "Caches redirects for hot links near the user. A viral link is served from the edge in ~10ms and never touches your servers." },
+    { id: "lb", type: "loadbalancer", label: "Load Balancer", position: { x: 46, y: 50 }, status: "active", info: "Spreads the surviving traffic across a fleet of stateless redirect servers." },
+    { id: "svc", type: "server", label: "Redirect Svc", position: { x: 66, y: 50 }, status: "busy", info: "Does almost nothing: look up code → return 301/302. Stateless, so scale it horizontally without limit." },
+    { id: "cache", type: "cache", label: "Redis", position: { x: 86, y: 28 }, status: "active", info: "code → URL in memory. Absorbs ~99% of lookups at ~1ms. This is the real workhorse." },
+    { id: "db", type: "database", label: "Database", position: { x: 86, y: 75 }, status: "idle", info: "Source of truth. Only hit on a cold cache miss — a tiny fraction of reads, plus the rare write." }
+  ]}
+  edges={[
+    { from: "user", to: "cdn", animated: true, label: "GET /aB3x9" },
+    { from: "cdn", to: "lb", dashed: true, color: "var(--neon-purple)", label: "edge miss" },
+    { from: "lb", to: "svc", animated: true },
+    { from: "svc", to: "cache", animated: true, color: "var(--neon-yellow)", label: "lookup" },
+    { from: "svc", to: "db", dashed: true, color: "var(--neon-red)", label: "cache miss" }
+  ]}
+/>
+
+Each layer exists to keep traffic from reaching the next one. The CDN serves viral links at the edge. Whatever misses the edge hits the cache, which serves ~99% of the rest from memory. The database — the slowest layer — sees only the dribble of cold misses and the trickle of writes. At 100k reads/sec, the database might field a few hundred queries/sec. That's the asymmetry paying off.
+
+<Callout type="tip" title="The mapping is immutable">
+A short code points to the same URL forever — it basically never changes after creation. That makes it a cache author's dream: you can cache it aggressively, almost indefinitely, with no invalidation headache. Most caching pain comes from updates; this workload has almost none.
+</Callout>
+
+## The write path: just generate a unique code
+
+Writes are rare, so simplicity wins. The only real question is how to generate a short, unique code. The honest ranking:
+
+- **Counter → Base62.** Keep an incrementing integer, encode it in `[0-9a-zA-Z]`. Seven Base62 chars cover ~3.5 trillion links. Clean and collision-free — the catch is coordinating the counter across servers.
+- **Hash → truncate.** Hash the URL, take the first few characters. Simple, but truncation means collisions you must detect and resolve as the corpus grows.
+- **Distributed IDs (Snowflake-style).** Hand each server a non-overlapping range, or use timestamp-based IDs, so multiple writers never collide without chatting on every insert.
+
+The full walkthrough — capacity math, code generation, and the split read/write architecture — is the [Design a URL Shortener](/learn/expert/design-url-shortener) lesson.
+
+## The one trap: analytics on the hot path
+
+The tempting mistake is to do `UPDATE links SET clicks = clicks + 1` on every redirect. You just turned your beautiful read-only hot path — which the database barely touched — into 100,000 **writes** per second, all contending on the same hot rows. You've recreated a worse problem than the one you solved.
+
+Instead, fire the click as a fire-and-forget event onto a queue and tally it asynchronously:
+
+```ts
+// hot path stays read-only; analytics happen off to the side
+const url = await cache.get(code) ?? await db.lookup(code);
+queue.emit("click", { code, ts: now() });   // async, best-effort
+return redirect(url, 301);                   // user is gone in ~1ms
+```
+
+The redirect doesn't wait for the analytics write, and a spike in clicks fills a queue (mind the [backpressure](/blog/backpressure)) instead of melting the database.
+
+<Callout type="info" title="301 vs 302">
+A **301 (permanent)** lets browsers and proxies cache the redirect — fewer hits reach you, which is great for load but means you stop seeing every click. A **302 (temporary)** routes every click through your service, which you need if click analytics matter. It's a real trade-off: cacheability vs. measurability.
+</Callout>
+
+## The takeaway
+
+The whole design is an exercise in reading a ratio. 1,000:1 reads-to-writes says: spend nothing on the write path, and build the read path as a cascade of caches that each shield the layer behind them. Keep that path read-only — push clicks and counters off to the side — and a "trivial" service comfortably serves 100k redirects/sec from mostly memory.
+
+Walk the full design in [Design a URL Shortener](/learn/expert/design-url-shortener); the layered caching idea is [CDN](/learn/intermediate/cdn) and [Caching Strategies](/learn/intermediate/caching-strategies).
