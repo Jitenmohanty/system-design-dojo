@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Search, ChevronDown, Check, Zap, X, Filter, Home, LayoutGrid, GitCompare,
+  Search, ChevronDown, Check, Zap, X, Filter, Home, LayoutGrid, GitCompare, BookOpen,
 } from "lucide-react";
 import {
   LEVELS, LEVEL_ORDER, conceptsByLevel, conceptHref, CONCEPTS,
@@ -81,8 +81,9 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
           { href: "/learn", label: "Map", icon: LayoutGrid },
           { href: "/playground", label: "Play", icon: Zap },
           { href: "/compare", label: "Compare", icon: GitCompare },
+          { href: "/blog", label: "Blog", icon: BookOpen },
         ].map(({ href, label, icon: Icon }) => {
-          const active = pathname === href;
+          const active = pathname === href || (href !== "/" && pathname.startsWith(href + "/"));
           return (
             <Link
               key={href}

@@ -1,0 +1,91 @@
+---
+title: "Read Replicas Lie: a field guide to replication lag"
+description: "You posted a comment, the page reloaded, and your comment was gone. You didn't lose data — you read from a replica that hadn't caught up yet. A practical tour of replication lag and the patterns that hide it."
+date: "2026-06-05"
+author: "System Design Dojo"
+emoji: "📖"
+accent: "var(--neon-blue)"
+tags: ["databases", "distributed", "scaling"]
+minutes: 8
+---
+
+The bug report said: *"I edited my profile, hit save, the page reloaded — and it showed my **old** name."* It only happened sometimes. It never reproduced on the developer's laptop. Refreshing again fixed it.
+
+No data was lost. The user just read from a database replica that hadn't received the write yet. This is **replication lag**, and once you've seen it you'll see it everywhere.
+
+## Why we even have replicas
+
+A single database handles only so many reads. The standard escape — covered in [Database Scaling](/learn/intermediate/database-scaling) — is to send all *writes* to one leader, which streams its changes to *read replicas* that absorb the read traffic:
+
+<AnimatedDiagram
+  height={340}
+  nodes={[
+    { id: "app", type: "server", label: "App", position: { x: 10, y: 50 }, status: "busy", info: "Routes writes to the leader and reads to a replica — usually via a proxy or ORM setting." },
+    { id: "leader", type: "database", label: "Leader", position: { x: 42, y: 50 }, status: "active", info: "The single writable copy. Every INSERT/UPDATE lands here, then replicates outward." },
+    { id: "r1", type: "database", label: "Replica 1", position: { x: 78, y: 24 }, status: "active", info: "Serves reads. Lags the leader by however long replication takes — usually milliseconds, sometimes seconds." },
+    { id: "r2", type: "database", label: "Replica 2", position: { x: 78, y: 76 }, status: "active", info: "Each replica lags independently. One can be fresh while another is behind." }
+  ]}
+  edges={[
+    { from: "app", to: "leader", animated: true, color: "var(--neon-green)", label: "writes" },
+    { from: "app", to: "r1", animated: true, color: "var(--neon-blue)", label: "reads" },
+    { from: "app", to: "r2", animated: true, color: "var(--neon-blue)" },
+    { from: "leader", to: "r1", dashed: true, label: "replicate" },
+    { from: "leader", to: "r2", dashed: true, label: "replicate" }
+  ]}
+/>
+
+This scales reads beautifully. The catch is in the dashed arrows: replication is **asynchronous**. The write commits on the leader and returns success to the user *before* the replicas have it.
+
+## The exact race
+
+Here's the sequence that produced the bug report, slowed down:
+
+1. The user's **write** goes to the leader. `name = "Trinity Anderson"`. Commit succeeds. ✅
+2. The page reloads and issues a **read**. The proxy, doing its job, routes it to a replica to spare the leader.
+3. That replica is **200ms behind**. It still has `name = "Trinity"`.
+4. The user sees their *old* name and files a bug.
+
+<AnimatedDiagram
+  height={320}
+  nodes={[
+    { id: "user", type: "client", label: "User", position: { x: 8, y: 50 }, status: "busy", info: "Writes, then immediately reads — the classic 'read-your-own-writes' expectation." },
+    { id: "leader", type: "database", label: "Leader", position: { x: 45, y: 24 }, status: "active", info: "Has the fresh value the instant the write commits." },
+    { id: "replica", type: "database", label: "Replica (200ms behind)", position: { x: 45, y: 76 }, status: "busy", info: "Hasn't applied the write yet. Returns stale data — technically correct, just out of date." }
+  ]}
+  edges={[
+    { from: "user", to: "leader", animated: true, color: "var(--neon-green)", label: "1. write name" },
+    { from: "user", to: "replica", animated: true, color: "var(--neon-red)", label: "2. read → STALE" },
+    { from: "leader", to: "replica", dashed: true, color: "var(--neon-orange)", label: "catches up @ 200ms" }
+  ]}
+/>
+
+The system is behaving *exactly as designed*. Nothing is broken. The expectation — "I should see my own writes immediately" — is the thing that's violated. It even has a name: **read-your-writes consistency**.
+
+<Callout type="info" title="It reproduces on prod, never on your laptop">
+On a developer machine the leader and replica are the same database, so lag is zero and the bug is invisible. This class of bug only appears once you actually split reads and writes — which is why it tends to ship.
+</Callout>
+
+## Four ways to hide the lag
+
+You rarely eliminate lag; you route around it for the cases that care.
+
+- **Read-your-writes routing.** For a short window after a user writes (say 5–10s), send *that user's* reads to the leader. Cheap, and kills the most common symptom.
+- **Monotonic reads.** Pin a user to one replica per session so they never bounce from a fresh replica to a more-stale one (which would make data appear to travel *backwards* in time).
+- **Read from the leader for critical paths.** "Did my payment go through?" should never ask a lagging replica. Mark those queries leader-only.
+- **Wait for the replica to catch up.** Some databases let you say "don't answer until you've applied log position X" (e.g. Postgres `pg_wal_lsn`, MySQL `MASTER_POS_WAIT`). Strongest guarantee, highest latency.
+
+## When lag becomes data loss
+
+Lag is usually harmless staleness. It turns dangerous during **failover**. If the leader dies and a replica that was behind gets promoted, every write that hadn't replicated yet is *gone* — acknowledged to the user, then vaporized.
+
+<Callout type="danger" title="The async durability trap">
+"Write succeeded" from an async-replicated leader means "succeeded *on the leader*," not "safely on multiple machines." If that distinction matters for your data (payments, orders), you want at least one **synchronous** replica that must confirm before the write returns.
+</Callout>
+
+This is where replication blurs into [consensus](/learn/advanced/consensus-algorithms): the moment you need a write to be durable across failures, you need a *majority* of nodes to agree it happened — not just a leader's optimism.
+
+## The takeaway
+
+Replicas don't lie, exactly — they tell you the truth *as of a moment ago*. Asynchronous replication trades a sliver of staleness for a huge amount of read capacity, and that's almost always the right trade. Just decide, per query, whether "a moment ago" is good enough — and route the ones where it isn't to the leader.
+
+Go deeper in [Replication](/learn/advanced/replication) and [Database Scaling](/learn/intermediate/database-scaling).

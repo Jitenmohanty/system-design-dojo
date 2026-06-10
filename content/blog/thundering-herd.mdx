@@ -1,0 +1,87 @@
+---
+title: "The Thundering Herd: when your cache stampedes the database"
+description: "A cache miss isn't a small problem — at scale it's a synchronized rush of thousands of identical queries that can take your database down in seconds. Here's why, and three ways to stop it."
+date: "2026-06-08"
+author: "System Design Dojo"
+emoji: "🐎"
+accent: "var(--neon-yellow)"
+tags: ["caching", "scaling", "reliability"]
+minutes: 7
+---
+
+You added a cache. Reads are 50× faster, the database is bored, everyone's happy. Then one Tuesday a single popular key expires and your database — the one that was *bored* — falls over. Welcome to the **thundering herd**.
+
+## The setup looks innocent
+
+Most apps use **cache-aside**: check the cache, and on a miss, load from the database and backfill the cache. We teach the happy path in [Caching Basics](/learn/beginner/caching-basics). Here it is as a reminder:
+
+<AnimatedDiagram
+  height={300}
+  nodes={[
+    { id: "clients", type: "client", label: "10k requests/s", position: { x: 8, y: 50 }, status: "busy", info: "A hot key — say the homepage feed — gets thousands of requests per second." },
+    { id: "cache", type: "cache", label: "Cache", position: { x: 42, y: 50 }, status: "active", info: "Normally absorbs ~99% of these reads in ~1ms." },
+    { id: "db", type: "database", label: "Database", position: { x: 78, y: 50 }, status: "idle", info: "Sees almost no traffic — until the key expires." }
+  ]}
+  edges={[
+    { from: "clients", to: "cache", animated: true, color: "var(--neon-yellow)", label: "GET feed" },
+    { from: "cache", to: "db", dashed: true, color: "var(--neon-red)", label: "rare miss" }
+  ]}
+/>
+
+99% of the time the cache answers and the database naps. The danger is hiding in that thin red "rare miss" arrow.
+
+## The moment it breaks
+
+That hot key has a TTL, and TTLs expire. The instant it does, **every** in-flight request misses at the same time. There's nothing in the cache to coordinate them, so all 10,000 of them independently decide to "just go load it from the database."
+
+<AnimatedDiagram
+  height={320}
+  nodes={[
+    { id: "clients", type: "client", label: "10k requests/s", position: { x: 8, y: 50 }, status: "busy", info: "The exact same traffic as before — nothing changed on the client side." },
+    { id: "cache", type: "cache", label: "Cache (EXPIRED)", position: { x: 42, y: 50 }, status: "down", info: "The hot key just expired. Every request now misses simultaneously." },
+    { id: "db", type: "database", label: "Database", position: { x: 78, y: 50 }, status: "busy", info: "Gets hit by 10,000 identical queries in the same instant. Connection pool exhausts, latency spikes, it falls over." }
+  ]}
+  edges={[
+    { from: "clients", to: "cache", animated: true, color: "var(--neon-red)", label: "all miss" },
+    { from: "cache", to: "db", animated: true, color: "var(--neon-red)", label: "10k identical queries" }
+  ]}
+/>
+
+Ten thousand requests that *would have shared one cached answer* are now ten thousand identical, redundant database queries — all asking for the exact same row. The database's connection pool drains, query latency climbs, and the requests that are still waiting also miss and pile on. That feedback loop is the stampede.
+
+<Callout type="danger" title="Why it's worse than normal load">
+This isn't 10k *different* queries — it's the same query 10k times. The database does the identical work over and over, and the result every one of them produces is identical. It's pure waste, and it arrives all at once.
+</Callout>
+
+## Fix 1 — Request coalescing (single-flight)
+
+The cleanest fix: when a key misses, let **one** request go fetch it and make everyone else *wait for that one result*. Go calls this `singleflight`; you can build it with a per-key in-memory lock.
+
+```go
+val, err, _ := group.Do("feed", func() (interface{}, error) {
+    return loadFeedFromDB()   // only ONE of the 10k goroutines runs this
+})
+```
+
+The other 9,999 block for a few milliseconds, then all receive the single answer. The database sees **one** query instead of ten thousand.
+
+## Fix 2 — Don't let everything expire at once
+
+Stampedes love synchronized expiry. Two defenses:
+
+- **Jitter the TTL.** Instead of `ttl = 60s`, use `ttl = 60s ± random(10s)`. Keys spread their expiry across a window instead of all firing on the same second.
+- **Refresh ahead of expiry.** When a key is, say, 90% through its TTL, refresh it *in the background* on the next read while still serving the old value. The key never actually goes cold.
+
+## Fix 3 — Serve stale while you revalidate
+
+Keep two timestamps on each entry: a *soft* expiry and a *hard* expiry. Between them, serve the stale value immediately **and** kick off one async refresh. Readers never block on the database at all; they just occasionally get data that's a few seconds old.
+
+<Callout type="tip" title="Which one should you reach for?">
+Start with **coalescing** — it's the highest-leverage fix and protects against any miss, not just expiry. Add **TTL jitter** because it's nearly free. Reach for **stale-while-revalidate** when even a few milliseconds of added latency on a miss is unacceptable.
+</Callout>
+
+## The takeaway
+
+A cache doesn't just make things faster — it *concentrates* load. The flip side of "99% of reads hit the cache" is "100% of misses hit the database at once." Design the miss path, not just the hit path, and the herd stays in its pen.
+
+Want the fundamentals first? Start with [Caching Basics](/learn/beginner/caching-basics), then level up with [Caching Strategies](/learn/intermediate/caching-strategies).
