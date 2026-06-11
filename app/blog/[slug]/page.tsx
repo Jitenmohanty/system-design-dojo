@@ -74,7 +74,13 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
         <MDXRemote
           source={post.content}
           components={mdxComponents}
-          options={{ mdxOptions: { rehypePlugins: [[rehypePrettyCode, prettyCodeOptions]] } }}
+          // blockJS:false re-enables JSX expression props (e.g. <AnimatedDiagram nodes={[...]} />),
+          // which next-mdx-remote v6 blocks by default. Safe here: posts are authored in-repo,
+          // not user input. blockDangerousJS stays true (default) — eval/Function/require remain blocked.
+          options={{
+            mdxOptions: { rehypePlugins: [[rehypePrettyCode, prettyCodeOptions]] },
+            blockJS: false,
+          }}
         />
       </div>
 
