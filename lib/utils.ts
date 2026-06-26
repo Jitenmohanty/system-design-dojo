@@ -22,6 +22,7 @@ export const BELT_VISUALS: Record<Belt, BeltVisual> = {
   yellow: { label: "Yellow Belt", color: "#ffd000", glow: "rgba(255,208,0,0.6)", textColor: "#0a0a0f" },
   green: { label: "Green Belt", color: "#00ff88", glow: "rgba(0,255,136,0.6)", textColor: "#0a0a0f" },
   black: { label: "Black Belt", color: "#1c1c2e", glow: "rgba(168,85,247,0.7)", textColor: "#fff" },
+  red: { label: "Red Belt", color: "#ff3b6b", glow: "rgba(255,59,107,0.65)", textColor: "#0a0a0f" },
 };
 
 export const TOPIC_COLORS: Record<string, string> = {
@@ -33,6 +34,8 @@ export const TOPIC_COLORS: Record<string, string> = {
   architecture: "var(--neon-orange)",
   api: "var(--neon-blue)",
   "case-study": "var(--neon-purple)",
+  llm: "var(--neon-purple)",
+  agents: "var(--neon-pink)",
 };
 
 export function formatNumber(n: number): string {

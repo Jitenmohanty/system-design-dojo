@@ -11,7 +11,7 @@ import { useProgress } from "@/lib/progress";
 import { BELT_VISUALS, TOPIC_COLORS, cn } from "@/lib/utils";
 
 const BELT_FOR_LEVEL = {
-  beginner: "white", intermediate: "yellow", advanced: "green", expert: "black",
+  beginner: "white", intermediate: "yellow", advanced: "green", expert: "black", ai: "red",
 } as const;
 
 export function ConceptPage({

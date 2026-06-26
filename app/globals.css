@@ -19,6 +19,7 @@
   --neon-yellow: #ffd000;
   --neon-purple: #a855f7;
   --neon-orange: #ff8a3d;
+  --neon-pink: #ff3b6b;
 
   /* Text */
   --text-primary: #e0e0e0;
@@ -34,6 +35,7 @@
   --belt-yellow: #ffd000;
   --belt-green: #00ff88;
   --belt-black: #6b6b8a;
+  --belt-red: #ff3b6b;
 
   --font-display: var(--font-chakra), ui-sans-serif, system-ui, sans-serif;
   --font-body: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;

@@ -175,7 +175,8 @@ export function currentBelt(state: ProgressState): Belt {
       belt = level === "beginner" ? "yellow"
         : level === "intermediate" ? "green"
         : level === "advanced" ? "black"
-        : "black";
+        : level === "expert" ? "black"
+        : "red";
     } else {
       break;
     }

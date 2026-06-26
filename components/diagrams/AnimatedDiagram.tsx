@@ -3,13 +3,15 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Server, Database, Zap, Network, Monitor, ListOrdered, Globe, Shield, Skull, type LucideIcon,
+  Server, Database, Zap, Network, Monitor, ListOrdered, Globe, Shield, Skull,
+  Brain, Bot, Wrench, Boxes, type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export type NodeType =
   | "server" | "database" | "cache" | "loadbalancer"
-  | "client" | "queue" | "cdn" | "gateway";
+  | "client" | "queue" | "cdn" | "gateway"
+  | "llm" | "agent" | "tool" | "vector";
 
 export type NodeStatus = "active" | "busy" | "down" | "idle";
 
@@ -41,6 +43,10 @@ const TYPE_META: Record<NodeType, { icon: LucideIcon; color: string; label: stri
   queue: { icon: ListOrdered, color: "var(--neon-orange)", label: "Queue" },
   cdn: { icon: Globe, color: "var(--neon-purple)", label: "CDN" },
   gateway: { icon: Shield, color: "var(--neon-orange)", label: "Gateway" },
+  llm: { icon: Brain, color: "var(--neon-purple)", label: "LLM" },
+  agent: { icon: Bot, color: "var(--neon-pink)", label: "Agent" },
+  tool: { icon: Wrench, color: "var(--neon-orange)", label: "Tool" },
+  vector: { icon: Boxes, color: "var(--neon-green)", label: "Vector DB" },
 };
 
 const STATUS_COLOR: Record<NodeStatus, string> = {

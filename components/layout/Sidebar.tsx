@@ -24,7 +24,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const [activeTopics, setActiveTopics] = useState<Topic[]>([]);
   const [showFilters, setShowFilters] = useState(false);
   const [openLevels, setOpenLevels] = useState<Record<Level, boolean>>({
-    beginner: true, intermediate: true, advanced: false, expert: false,
+    beginner: true, intermediate: true, advanced: false, expert: false, ai: false,
   });
 
   const belt = isClient ? currentBelt(state) : "white";

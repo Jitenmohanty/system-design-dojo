@@ -12,7 +12,7 @@ import { BeltBadge } from "./BeltBadge";
 import { BELT_VISUALS } from "@/lib/utils";
 
 const LEVEL_TO_BELT = {
-  beginner: "yellow", intermediate: "green", advanced: "black", expert: "black",
+  beginner: "yellow", intermediate: "green", advanced: "black", expert: "black", ai: "red",
 } as const;
 
 export function GlobalEffects() {

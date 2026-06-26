@@ -14,7 +14,7 @@ import { ScrollReveal, ScrollRevealGroup, ScrollRevealItem } from "@/components/
 import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
 
 const BELT_FOR_LEVEL = {
-  beginner: "white", intermediate: "yellow", advanced: "green", expert: "black",
+  beginner: "white", intermediate: "yellow", advanced: "green", expert: "black", ai: "red",
 } as const;
 
 const TESTIMONIALS = [
@@ -89,7 +89,7 @@ export default function Landing() {
           className="mx-auto mt-14 grid max-w-3xl grid-cols-2 gap-3 sm:grid-cols-4"
         >
           {[
-            { value: 29, suffix: "+", label: "concepts", color: "var(--neon-blue)", raw: "" },
+            { value: 39, suffix: "+", label: "concepts", color: "var(--neon-blue)", raw: "" },
             { value: 7, suffix: "", label: "live simulations", color: "var(--neon-green)", raw: "" },
             { value: 50, suffix: "+", label: "diagrams", color: "var(--neon-purple)", raw: "" },
             { value: 0, suffix: "", label: "bad jokes", color: "var(--neon-yellow)", raw: "∞" },
@@ -109,7 +109,7 @@ export default function Landing() {
       {/* ---------------- LEVEL CARDS ---------------- */}
       <section className="mx-auto max-w-6xl px-6 py-10">
         <ScrollReveal className="mb-8 text-center">
-          <h2 className="font-display text-3xl font-bold">Four belts. One path.</h2>
+          <h2 className="font-display text-3xl font-bold">Five belts. One path.</h2>
           <p className="mt-2 text-ink-secondary">
             Master every concept in a level to rank up. Train at your own pace.
           </p>
@@ -226,9 +226,9 @@ export default function Landing() {
         <ScrollReveal variant="scaleIn">
           <div className="card neon-border relative overflow-hidden p-10 text-center">
             <Trophy size={36} className="mx-auto text-neon-yellow" />
-            <h2 className="mt-4 font-display text-3xl font-bold">Ready to earn your black belt?</h2>
+            <h2 className="mt-4 font-display text-3xl font-bold">Ready to earn your red belt?</h2>
             <p className="mx-auto mt-2 max-w-md text-ink-secondary">
-              29 concepts stand between you and &ldquo;Design YouTube&rdquo;. Let&apos;s go.
+              39 concepts stand between you and designing AI agents like a sensei. Let&apos;s go.
             </p>
             <Link href={conceptHref(firstConcept)} className="btn-neon mx-auto mt-7 text-base">
               Start with the basics <ArrowRight size={18} />

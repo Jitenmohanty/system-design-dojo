@@ -11,7 +11,7 @@ import { BELT_VISUALS, cn } from "@/lib/utils";
 import { BeltBadge } from "@/components/layout/BeltBadge";
 
 const BELT_FOR_LEVEL = {
-  beginner: "white", intermediate: "yellow", advanced: "green", expert: "black",
+  beginner: "white", intermediate: "yellow", advanced: "green", expert: "black", ai: "red",
 } as const;
 
 export default function LearnRoadmap() {

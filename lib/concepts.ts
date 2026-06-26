@@ -3,9 +3,9 @@
 // Drives: sidebar, routing, navigation, progress, roadmap, search.
 // ============================================================
 
-export type Level = "beginner" | "intermediate" | "advanced" | "expert";
+export type Level = "beginner" | "intermediate" | "advanced" | "expert" | "ai";
 
-export type Belt = "white" | "yellow" | "green" | "black";
+export type Belt = "white" | "yellow" | "green" | "black" | "red";
 
 export type Topic =
   | "networking"
@@ -15,7 +15,9 @@ export type Topic =
   | "distributed"
   | "architecture"
   | "api"
-  | "case-study";
+  | "case-study"
+  | "llm"
+  | "agents";
 
 export interface Concept {
   slug: string;
@@ -69,9 +71,17 @@ export const LEVELS: Record<Level, LevelMeta> = {
     color: "var(--belt-black)",
     tagline: "Design real systems. Ace the interview.",
   },
+  ai: {
+    level: "ai",
+    belt: "red",
+    name: "AI & Agents",
+    beltLabel: "Red Belt",
+    color: "var(--belt-red)",
+    tagline: "LLMs, RAG, and autonomous agents. The new dark art.",
+  },
 };
 
-export const LEVEL_ORDER: Level[] = ["beginner", "intermediate", "advanced", "expert"];
+export const LEVEL_ORDER: Level[] = ["beginner", "intermediate", "advanced", "expert", "ai"];
 
 export const TOPIC_LABELS: Record<Topic, string> = {
   networking: "Networking",
@@ -82,6 +92,8 @@ export const TOPIC_LABELS: Record<Topic, string> = {
   architecture: "Architecture",
   api: "API",
   "case-study": "Case Study",
+  llm: "LLMs",
+  agents: "Agents",
 };
 
 export const CONCEPTS: Concept[] = [
@@ -352,6 +364,98 @@ export const CONCEPTS: Concept[] = [
     minutes: 16,
     emoji: "🧮",
     blurb: "Shared state, race conditions, Redis atomics across nodes.",
+  },
+
+  // ---------- AI & AGENTS · Red Belt ----------
+  {
+    slug: "llm-fundamentals",
+    title: "LLM Fundamentals",
+    level: "ai",
+    topics: ["llm"],
+    minutes: 12,
+    emoji: "🧠",
+    blurb: "Fancy autocomplete with a PhD. Next-token prediction & temperature.",
+  },
+  {
+    slug: "tokens-embeddings",
+    title: "Tokens & Embeddings",
+    level: "ai",
+    topics: ["llm"],
+    minutes: 12,
+    emoji: "🔡",
+    blurb: "Words become numbers become meaning. Tokenizers & vector space.",
+  },
+  {
+    slug: "prompting-context",
+    title: "Prompting & Context Windows",
+    level: "ai",
+    topics: ["llm"],
+    minutes: 13,
+    emoji: "💬",
+    blurb: "The model has amnesia — the context window is its entire world.",
+  },
+  {
+    slug: "rag",
+    title: "Retrieval-Augmented Generation",
+    level: "ai",
+    topics: ["llm", "agents"],
+    minutes: 15,
+    emoji: "📚",
+    blurb: "Open-book exam for the LLM. Chunk, embed, retrieve, ground.",
+  },
+  {
+    slug: "tool-use",
+    title: "Tool Use & Function Calling",
+    level: "ai",
+    topics: ["agents", "api"],
+    minutes: 14,
+    emoji: "🛠️",
+    blurb: "Give the brain hands. Schemas, the call loop, real actions.",
+  },
+  {
+    slug: "ai-agents",
+    title: "What Is an AI Agent?",
+    level: "ai",
+    topics: ["agents"],
+    minutes: 16,
+    emoji: "🤖",
+    blurb: "Think → Act → Observe, on loop. The ReAct pattern, animated.",
+  },
+  {
+    slug: "agent-memory",
+    title: "Agent Memory",
+    level: "ai",
+    topics: ["agents"],
+    minutes: 13,
+    emoji: "🧵",
+    blurb: "Short-term scratchpad vs long-term vector recall. Beating amnesia.",
+  },
+  {
+    slug: "multi-agent-systems",
+    title: "Multi-Agent Systems",
+    level: "ai",
+    topics: ["agents", "architecture"],
+    minutes: 15,
+    emoji: "🐝",
+    blurb: "One orchestrator, many specialists. Handoffs, fan-out, debate.",
+  },
+  {
+    slug: "agent-design",
+    title: "Design an AI Agent",
+    level: "ai",
+    topics: ["agents", "case-study"],
+    minutes: 20,
+    emoji: "🏗️",
+    blurb: "Case study: a deep-research agent end-to-end, every box explained.",
+  },
+  {
+    slug: "agent-guardrails",
+    title: "Evaluation & Guardrails",
+    level: "ai",
+    topics: ["agents"],
+    minutes: 15,
+    emoji: "🛡️",
+    blurb: "Stop it hallucinating, looping, and bankrupting you. Evals & limits.",
   },
 ];
 
