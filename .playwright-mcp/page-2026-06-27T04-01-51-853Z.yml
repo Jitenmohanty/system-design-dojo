@@ -1,0 +1,308 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - link "DOJO System Design" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img [ref=e8]
+          - generic [ref=e10]:
+            - text: DOJO
+            - generic [ref=e11]: System Design
+        - generic [ref=e17]:
+          - generic [ref=e18]: White Belt
+          - generic [ref=e19]: Rank
+      - generic [ref=e20]:
+        - link "Home" [ref=e21] [cursor=pointer]:
+          - /url: /
+          - img [ref=e22]
+          - text: Home
+        - link "Map" [ref=e25] [cursor=pointer]:
+          - /url: /learn
+          - img [ref=e26]
+          - text: Map
+        - link "Play" [ref=e31] [cursor=pointer]:
+          - /url: /playground
+          - img [ref=e32]
+          - text: Play
+        - link "Compare" [ref=e34] [cursor=pointer]:
+          - /url: /compare
+          - img [ref=e35]
+          - text: Compare
+        - link "Blog" [ref=e40] [cursor=pointer]:
+          - /url: /blog
+          - img [ref=e41]
+          - text: Blog
+      - generic [ref=e43]:
+        - generic [ref=e44]:
+          - img
+          - textbox "Search concepts…" [ref=e45]
+        - button "Filter by topic" [ref=e46] [cursor=pointer]:
+          - img [ref=e47]
+          - text: Filter by topic
+      - navigation [ref=e49]:
+        - generic [ref=e50]:
+          - button "BeginnerWhite Belt 0/6" [ref=e51] [cursor=pointer]:
+            - generic [ref=e53]: BeginnerWhite Belt
+            - generic [ref=e54]: 0/6
+            - img [ref=e55]
+          - generic [ref=e59]:
+            - link "🍽️ Client–Server Model" [ref=e60] [cursor=pointer]:
+              - /url: /learn/beginner/client-server
+              - generic [ref=e61]: 🍽️
+              - generic [ref=e62]: Client–Server Model
+            - link "📖 DNS & How the Internet Works" [ref=e63] [cursor=pointer]:
+              - /url: /learn/beginner/dns-how-internet-works
+              - generic [ref=e64]: 📖
+              - generic [ref=e65]: DNS & How the Internet Works
+            - link "🧑‍🍳 APIs & REST" [ref=e66] [cursor=pointer]:
+              - /url: /learn/beginner/apis-rest
+              - generic [ref=e67]: 🧑‍🍳
+              - generic [ref=e68]: APIs & REST
+            - link "🗄️ Databases 101" [ref=e69] [cursor=pointer]:
+              - /url: /learn/beginner/databases-101
+              - generic [ref=e70]: 🗄️
+              - generic [ref=e71]: Databases 101
+            - link "⚡ Caching Basics" [ref=e72] [cursor=pointer]:
+              - /url: /learn/beginner/caching-basics
+              - generic [ref=e73]: ⚡
+              - generic [ref=e74]: Caching Basics
+            - link "🔤 JSON & Data Formats" [ref=e75] [cursor=pointer]:
+              - /url: /learn/beginner/json-data-formats
+              - generic [ref=e76]: 🔤
+              - generic [ref=e77]: JSON & Data Formats
+        - generic [ref=e78]:
+          - button "IntermediateYellow Belt 0/8" [ref=e79] [cursor=pointer]:
+            - generic [ref=e81]: IntermediateYellow Belt
+            - generic [ref=e82]: 0/8
+            - img [ref=e83]
+          - generic [ref=e87]:
+            - link "⚖️ Load Balancing" [ref=e88] [cursor=pointer]:
+              - /url: /learn/intermediate/load-balancing
+              - generic [ref=e89]: ⚖️
+              - generic [ref=e90]: Load Balancing
+            - link "🐎 Database Scaling" [ref=e91] [cursor=pointer]:
+              - /url: /learn/intermediate/database-scaling
+              - generic [ref=e92]: 🐎
+              - generic [ref=e93]: Database Scaling
+            - link "🗂️ Caching Strategies" [ref=e94] [cursor=pointer]:
+              - /url: /learn/intermediate/caching-strategies
+              - generic [ref=e95]: 🗂️
+              - generic [ref=e96]: Caching Strategies
+            - link "🎫 Message Queues" [ref=e97] [cursor=pointer]:
+              - /url: /learn/intermediate/message-queues
+              - generic [ref=e98]: 🎫
+              - generic [ref=e99]: Message Queues
+            - link "🆚 SQL vs NoSQL" [ref=e100] [cursor=pointer]:
+              - /url: /learn/intermediate/sql-vs-nosql
+              - generic [ref=e101]: 🆚
+              - generic [ref=e102]: SQL vs NoSQL
+            - link "🛡️ API Gateway" [ref=e103] [cursor=pointer]:
+              - /url: /learn/intermediate/api-gateway
+              - generic [ref=e104]: 🛡️
+              - generic [ref=e105]: API Gateway
+            - link "🌍 Content Delivery Networks" [ref=e106] [cursor=pointer]:
+              - /url: /learn/intermediate/cdn
+              - generic [ref=e107]: 🌍
+              - generic [ref=e108]: Content Delivery Networks
+            - link "🚦 Rate Limiting" [ref=e109] [cursor=pointer]:
+              - /url: /learn/intermediate/rate-limiting
+              - generic [ref=e110]: 🚦
+              - generic [ref=e111]: Rate Limiting
+        - button "AdvancedGreen Belt 0/8" [ref=e113] [cursor=pointer]:
+          - generic [ref=e115]: AdvancedGreen Belt
+          - generic [ref=e116]: 0/8
+          - img [ref=e117]
+        - button "ExpertBlack Belt 0/7" [ref=e121] [cursor=pointer]:
+          - generic [ref=e123]: ExpertBlack Belt
+          - generic [ref=e124]: 0/7
+          - img [ref=e125]
+        - button "AI & AgentsRed Belt 0/17" [ref=e129] [cursor=pointer]:
+          - generic [ref=e131]: AI & AgentsRed Belt
+          - generic [ref=e132]: 0/17
+          - img [ref=e133]
+  - generic [ref=e136]:
+    - banner [ref=e137]:
+      - navigation [ref=e138]:
+        - link "Dojo" [ref=e140] [cursor=pointer]:
+          - /url: /
+        - generic [ref=e141]:
+          - img [ref=e142]
+          - link "Learn" [ref=e144] [cursor=pointer]:
+            - /url: /learn
+        - generic [ref=e145]:
+          - img [ref=e146]
+          - link "AI & Agents" [ref=e148] [cursor=pointer]:
+            - /url: /learn
+        - generic [ref=e149]:
+          - img [ref=e150]
+          - generic [ref=e152]: LLM Fundamentals
+      - button "Mark Complete" [ref=e153] [cursor=pointer]:
+        - img [ref=e154]
+        - generic [ref=e156]: Mark Complete
+    - main [ref=e157]:
+      - article [ref=e160]:
+        - generic [ref=e161]:
+          - generic [ref=e162]:
+            - generic [ref=e163]: Red Belt
+            - generic [ref=e164]:
+              - img [ref=e165]
+              - text: 12 min
+            - generic [ref=e168]: LLMs
+          - heading "🧠 LLM Fundamentals" [level=1] [ref=e169]:
+            - generic [ref=e170]: 🧠
+            - generic [ref=e171]: LLM Fundamentals
+          - paragraph [ref=e172]: Fancy autocomplete with a PhD. Next-token prediction & temperature.
+        - generic [ref=e174]:
+          - generic [ref=e175]: 🧠
+          - generic [ref=e176]: Think of it like…
+          - generic [ref=e177]:
+            - text: A Large Language Model is
+            - strong [ref=e178]: fancy autocomplete with a PhD
+            - text: ". It does exactly one thing: look at the text so far and guess the"
+            - emphasis [ref=e179]: next
+            - text: word. Then it adds that word and guesses again. That's it. The magic is that "guess the next word" — done well enough, at enough scale — looks an awful lot like thinking.
+          - button "2 more analogies" [ref=e180] [cursor=pointer]:
+            - img [ref=e181]
+            - text: 2 more analogies
+        - generic [ref=e183]:
+          - generic [ref=e185]:
+            - generic [ref=e186]: The one trick
+            - heading "Predict the next token, forever" [level=2] [ref=e187]
+            - paragraph [ref=e188]:
+              - text: An LLM never sees your whole question and "answers" it in one shot. It builds the answer
+              - strong [ref=e189]: one token at a time
+              - text: ", each token chosen from a probability distribution over its entire vocabulary. Feed the new token back in, repeat, and a paragraph appears. Everything else — reasoning, code, poems — is an emergent side effect of getting really, really good at this single guessing game."
+          - generic [ref=e191]:
+            - generic [ref=e192]: Try it
+            - heading "Roll the dice on the next word" [level=2] [ref=e193]
+            - generic [ref=e194]:
+              - generic [ref=e195]:
+                - button "The cat sat on the…" [ref=e196] [cursor=pointer]
+                - button "import numpy as…" [ref=e197] [cursor=pointer]
+                - button "To be, or not to…" [ref=e198] [cursor=pointer]
+              - generic [ref=e199]: The cat sat on the▍
+              - generic [ref=e200]:
+                - generic [ref=e201]:
+                  - generic [ref=e202]: "\"mat\""
+                  - generic [ref=e205]: 71.5%
+                - generic [ref=e206]:
+                  - generic [ref=e207]: "\"floor\""
+                  - generic [ref=e210]: 18.1%
+                - generic [ref=e211]:
+                  - generic [ref=e212]: "\"sofa\""
+                  - generic [ref=e215]: 7.5%
+                - generic [ref=e216]:
+                  - generic [ref=e217]: "\"keyboard\""
+                  - generic [ref=e220]: 2.4%
+                - generic [ref=e221]:
+                  - generic [ref=e222]: "\"moon\""
+                  - generic [ref=e225]: 0.5%
+              - generic [ref=e226]:
+                - generic [ref=e227]:
+                  - generic [ref=e228]:
+                    - generic [ref=e229]: temperature
+                    - generic [ref=e230]: 0.80 · balanced
+                  - slider [ref=e231]: "0.8"
+                - button "Sample a token" [ref=e232] [cursor=pointer]:
+                  - img [ref=e233]
+                  - text: Sample a token
+              - paragraph [ref=e236]: Low temperature = always pick the top word (boring but reliable). High temperature = flatten the odds and roll the dice (creative, but it might say "moon").
+          - generic [ref=e238]:
+            - generic [ref=e239]: Where the smarts come from
+            - heading "How a model is born" [level=2] [ref=e240]
+            - generic [ref=e241]:
+              - generic [ref=e242]:
+                - img [ref=e244]
+                - generic [ref=e246]: 1 · Pre-training
+                - paragraph [ref=e247]: "Read a huge slice of the internet and learn to predict the next token. Costs millions of dollars and weeks of GPUs. Result: raw knowledge, zero manners."
+              - generic [ref=e248]:
+                - img [ref=e250]
+                - generic [ref=e253]: 2 · Fine-tuning
+                - paragraph [ref=e254]: Show it thousands of example conversations so it learns the chat format and how to follow instructions instead of just rambling.
+              - generic [ref=e255]:
+                - img [ref=e257]
+                - generic [ref=e259]: 3 · RLHF
+                - paragraph [ref=e260]: Humans rank answers; the model is nudged toward the helpful, honest, harmless ones. This is the 'be a good assistant' polish.
+          - generic [ref=e262]:
+            - generic [ref=e263]: Reality check
+            - heading "What it is NOT" [level=2] [ref=e264]
+            - generic [ref=e265]:
+              - generic [ref=e266]:
+                - generic [ref=e267]:
+                  - generic [ref=e268]: 🚫
+                  - generic [ref=e269]: Not a database
+                - paragraph [ref=e270]: It doesn't 'look up' facts — it predicts plausible text. That's why it can confidently invent a citation. (We call that a hallucination.)
+              - generic [ref=e271]:
+                - generic [ref=e272]:
+                  - generic [ref=e273]: 🧮
+                  - generic [ref=e274]: Not a calculator
+                - paragraph [ref=e275]: It pattern-matches math from training data. It can be wrong about 7,341 × 89 unless it's given a tool to actually compute it.
+              - generic [ref=e276]:
+                - generic [ref=e277]:
+                  - generic [ref=e278]: 🕰️
+                  - generic [ref=e279]: Not live
+                - paragraph [ref=e280]: Its knowledge is frozen at a training cutoff. It has no idea what happened yesterday unless you put it in the prompt.
+              - generic [ref=e281]:
+                - generic [ref=e282]:
+                  - generic [ref=e283]: 🎲
+                  - generic [ref=e284]: Not deterministic
+                - paragraph [ref=e285]: Same prompt, different answer — because it's sampling from a distribution. Temperature 0 makes it (mostly) repeatable.
+            - generic [ref=e286]:
+              - img [ref=e287]
+              - paragraph [ref=e290]:
+                - text: "Keep this in your pocket for the rest of the belt: every limitation above is a problem the agent stack"
+                - emphasis [ref=e291]: solves
+                - text: . No live data? Give it
+                - strong [ref=e292]: tools
+                - text: . No memory? Add
+                - strong [ref=e293]: RAG
+                - text: . Can't do math? Let it
+                - strong [ref=e294]: call a calculator
+                - text: .
+          - generic [ref=e296]:
+            - generic [ref=e298]:
+              - img [ref=e299]
+              - heading "Belt Check" [level=3] [ref=e305]
+            - generic [ref=e311]:
+              - paragraph [ref=e312]:
+                - generic [ref=e313]: Q1.
+                - text: At its core, what does an LLM actually do?
+              - generic [ref=e314]:
+                - button "A Searches a database for the best matching answer" [ref=e315] [cursor=pointer]:
+                  - generic [ref=e316]: A
+                  - generic [ref=e317]: Searches a database for the best matching answer
+                - button "B Predicts the next token given the text so far, repeatedly" [ref=e318] [cursor=pointer]:
+                  - generic [ref=e319]: B
+                  - generic [ref=e320]: Predicts the next token given the text so far, repeatedly
+                - button "C Runs a fixed decision tree of if/else rules" [ref=e321] [cursor=pointer]:
+                  - generic [ref=e322]: C
+                  - generic [ref=e323]: Runs a fixed decision tree of if/else rules
+                - button "D Compiles your prompt into machine code" [ref=e324] [cursor=pointer]:
+                  - generic [ref=e325]: D
+                  - generic [ref=e326]: Compiles your prompt into machine code
+        - generic [ref=e327]:
+          - generic [ref=e328]:
+            - paragraph [ref=e329]: Got it? Lock it in.
+            - button "Mark Complete" [ref=e330] [cursor=pointer]:
+              - img [ref=e331]
+              - text: Mark Complete
+          - navigation [ref=e333]:
+            - link "Previous · P 🧮 Design a Distributed Rate Limiter" [ref=e334] [cursor=pointer]:
+              - /url: /learn/expert/design-rate-limiter
+              - img [ref=e335]
+              - generic [ref=e337]:
+                - generic [ref=e338]: Previous · P
+                - generic [ref=e339]: 🧮 Design a Distributed Rate Limiter
+            - link "Next · N Tokens & Embeddings 🔡" [ref=e340] [cursor=pointer]:
+              - /url: /learn/ai/tokens-embeddings
+              - generic [ref=e341]:
+                - generic [ref=e342]: Next · N
+                - generic [ref=e343]: Tokens & Embeddings 🔡
+              - img [ref=e344]
+          - paragraph [ref=e346]:
+            - img [ref=e347]
+            - text: "Tip: press"
+            - generic [ref=e349]: "N"
+            - text: /
+            - generic [ref=e350]: P
+            - text: to navigate

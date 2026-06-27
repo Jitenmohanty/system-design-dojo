@@ -1,0 +1,299 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - link "DOJO System Design" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img [ref=e8]
+          - generic [ref=e10]:
+            - text: DOJO
+            - generic [ref=e11]: System Design
+        - generic [ref=e17]:
+          - generic [ref=e18]: White Belt
+          - generic [ref=e19]: Rank
+      - generic [ref=e20]:
+        - link "Home" [ref=e21] [cursor=pointer]:
+          - /url: /
+          - img [ref=e22]
+          - text: Home
+        - link "Map" [ref=e25] [cursor=pointer]:
+          - /url: /learn
+          - img [ref=e26]
+          - text: Map
+        - link "Play" [ref=e31] [cursor=pointer]:
+          - /url: /playground
+          - img [ref=e32]
+          - text: Play
+        - link "Compare" [ref=e34] [cursor=pointer]:
+          - /url: /compare
+          - img [ref=e35]
+          - text: Compare
+        - link "Blog" [ref=e40] [cursor=pointer]:
+          - /url: /blog
+          - img [ref=e41]
+          - text: Blog
+      - generic [ref=e43]:
+        - generic [ref=e44]:
+          - img
+          - textbox "Search concepts…" [ref=e45]
+        - button "Filter by topic" [ref=e46] [cursor=pointer]:
+          - img [ref=e47]
+          - text: Filter by topic
+      - navigation [ref=e49]:
+        - generic [ref=e50]:
+          - button "BeginnerWhite Belt 0/6" [ref=e51] [cursor=pointer]:
+            - generic [ref=e53]: BeginnerWhite Belt
+            - generic [ref=e54]: 0/6
+            - img [ref=e55]
+          - generic [ref=e59]:
+            - link "🍽️ Client–Server Model" [ref=e60] [cursor=pointer]:
+              - /url: /learn/beginner/client-server
+              - generic [ref=e61]: 🍽️
+              - generic [ref=e62]: Client–Server Model
+            - link "📖 DNS & How the Internet Works" [ref=e63] [cursor=pointer]:
+              - /url: /learn/beginner/dns-how-internet-works
+              - generic [ref=e64]: 📖
+              - generic [ref=e65]: DNS & How the Internet Works
+            - link "🧑‍🍳 APIs & REST" [ref=e66] [cursor=pointer]:
+              - /url: /learn/beginner/apis-rest
+              - generic [ref=e67]: 🧑‍🍳
+              - generic [ref=e68]: APIs & REST
+            - link "🗄️ Databases 101" [ref=e69] [cursor=pointer]:
+              - /url: /learn/beginner/databases-101
+              - generic [ref=e70]: 🗄️
+              - generic [ref=e71]: Databases 101
+            - link "⚡ Caching Basics" [ref=e72] [cursor=pointer]:
+              - /url: /learn/beginner/caching-basics
+              - generic [ref=e73]: ⚡
+              - generic [ref=e74]: Caching Basics
+            - link "🔤 JSON & Data Formats" [ref=e75] [cursor=pointer]:
+              - /url: /learn/beginner/json-data-formats
+              - generic [ref=e76]: 🔤
+              - generic [ref=e77]: JSON & Data Formats
+        - generic [ref=e78]:
+          - button "IntermediateYellow Belt 0/8" [ref=e79] [cursor=pointer]:
+            - generic [ref=e81]: IntermediateYellow Belt
+            - generic [ref=e82]: 0/8
+            - img [ref=e83]
+          - generic [ref=e87]:
+            - link "⚖️ Load Balancing" [ref=e88] [cursor=pointer]:
+              - /url: /learn/intermediate/load-balancing
+              - generic [ref=e89]: ⚖️
+              - generic [ref=e90]: Load Balancing
+            - link "🐎 Database Scaling" [ref=e91] [cursor=pointer]:
+              - /url: /learn/intermediate/database-scaling
+              - generic [ref=e92]: 🐎
+              - generic [ref=e93]: Database Scaling
+            - link "🗂️ Caching Strategies" [ref=e94] [cursor=pointer]:
+              - /url: /learn/intermediate/caching-strategies
+              - generic [ref=e95]: 🗂️
+              - generic [ref=e96]: Caching Strategies
+            - link "🎫 Message Queues" [ref=e97] [cursor=pointer]:
+              - /url: /learn/intermediate/message-queues
+              - generic [ref=e98]: 🎫
+              - generic [ref=e99]: Message Queues
+            - link "🆚 SQL vs NoSQL" [ref=e100] [cursor=pointer]:
+              - /url: /learn/intermediate/sql-vs-nosql
+              - generic [ref=e101]: 🆚
+              - generic [ref=e102]: SQL vs NoSQL
+            - link "🛡️ API Gateway" [ref=e103] [cursor=pointer]:
+              - /url: /learn/intermediate/api-gateway
+              - generic [ref=e104]: 🛡️
+              - generic [ref=e105]: API Gateway
+            - link "🌍 Content Delivery Networks" [ref=e106] [cursor=pointer]:
+              - /url: /learn/intermediate/cdn
+              - generic [ref=e107]: 🌍
+              - generic [ref=e108]: Content Delivery Networks
+            - link "🚦 Rate Limiting" [ref=e109] [cursor=pointer]:
+              - /url: /learn/intermediate/rate-limiting
+              - generic [ref=e110]: 🚦
+              - generic [ref=e111]: Rate Limiting
+        - button "AdvancedGreen Belt 0/8" [ref=e113] [cursor=pointer]:
+          - generic [ref=e115]: AdvancedGreen Belt
+          - generic [ref=e116]: 0/8
+          - img [ref=e117]
+        - button "ExpertBlack Belt 0/7" [ref=e121] [cursor=pointer]:
+          - generic [ref=e123]: ExpertBlack Belt
+          - generic [ref=e124]: 0/7
+          - img [ref=e125]
+        - button "AI & AgentsRed Belt 0/17" [ref=e129] [cursor=pointer]:
+          - generic [ref=e131]: AI & AgentsRed Belt
+          - generic [ref=e132]: 0/17
+          - img [ref=e133]
+  - generic [ref=e136]:
+    - banner [ref=e137]:
+      - navigation [ref=e138]:
+        - link "Dojo" [ref=e140] [cursor=pointer]:
+          - /url: /
+        - generic [ref=e141]:
+          - img [ref=e142]
+          - link "Learn" [ref=e144] [cursor=pointer]:
+            - /url: /learn
+        - generic [ref=e145]:
+          - img [ref=e146]
+          - link "AI & Agents" [ref=e148] [cursor=pointer]:
+            - /url: /learn
+        - generic [ref=e149]:
+          - img [ref=e150]
+          - generic [ref=e152]: Multimodal & Generative Media
+      - button "Mark Complete" [ref=e153] [cursor=pointer]:
+        - img [ref=e154]
+        - generic [ref=e156]: Mark Complete
+    - main [ref=e157]:
+      - article [ref=e160]:
+        - generic [ref=e161]:
+          - generic [ref=e162]:
+            - generic [ref=e163]: Red Belt
+            - generic [ref=e164]:
+              - img [ref=e165]
+              - text: 13 min
+            - generic [ref=e168]: LLMs
+          - heading "👁️ Multimodal & Generative Media" [level=1] [ref=e169]:
+            - generic [ref=e170]: 👁️
+            - generic [ref=e171]: Multimodal & Generative Media
+          - paragraph [ref=e172]: "Beyond text: vision, audio, and image generation (diffusion), explained."
+        - generic [ref=e174]:
+          - generic [ref=e175]: 👁️
+          - generic [ref=e176]: Think of it like…
+          - generic [ref=e177]:
+            - text: Text was just the start.
+            - strong [ref=e178]: Multimodal
+            - text: "models take in images, audio, even video — and some generate them too. The unlock is the same trick from earlier:"
+            - emphasis [ref=e179]: everything
+            - text: becomes
+            - strong [ref=e180]: tokens and embeddings
+            - text: . Once a photo and a sentence live in the same vector space, the model can reason across them as easily as it reads text.
+          - button "2 more analogies" [ref=e181] [cursor=pointer]:
+            - img [ref=e182]
+            - text: 2 more analogies
+        - generic [ref=e184]:
+          - generic [ref=e186]:
+            - generic [ref=e187]: The big idea
+            - heading "One space to rule them all" [level=2] [ref=e188]
+            - paragraph [ref=e189]:
+              - text: A multimodal model doesn't have a separate "eye brain" and "word brain." It runs each input through an encoder that maps it into the
+              - strong [ref=e190]: same embedding space
+              - text: as text. A picture of a dog and the word "dog" land near each other. After that, understanding an image is just more context in the prompt — the model reasons over it the way it reasons over words.
+          - generic [ref=e192]:
+            - generic [ref=e193]: How understanding works
+            - heading "Everything funnels into one embedding space" [level=2] [ref=e194]
+            - paragraph [ref=e195]: Different encoders, one shared meaning space, one model. Click a node.
+            - generic [ref=e196]:
+              - img [ref=e197]
+              - generic [ref=e199] [cursor=pointer]:
+                - img [ref=e201]
+                - generic [ref=e203]: 🖼️ Image
+              - generic [ref=e205] [cursor=pointer]:
+                - img [ref=e207]
+                - generic [ref=e209]: 🔊 Audio
+              - generic [ref=e211] [cursor=pointer]:
+                - img [ref=e213]
+                - generic [ref=e215]: 📝 Text
+              - generic [ref=e217] [cursor=pointer]:
+                - img [ref=e219]
+                - generic [ref=e229]: Shared embeddings
+              - generic [ref=e231] [cursor=pointer]:
+                - img [ref=e233]
+                - generic [ref=e241]: Model
+              - generic [ref=e243] [cursor=pointer]:
+                - img [ref=e245]
+                - generic [ref=e247]: Answer
+          - generic [ref=e249]:
+            - generic [ref=e250]: Try it
+            - 'heading "How an image is generated: diffusion" [level=2] [ref=e251]'
+            - generic [ref=e252]:
+              - generic [ref=e327]:
+                - generic [ref=e328]:
+                  - text: prompt
+                  - paragraph [ref=e329]: "\"a glowing pink heart\" ❤️"
+                - generic [ref=e330]:
+                  - generic [ref=e331]:
+                    - generic [ref=e332]: denoising step
+                    - generic [ref=e333]: 0/16 · pure noise
+                  - slider [ref=e334]: "0"
+                - button "Generate" [ref=e335] [cursor=pointer]:
+                  - img [ref=e336]
+                  - text: Generate
+              - paragraph [ref=e338]:
+                - text: Image models start from pure random
+                - strong [ref=e339]: noise
+                - text: and remove a little of it each step, nudged by your prompt, until a picture emerges. That's
+                - strong [ref=e340]: diffusion
+                - text: — sculpting signal out of static. Drag the slider to scrub the process by hand.
+          - generic [ref=e342]:
+            - generic [ref=e343]: The landscape
+            - heading "What multimodal unlocks" [level=2] [ref=e344]
+            - generic [ref=e345]:
+              - generic [ref=e346]:
+                - generic [ref=e347]:
+                  - generic [ref=e348]: 🔎
+                  - generic [ref=e349]: Vision understanding
+                - paragraph [ref=e350]: Read a chart, extract text from a receipt (OCR), describe a photo, debug a screenshot. Input = image, output = text.
+              - generic [ref=e351]:
+                - generic [ref=e352]:
+                  - generic [ref=e353]: 🎨
+                  - generic [ref=e354]: Image generation
+                - paragraph [ref=e355]: Diffusion models paint from a prompt by denoising. Text-to-image, inpainting, style transfer.
+              - generic [ref=e356]:
+                - generic [ref=e357]:
+                  - generic [ref=e358]: 🗣️
+                  - generic [ref=e359]: Speech in & out
+                - paragraph [ref=e360]: Transcription (audio→text) and natural text-to-speech (text→audio) power real-time voice agents.
+              - generic [ref=e361]:
+                - generic [ref=e362]:
+                  - generic [ref=e363]: 🖥️
+                  - generic [ref=e364]: Computer / browser use
+                - paragraph [ref=e365]: A model that 'sees' a screen can click and type — the basis of agents that operate real software.
+            - generic [ref=e366]:
+              - img [ref=e367]
+              - paragraph [ref=e370]:
+                - text: "Why agents care: vision turns the whole visual world into tool input. An agent that can"
+                - img [ref=e371]
+                - text: see a screen, a PDF, or a dashboard can act on things that were never an API — that's how "computer use" agents work.
+          - generic [ref=e376]:
+            - generic [ref=e378]:
+              - img [ref=e379]
+              - heading "Belt Check" [level=3] [ref=e385]
+            - generic [ref=e391]:
+              - paragraph [ref=e392]:
+                - generic [ref=e393]: Q1.
+                - text: How does a multimodal model handle an image and text together?
+              - generic [ref=e394]:
+                - button "A It has separate brains it switches between" [ref=e395] [cursor=pointer]:
+                  - generic [ref=e396]: A
+                  - generic [ref=e397]: It has separate brains it switches between
+                - button "B It encodes both into the same shared embedding space and reasons over them together" [ref=e398] [cursor=pointer]:
+                  - generic [ref=e399]: B
+                  - generic [ref=e400]: It encodes both into the same shared embedding space and reasons over them together
+                - button "C It converts the image to text first with OCR only" [ref=e401] [cursor=pointer]:
+                  - generic [ref=e402]: C
+                  - generic [ref=e403]: It converts the image to text first with OCR only
+                - button "D It can't — text and images are incompatible" [ref=e404] [cursor=pointer]:
+                  - generic [ref=e405]: D
+                  - generic [ref=e406]: It can't — text and images are incompatible
+        - generic [ref=e407]:
+          - generic [ref=e408]:
+            - paragraph [ref=e409]: Got it? Lock it in.
+            - button "Mark Complete" [ref=e410] [cursor=pointer]:
+              - img [ref=e411]
+              - text: Mark Complete
+          - navigation [ref=e413]:
+            - link "Previous · P 🎛️ Fine-tuning vs RAG vs Prompting" [ref=e414] [cursor=pointer]:
+              - /url: /learn/ai/fine-tuning-vs-rag
+              - img [ref=e415]
+              - generic [ref=e417]:
+                - generic [ref=e418]: Previous · P
+                - generic [ref=e419]: 🎛️ Fine-tuning vs RAG vs Prompting
+            - link "Next · N Tool Use & Function Calling 🛠️" [ref=e420] [cursor=pointer]:
+              - /url: /learn/ai/tool-use
+              - generic [ref=e421]:
+                - generic [ref=e422]: Next · N
+                - generic [ref=e423]: Tool Use & Function Calling 🛠️
+              - img [ref=e424]
+          - paragraph [ref=e426]:
+            - img [ref=e427]
+            - text: "Tip: press"
+            - generic [ref=e429]: "N"
+            - text: /
+            - generic [ref=e430]: P
+            - text: to navigate

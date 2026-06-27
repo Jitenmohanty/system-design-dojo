@@ -1,0 +1,301 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - link "DOJO System Design" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img [ref=e8]
+          - generic [ref=e10]:
+            - text: DOJO
+            - generic [ref=e11]: System Design
+        - generic [ref=e17]:
+          - generic [ref=e18]: White Belt
+          - generic [ref=e19]: Rank
+      - generic [ref=e20]:
+        - link "Home" [ref=e21] [cursor=pointer]:
+          - /url: /
+          - img [ref=e22]
+          - text: Home
+        - link "Map" [ref=e25] [cursor=pointer]:
+          - /url: /learn
+          - img [ref=e26]
+          - text: Map
+        - link "Play" [ref=e31] [cursor=pointer]:
+          - /url: /playground
+          - img [ref=e32]
+          - text: Play
+        - link "Compare" [ref=e34] [cursor=pointer]:
+          - /url: /compare
+          - img [ref=e35]
+          - text: Compare
+        - link "Blog" [ref=e40] [cursor=pointer]:
+          - /url: /blog
+          - img [ref=e41]
+          - text: Blog
+      - generic [ref=e43]:
+        - generic [ref=e44]:
+          - img
+          - textbox "Search concepts…" [ref=e45]
+        - button "Filter by topic" [ref=e46] [cursor=pointer]:
+          - img [ref=e47]
+          - text: Filter by topic
+      - navigation [ref=e49]:
+        - generic [ref=e50]:
+          - button "BeginnerWhite Belt 0/6" [ref=e51] [cursor=pointer]:
+            - generic [ref=e53]: BeginnerWhite Belt
+            - generic [ref=e54]: 0/6
+            - img [ref=e55]
+          - generic [ref=e59]:
+            - link "🍽️ Client–Server Model" [ref=e60] [cursor=pointer]:
+              - /url: /learn/beginner/client-server
+              - generic [ref=e61]: 🍽️
+              - generic [ref=e62]: Client–Server Model
+            - link "📖 DNS & How the Internet Works" [ref=e63] [cursor=pointer]:
+              - /url: /learn/beginner/dns-how-internet-works
+              - generic [ref=e64]: 📖
+              - generic [ref=e65]: DNS & How the Internet Works
+            - link "🧑‍🍳 APIs & REST" [ref=e66] [cursor=pointer]:
+              - /url: /learn/beginner/apis-rest
+              - generic [ref=e67]: 🧑‍🍳
+              - generic [ref=e68]: APIs & REST
+            - link "🗄️ Databases 101" [ref=e69] [cursor=pointer]:
+              - /url: /learn/beginner/databases-101
+              - generic [ref=e70]: 🗄️
+              - generic [ref=e71]: Databases 101
+            - link "⚡ Caching Basics" [ref=e72] [cursor=pointer]:
+              - /url: /learn/beginner/caching-basics
+              - generic [ref=e73]: ⚡
+              - generic [ref=e74]: Caching Basics
+            - link "🔤 JSON & Data Formats" [ref=e75] [cursor=pointer]:
+              - /url: /learn/beginner/json-data-formats
+              - generic [ref=e76]: 🔤
+              - generic [ref=e77]: JSON & Data Formats
+        - generic [ref=e78]:
+          - button "IntermediateYellow Belt 0/8" [ref=e79] [cursor=pointer]:
+            - generic [ref=e81]: IntermediateYellow Belt
+            - generic [ref=e82]: 0/8
+            - img [ref=e83]
+          - generic [ref=e87]:
+            - link "⚖️ Load Balancing" [ref=e88] [cursor=pointer]:
+              - /url: /learn/intermediate/load-balancing
+              - generic [ref=e89]: ⚖️
+              - generic [ref=e90]: Load Balancing
+            - link "🐎 Database Scaling" [ref=e91] [cursor=pointer]:
+              - /url: /learn/intermediate/database-scaling
+              - generic [ref=e92]: 🐎
+              - generic [ref=e93]: Database Scaling
+            - link "🗂️ Caching Strategies" [ref=e94] [cursor=pointer]:
+              - /url: /learn/intermediate/caching-strategies
+              - generic [ref=e95]: 🗂️
+              - generic [ref=e96]: Caching Strategies
+            - link "🎫 Message Queues" [ref=e97] [cursor=pointer]:
+              - /url: /learn/intermediate/message-queues
+              - generic [ref=e98]: 🎫
+              - generic [ref=e99]: Message Queues
+            - link "🆚 SQL vs NoSQL" [ref=e100] [cursor=pointer]:
+              - /url: /learn/intermediate/sql-vs-nosql
+              - generic [ref=e101]: 🆚
+              - generic [ref=e102]: SQL vs NoSQL
+            - link "🛡️ API Gateway" [ref=e103] [cursor=pointer]:
+              - /url: /learn/intermediate/api-gateway
+              - generic [ref=e104]: 🛡️
+              - generic [ref=e105]: API Gateway
+            - link "🌍 Content Delivery Networks" [ref=e106] [cursor=pointer]:
+              - /url: /learn/intermediate/cdn
+              - generic [ref=e107]: 🌍
+              - generic [ref=e108]: Content Delivery Networks
+            - link "🚦 Rate Limiting" [ref=e109] [cursor=pointer]:
+              - /url: /learn/intermediate/rate-limiting
+              - generic [ref=e110]: 🚦
+              - generic [ref=e111]: Rate Limiting
+        - button "AdvancedGreen Belt 0/8" [ref=e113] [cursor=pointer]:
+          - generic [ref=e115]: AdvancedGreen Belt
+          - generic [ref=e116]: 0/8
+          - img [ref=e117]
+        - button "ExpertBlack Belt 0/7" [ref=e121] [cursor=pointer]:
+          - generic [ref=e123]: ExpertBlack Belt
+          - generic [ref=e124]: 0/7
+          - img [ref=e125]
+        - button "AI & AgentsRed Belt 0/17" [ref=e129] [cursor=pointer]:
+          - generic [ref=e131]: AI & AgentsRed Belt
+          - generic [ref=e132]: 0/17
+          - img [ref=e133]
+  - generic [ref=e136]:
+    - banner [ref=e137]:
+      - navigation [ref=e138]:
+        - link "Dojo" [ref=e140] [cursor=pointer]:
+          - /url: /
+        - generic [ref=e141]:
+          - img [ref=e142]
+          - link "Learn" [ref=e144] [cursor=pointer]:
+            - /url: /learn
+        - generic [ref=e145]:
+          - img [ref=e146]
+          - link "AI & Agents" [ref=e148] [cursor=pointer]:
+            - /url: /learn
+        - generic [ref=e149]:
+          - img [ref=e150]
+          - generic [ref=e152]: Reasoning & Advanced Prompting
+      - button "Mark Complete" [ref=e153] [cursor=pointer]:
+        - img [ref=e154]
+        - generic [ref=e156]: Mark Complete
+    - main [ref=e157]:
+      - article [ref=e160]:
+        - generic [ref=e161]:
+          - generic [ref=e162]:
+            - generic [ref=e163]: Red Belt
+            - generic [ref=e164]:
+              - img [ref=e165]
+              - text: 14 min
+            - generic [ref=e168]: LLMs
+          - heading "🪜 Reasoning & Advanced Prompting" [level=1] [ref=e169]:
+            - generic [ref=e170]: 🪜
+            - generic [ref=e171]: Reasoning & Advanced Prompting
+          - paragraph [ref=e172]: Chain-of-thought, reflection, planning & when 'thinking' models earn it.
+        - generic [ref=e174]:
+          - generic [ref=e175]: 🧮
+          - generic [ref=e176]: Think of it like…
+          - generic [ref=e177]:
+            - text: An LLM picks each token in a flash — great for trivia, terrible for anything multi-step. The fix is to make it
+            - strong [ref=e178]: think on paper
+            - text: ": spend tokens reasoning through the problem before committing to an answer. \"Let's think step by step\" isn't a magic spell — it literally gives the model space to work, and it measurably boosts accuracy on math, logic, and planning."
+          - button "2 more analogies" [ref=e179] [cursor=pointer]:
+            - img [ref=e180]
+            - text: 2 more analogies
+        - generic [ref=e182]:
+          - generic [ref=e184]:
+            - generic [ref=e185]: The core idea
+            - heading "Tokens are the model's scratch paper" [level=2] [ref=e186]
+            - paragraph [ref=e187]: Because the model generates one token at a time, every token it writes becomes context for the next. Force it to answer immediately and it has done zero computation. Let it narrate its reasoning first and each step builds on the last — it can carry intermediate results, catch contradictions, and arrive somewhere it could never reach in one jump. More thinking tokens = more compute spent on the problem.
+          - generic [ref=e189]:
+            - generic [ref=e190]: Try it
+            - heading "Direct answer vs thinking it through" [level=2] [ref=e191]
+            - generic [ref=e192]:
+              - generic [ref=e193]:
+                - text: Question
+                - paragraph [ref=e194]: A cafe starts with 50 muffins, sells 3 boxes of 12, then bins 5 burnt ones. How many are left?
+              - generic [ref=e195]:
+                - button "⚡ Answer directly" [ref=e196] [cursor=pointer]
+                - button "🪜 Think step by step" [ref=e197] [cursor=pointer]
+              - generic [ref=e199]:
+                - text: Direct answer (no reasoning)
+                - paragraph [ref=e200]: "\"14 muffins.\" ❌"
+                - paragraph [ref=e201]: Blurted the first plausible number and forgot the burnt 5. Skipping the work is how models fumble multi-step problems.
+              - paragraph [ref=e202]:
+                - text: Same model, same question. Writing the steps out gives it room to compute each piece instead of guessing the final number in one shot. Reasoning is just
+                - emphasis [ref=e203]: more tokens spent thinking before answering
+                - text: .
+          - generic [ref=e205]:
+            - generic [ref=e206]: The toolkit
+            - heading "Prompting techniques, ranked by muscle" [level=2] [ref=e207]
+            - generic [ref=e208]:
+              - generic [ref=e209]:
+                - generic [ref=e210]:
+                  - generic [ref=e211]: 🪜
+                  - generic [ref=e212]: Chain-of-Thought (CoT)
+                - paragraph [ref=e213]: Ask it to reason step by step before answering. The single highest-leverage trick for any multi-step problem.
+              - generic [ref=e214]:
+                - generic [ref=e215]:
+                  - generic [ref=e216]: 🗳️
+                  - generic [ref=e217]: Self-consistency
+                - paragraph [ref=e218]: Generate several independent reasoning paths and take the majority answer. Trades cost for reliability on hard problems.
+              - generic [ref=e219]:
+                - generic [ref=e220]:
+                  - generic [ref=e221]: 🔄
+                  - generic [ref=e222]: Reflection / self-critique
+                - paragraph [ref=e223]: Have the model review its own answer, find flaws, and revise. A cheap second pass that catches a lot of slips.
+              - generic [ref=e224]:
+                - generic [ref=e225]:
+                  - generic [ref=e226]: 🌳
+                  - generic [ref=e227]: Plan-and-Execute / ToT
+                - paragraph [ref=e228]: Make a plan first, then execute steps — or explore several branches (Tree of Thoughts) and keep the best. Structure for complex tasks.
+          - generic [ref=e230]:
+            - generic [ref=e231]: Structure for hard tasks
+            - heading "Plan first, then execute" [level=2] [ref=e232]
+            - paragraph [ref=e233]: For anything with several moving parts, a planner breaks the goal into ordered steps; each step is executed (often with tools); a synthesizer combines the results. This is also the backbone of an agent. Click a node.
+            - generic [ref=e234]:
+              - img [ref=e235]:
+                - generic [ref=e237]: step
+              - generic [ref=e239] [cursor=pointer]:
+                - img [ref=e241]
+                - generic [ref=e243]: Goal
+              - generic [ref=e245] [cursor=pointer]:
+                - img [ref=e247]
+                - generic [ref=e255]: Planner
+              - generic [ref=e257] [cursor=pointer]:
+                - img [ref=e259]
+                - generic [ref=e267]: Step 1
+              - generic [ref=e269] [cursor=pointer]:
+                - img [ref=e271]
+                - generic [ref=e279]: Step 2
+              - generic [ref=e281] [cursor=pointer]:
+                - img [ref=e283]
+                - generic [ref=e291]: Step 3
+              - generic [ref=e293] [cursor=pointer]:
+                - img [ref=e295]
+                - generic [ref=e297]: Answer
+          - generic [ref=e299]:
+            - generic [ref=e300]: The new wave
+            - 'heading "Reasoning models: thinking built in" [level=2] [ref=e301]'
+            - generic [ref=e302]:
+              - generic [ref=e303]:
+                - generic [ref=e304]:
+                  - img [ref=e305]
+                  - text: Standard model
+                - paragraph [ref=e307]: Answers fast. You bolt on reasoning with prompting ("think step by step"). Cheaper and lower latency — perfect for most tasks.
+              - generic [ref=e308]:
+                - generic [ref=e309]:
+                  - img [ref=e310]
+                  - text: Reasoning model
+                - paragraph [ref=e318]: Trained to do a long internal "thinking" pass before answering. Stronger on math, code, and logic — but slower and pricier. Use it when the problem is genuinely hard.
+            - paragraph [ref=e319]:
+              - text: "Rule of thumb:"
+              - strong [ref=e320]: don't pay for reasoning you don't need.
+              - text: Reach for a thinking model on the hard 10% of tasks, not for "summarize this email."
+          - generic [ref=e322]:
+            - generic [ref=e324]:
+              - img [ref=e325]
+              - heading "Belt Check" [level=3] [ref=e331]
+            - generic [ref=e337]:
+              - paragraph [ref=e338]:
+                - generic [ref=e339]: Q1.
+                - text: Why does 'think step by step' improve accuracy on multi-step problems?
+              - generic [ref=e340]:
+                - button "A It makes the model bigger" [ref=e341] [cursor=pointer]:
+                  - generic [ref=e342]: A
+                  - generic [ref=e343]: It makes the model bigger
+                - button "B The reasoning tokens give the model space to compute each part instead of guessing the answer in one shot" [ref=e344] [cursor=pointer]:
+                  - generic [ref=e345]: B
+                  - generic [ref=e346]: The reasoning tokens give the model space to compute each part instead of guessing the answer in one shot
+                - button "C It lowers the temperature" [ref=e347] [cursor=pointer]:
+                  - generic [ref=e348]: C
+                  - generic [ref=e349]: It lowers the temperature
+                - button "D It searches the web" [ref=e350] [cursor=pointer]:
+                  - generic [ref=e351]: D
+                  - generic [ref=e352]: It searches the web
+        - generic [ref=e353]:
+          - generic [ref=e354]:
+            - paragraph [ref=e355]: Got it? Lock it in.
+            - button "Mark Complete" [ref=e356] [cursor=pointer]:
+              - img [ref=e357]
+              - text: Mark Complete
+          - navigation [ref=e359]:
+            - link "Previous · P 💬 Prompting & Context Windows" [ref=e360] [cursor=pointer]:
+              - /url: /learn/ai/prompting-context
+              - img [ref=e361]
+              - generic [ref=e363]:
+                - generic [ref=e364]: Previous · P
+                - generic [ref=e365]: 💬 Prompting & Context Windows
+            - link "Next · N Structured Outputs & JSON Mode 🧩" [ref=e366] [cursor=pointer]:
+              - /url: /learn/ai/structured-outputs
+              - generic [ref=e367]:
+                - generic [ref=e368]: Next · N
+                - generic [ref=e369]: Structured Outputs & JSON Mode 🧩
+              - img [ref=e370]
+          - paragraph [ref=e372]:
+            - img [ref=e373]
+            - text: "Tip: press"
+            - generic [ref=e375]: "N"
+            - text: /
+            - generic [ref=e376]: P
+            - text: to navigate

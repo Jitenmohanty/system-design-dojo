@@ -201,19 +201,6 @@ export default function AgentGuardrailsPage() {
       </ScrollReveal>
 
       <ScrollReveal>
-        <Section kicker="🥋 Red belt earned" title="You made it">
-          <div className="card neon-border p-5 text-center">
-            <p className="text-ink-secondary">
-              You went from <span className="mono text-neon-purple">&quot;what is a token?&quot;</span> to designing a
-              bounded, self-checking, multi-agent research system. That&apos;s the whole stack: prediction → meaning →
-              prompting → retrieval → tools → the loop → memory → teamwork → architecture → safety.
-            </p>
-            <p className="mt-3 text-sm text-neon-pink">Now go build one — with the guardrails on. 🛡️</p>
-          </div>
-        </Section>
-      </ScrollReveal>
-
-      <ScrollReveal>
         <InteractiveQuiz
           slug="agent-guardrails"
           questions={[

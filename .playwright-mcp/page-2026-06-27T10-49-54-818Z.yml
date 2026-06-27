@@ -1,0 +1,320 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]:
+          - link "DOJO System Design" [ref=e6] [cursor=pointer]:
+            - /url: /
+            - img [ref=e8]
+            - generic [ref=e10]:
+              - text: DOJO
+              - generic [ref=e11]: System Design
+          - generic [ref=e12]:
+            - generic [ref=e17]:
+              - generic [ref=e18]: White Belt
+              - generic [ref=e19]: Rank
+            - generic [ref=e375]:
+              - generic [ref=e376]: 1🔥
+              - generic [ref=e377]: day streak
+        - generic [ref=e20]:
+          - link "Home" [ref=e21] [cursor=pointer]:
+            - /url: /
+            - img [ref=e22]
+            - text: Home
+          - link "Map" [ref=e25] [cursor=pointer]:
+            - /url: /learn
+            - img [ref=e26]
+            - text: Map
+          - link "Play" [ref=e31] [cursor=pointer]:
+            - /url: /playground
+            - img [ref=e32]
+            - text: Play
+          - link "Compare" [ref=e34] [cursor=pointer]:
+            - /url: /compare
+            - img [ref=e35]
+            - text: Compare
+          - link "Blog" [ref=e40] [cursor=pointer]:
+            - /url: /blog
+            - img [ref=e41]
+            - text: Blog
+        - generic [ref=e43]:
+          - generic [ref=e44]:
+            - img
+            - textbox "Search concepts…" [ref=e45]
+          - button "Filter by topic" [ref=e46] [cursor=pointer]:
+            - img [ref=e47]
+            - text: Filter by topic
+        - navigation [ref=e49]:
+          - generic [ref=e50]:
+            - button "BeginnerWhite Belt 0/6" [ref=e51] [cursor=pointer]:
+              - generic [ref=e53]: BeginnerWhite Belt
+              - generic [ref=e54]: 0/6
+              - img [ref=e55]
+            - generic [ref=e59]:
+              - link "🍽️ Client–Server Model" [ref=e60] [cursor=pointer]:
+                - /url: /learn/beginner/client-server
+                - generic [ref=e61]: 🍽️
+                - generic [ref=e62]: Client–Server Model
+              - link "📖 DNS & How the Internet Works" [ref=e63] [cursor=pointer]:
+                - /url: /learn/beginner/dns-how-internet-works
+                - generic [ref=e64]: 📖
+                - generic [ref=e65]: DNS & How the Internet Works
+              - link "🧑‍🍳 APIs & REST" [ref=e66] [cursor=pointer]:
+                - /url: /learn/beginner/apis-rest
+                - generic [ref=e67]: 🧑‍🍳
+                - generic [ref=e68]: APIs & REST
+              - link "🗄️ Databases 101" [ref=e69] [cursor=pointer]:
+                - /url: /learn/beginner/databases-101
+                - generic [ref=e70]: 🗄️
+                - generic [ref=e71]: Databases 101
+              - link "⚡ Caching Basics" [ref=e72] [cursor=pointer]:
+                - /url: /learn/beginner/caching-basics
+                - generic [ref=e73]: ⚡
+                - generic [ref=e74]: Caching Basics
+              - link "🔤 JSON & Data Formats" [ref=e75] [cursor=pointer]:
+                - /url: /learn/beginner/json-data-formats
+                - generic [ref=e76]: 🔤
+                - generic [ref=e77]: JSON & Data Formats
+          - generic [ref=e78]:
+            - button "IntermediateYellow Belt 0/8" [ref=e79] [cursor=pointer]:
+              - generic [ref=e81]: IntermediateYellow Belt
+              - generic [ref=e82]: 0/8
+              - img [ref=e83]
+            - generic [ref=e87]:
+              - link "⚖️ Load Balancing" [ref=e88] [cursor=pointer]:
+                - /url: /learn/intermediate/load-balancing
+                - generic [ref=e89]: ⚖️
+                - generic [ref=e90]: Load Balancing
+              - link "🐎 Database Scaling" [ref=e91] [cursor=pointer]:
+                - /url: /learn/intermediate/database-scaling
+                - generic [ref=e92]: 🐎
+                - generic [ref=e93]: Database Scaling
+              - link "🗂️ Caching Strategies" [ref=e94] [cursor=pointer]:
+                - /url: /learn/intermediate/caching-strategies
+                - generic [ref=e95]: 🗂️
+                - generic [ref=e96]: Caching Strategies
+              - link "🎫 Message Queues" [ref=e97] [cursor=pointer]:
+                - /url: /learn/intermediate/message-queues
+                - generic [ref=e98]: 🎫
+                - generic [ref=e99]: Message Queues
+              - link "🆚 SQL vs NoSQL" [ref=e100] [cursor=pointer]:
+                - /url: /learn/intermediate/sql-vs-nosql
+                - generic [ref=e101]: 🆚
+                - generic [ref=e102]: SQL vs NoSQL
+              - link "🛡️ API Gateway" [ref=e103] [cursor=pointer]:
+                - /url: /learn/intermediate/api-gateway
+                - generic [ref=e104]: 🛡️
+                - generic [ref=e105]: API Gateway
+              - link "🌍 Content Delivery Networks" [ref=e106] [cursor=pointer]:
+                - /url: /learn/intermediate/cdn
+                - generic [ref=e107]: 🌍
+                - generic [ref=e108]: Content Delivery Networks
+              - link "🚦 Rate Limiting" [ref=e109] [cursor=pointer]:
+                - /url: /learn/intermediate/rate-limiting
+                - generic [ref=e110]: 🚦
+                - generic [ref=e111]: Rate Limiting
+          - button "AdvancedGreen Belt 0/8" [ref=e113] [cursor=pointer]:
+            - generic [ref=e115]: AdvancedGreen Belt
+            - generic [ref=e116]: 0/8
+            - img [ref=e117]
+          - button "ExpertBlack Belt 0/7" [ref=e121] [cursor=pointer]:
+            - generic [ref=e123]: ExpertBlack Belt
+            - generic [ref=e124]: 0/7
+            - img [ref=e125]
+          - button "AI & AgentsRed Belt 0/17" [ref=e129] [cursor=pointer]:
+            - generic [ref=e131]: AI & AgentsRed Belt
+            - generic [ref=e132]: 0/17
+            - img [ref=e133]
+    - generic [ref=e136]:
+      - banner [ref=e137]:
+        - navigation [ref=e138]:
+          - link "Dojo" [ref=e140] [cursor=pointer]:
+            - /url: /
+          - generic [ref=e141]:
+            - img [ref=e142]
+            - link "Learn" [ref=e144] [cursor=pointer]:
+              - /url: /learn
+          - generic [ref=e145]:
+            - img [ref=e146]
+            - link "AI & Agents" [ref=e148] [cursor=pointer]:
+              - /url: /learn
+          - generic [ref=e149]:
+            - img [ref=e150]
+            - generic [ref=e152]: "Production: Streaming, Latency & Cost"
+        - button "Mark Complete" [ref=e153] [cursor=pointer]:
+          - img [ref=e154]
+          - generic [ref=e156]: Mark Complete
+      - main [ref=e157]:
+        - article [ref=e160]:
+          - generic [ref=e161]:
+            - generic [ref=e162]:
+              - generic [ref=e163]: Red Belt
+              - generic [ref=e164]:
+                - img [ref=e165]
+                - text: 14 min
+              - generic [ref=e168]: Agents
+              - generic [ref=e169]: Scaling
+            - 'heading "⚡ Production: Streaming, Latency & Cost" [level=1] [ref=e170]':
+              - generic [ref=e171]: ⚡
+              - generic [ref=e172]: "Production: Streaming, Latency & Cost"
+            - paragraph [ref=e173]: Ship it fast and cheap. Streaming, prompt caching, batching, routing.
+          - generic [ref=e175]:
+            - generic [ref=e176]: 🍽️
+            - generic [ref=e177]: Think of it like…
+            - generic [ref=e178]:
+              - text: "A working prototype and a shippable product are different animals. In production three things decide whether users love it or leave: how"
+              - strong [ref=e179]: fast
+              - text: it feels, how much it
+              - strong [ref=e180]: costs
+              - text: "per request, and how gracefully it handles scale. The good news: a handful of well-known techniques move all three at once."
+            - button "2 more analogies" [ref=e181] [cursor=pointer]:
+              - img [ref=e182]
+              - text: 2 more analogies
+          - generic [ref=e184]:
+            - generic [ref=e186]:
+              - generic [ref=e187]: Latency that matters
+              - heading "Stream the answer — don't make them wait" [level=2] [ref=e188]
+              - paragraph [ref=e189]: LLMs generate token by token, so a long reply can take seconds. Make the user stare at a spinner and it feels broken. Stream the tokens as they're produced and the answer starts appearing almost immediately — same total time, wildly better experience. Run both and watch.
+              - generic [ref=e190]:
+                - generic [ref=e191]:
+                  - generic [ref=e192]:
+                    - generic [ref=e193]:
+                      - generic [ref=e194]: ⛔ Blocking
+                      - generic [ref=e195]: "first token: 2.5s"
+                    - generic [ref=e437]:
+                      - img [ref=e438]
+                      - text: waiting for the whole reply…
+                  - generic [ref=e197]:
+                    - generic [ref=e198]:
+                      - generic [ref=e199]: ⚡ Streaming
+                      - generic [ref=e200]: "first token: 0.3s"
+                    - generic [ref=e440]: Sure —▍
+                - generic [ref=e202]:
+                  - button "Send the same request to both" [disabled] [ref=e203] [cursor=pointer]:
+                    - img [ref=e204]
+                    - text: Send the same request to both
+                  - button "Reset" [ref=e206] [cursor=pointer]:
+                    - img [ref=e207]
+                    - text: Reset
+                - paragraph [ref=e210]:
+                  - text: The
+                  - emphasis [ref=e211]: total
+                  - text: time is identical — but streaming shows the first words almost instantly, so it
+                  - strong [ref=e212]: feels
+                  - text: ~8× faster. Time-to-first-token (TTFT) is the latency users actually judge you on.
+            - generic [ref=e214]:
+              - generic [ref=e215]: The serving path
+              - heading "Where requests go (and where you save)" [level=2] [ref=e216]
+              - paragraph [ref=e217]: A production LLM request rarely hits one model and stops. A router and caches sit in front to cut cost and latency. Click each node.
+              - generic [ref=e218]:
+                - img [ref=e219]:
+                  - generic [ref=e221]: miss
+                  - generic [ref=e223]: easy
+                  - generic [ref=e225]: hard
+                - generic [ref=e227] [cursor=pointer]:
+                  - img [ref=e229]
+                  - generic [ref=e231]: Request
+                - generic [ref=e233] [cursor=pointer]:
+                  - img [ref=e235]
+                  - generic [ref=e237]: Semantic cache
+                - generic [ref=e239] [cursor=pointer]:
+                  - img [ref=e241]
+                  - generic [ref=e246]: Router
+                - generic [ref=e248] [cursor=pointer]:
+                  - img [ref=e250]
+                  - generic [ref=e258]: Small model
+                - generic [ref=e260] [cursor=pointer]:
+                  - img [ref=e262]
+                  - generic [ref=e270]: Strong model
+                - generic [ref=e272] [cursor=pointer]:
+                  - img [ref=e274]
+                  - generic [ref=e276]: Stream out
+            - generic [ref=e278]:
+              - generic [ref=e279]: The cost toolkit
+              - heading "Five levers on your bill" [level=2] [ref=e280]
+              - generic [ref=e281]:
+                - generic [ref=e282]:
+                  - generic [ref=e283]:
+                    - generic [ref=e284]: 🧠
+                    - generic [ref=e285]: Prompt caching
+                  - paragraph [ref=e286]: Reuse the processed prefix (system prompt, tools, docs) across calls. Cached input tokens are far cheaper and faster.
+                - generic [ref=e287]:
+                  - generic [ref=e288]:
+                    - generic [ref=e289]: 🚦
+                    - generic [ref=e290]: Model routing
+                  - paragraph [ref=e291]: Send easy requests to a small model, hard ones to the flagship. Most traffic is easy — most of your bill shouldn't be flagship.
+                - generic [ref=e292]:
+                  - generic [ref=e293]:
+                    - generic [ref=e294]: 🔁
+                    - generic [ref=e295]: Semantic caching
+                  - paragraph [ref=e296]: Cache answers to semantically similar questions. Repetitive queries return for near-zero cost and latency.
+                - generic [ref=e297]:
+                  - generic [ref=e298]:
+                    - generic [ref=e299]: 📦
+                    - generic [ref=e300]: Batching
+                  - paragraph [ref=e301]: Group many requests through the GPU together for big throughput gains. Great for offline/bulk jobs.
+              - generic [ref=e302]:
+                - generic [ref=e303]: 💸
+                - paragraph [ref=e304]:
+                  - text: "The mental model:"
+                  - strong [ref=e305]: cost ≈ tokens in + tokens out
+                  - text: ", and"
+                  - strong [ref=e306]: latency ≈ tokens out
+                  - text: . Every optimization is really about generating fewer tokens, reusing tokens, or generating them on a cheaper machine. Trim prompts, cache aggressively, and right-size the model.
+            - generic [ref=e308]:
+              - generic [ref=e309]: 🥋 Red belt earned
+              - heading "You made it to the end of the dojo" [level=2] [ref=e310]
+              - generic [ref=e311]:
+                - img [ref=e312]
+                - paragraph [ref=e318]:
+                  - text: You went from "what is a token?" to designing and
+                  - emphasis [ref=e319]: shipping
+                  - text: "bounded, secure, fast AI agents. The whole stack: prediction → meaning → prompting → reasoning → structured output → retrieval → customization → multimodal → tools → MCP → the agent loop → memory → multi-agent → architecture → security → guardrails → production."
+                - paragraph [ref=e320]: That's the Red Belt. Now go build something real — fast, cheap, and on the rails. 🛡️⚡
+                - generic [ref=e321]:
+                  - 'link "Revisit: Design an Agent" [ref=e322] [cursor=pointer]':
+                    - /url: /learn/ai/agent-design
+                  - 'link "Read: When to use an agent →" [ref=e323] [cursor=pointer]':
+                    - /url: /blog/when-to-use-an-ai-agent
+            - generic [ref=e325]:
+              - generic [ref=e327]:
+                - img [ref=e328]
+                - heading "Belt Check" [level=3] [ref=e334]
+              - generic [ref=e340]:
+                - paragraph [ref=e341]:
+                  - generic [ref=e342]: Q1.
+                  - text: Why stream tokens instead of returning the full reply at once?
+                - generic [ref=e343]:
+                  - button "A It makes the total time shorter" [ref=e344] [cursor=pointer]:
+                    - generic [ref=e345]: A
+                    - generic [ref=e346]: It makes the total time shorter
+                  - button "B It slashes time-to-first-token, so the response feels far faster even though total time is the same" [ref=e347] [cursor=pointer]:
+                    - generic [ref=e348]: B
+                    - generic [ref=e349]: It slashes time-to-first-token, so the response feels far faster even though total time is the same
+                  - button "C It reduces token cost" [ref=e350] [cursor=pointer]:
+                    - generic [ref=e351]: C
+                    - generic [ref=e352]: It reduces token cost
+                  - button "D It improves accuracy" [ref=e353] [cursor=pointer]:
+                    - generic [ref=e354]: D
+                    - generic [ref=e355]: It improves accuracy
+          - generic [ref=e356]:
+            - generic [ref=e357]:
+              - paragraph [ref=e358]: Got it? Lock it in.
+              - button "Mark Complete" [ref=e359] [cursor=pointer]:
+                - img [ref=e360]
+                - text: Mark Complete
+            - navigation [ref=e362]:
+              - link "Previous · P 🛡️ Evaluation & Guardrails" [ref=e363] [cursor=pointer]:
+                - /url: /learn/ai/agent-guardrails
+                - img [ref=e364]
+                - generic [ref=e366]:
+                  - generic [ref=e367]: Previous · P
+                  - generic [ref=e368]: 🛡️ Evaluation & Guardrails
+            - paragraph [ref=e370]:
+              - img [ref=e371]
+              - text: "Tip: press"
+              - generic [ref=e373]: "N"
+              - text: /
+              - generic [ref=e374]: P
+              - text: to navigate
+  - alert [ref=e432]

@@ -1,0 +1,310 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - link "DOJO System Design" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img [ref=e8]
+          - generic [ref=e10]:
+            - text: DOJO
+            - generic [ref=e11]: System Design
+        - generic [ref=e17]:
+          - generic [ref=e18]: White Belt
+          - generic [ref=e19]: Rank
+      - generic [ref=e20]:
+        - link "Home" [ref=e21] [cursor=pointer]:
+          - /url: /
+          - img [ref=e22]
+          - text: Home
+        - link "Map" [ref=e25] [cursor=pointer]:
+          - /url: /learn
+          - img [ref=e26]
+          - text: Map
+        - link "Play" [ref=e31] [cursor=pointer]:
+          - /url: /playground
+          - img [ref=e32]
+          - text: Play
+        - link "Compare" [ref=e34] [cursor=pointer]:
+          - /url: /compare
+          - img [ref=e35]
+          - text: Compare
+        - link "Blog" [ref=e40] [cursor=pointer]:
+          - /url: /blog
+          - img [ref=e41]
+          - text: Blog
+      - generic [ref=e43]:
+        - generic [ref=e44]:
+          - img
+          - textbox "Search concepts…" [ref=e45]
+        - button "Filter by topic" [ref=e46] [cursor=pointer]:
+          - img [ref=e47]
+          - text: Filter by topic
+      - navigation [ref=e49]:
+        - generic [ref=e50]:
+          - button "BeginnerWhite Belt 0/6" [ref=e51] [cursor=pointer]:
+            - generic [ref=e53]: BeginnerWhite Belt
+            - generic [ref=e54]: 0/6
+            - img [ref=e55]
+          - generic [ref=e59]:
+            - link "🍽️ Client–Server Model" [ref=e60] [cursor=pointer]:
+              - /url: /learn/beginner/client-server
+              - generic [ref=e61]: 🍽️
+              - generic [ref=e62]: Client–Server Model
+            - link "📖 DNS & How the Internet Works" [ref=e63] [cursor=pointer]:
+              - /url: /learn/beginner/dns-how-internet-works
+              - generic [ref=e64]: 📖
+              - generic [ref=e65]: DNS & How the Internet Works
+            - link "🧑‍🍳 APIs & REST" [ref=e66] [cursor=pointer]:
+              - /url: /learn/beginner/apis-rest
+              - generic [ref=e67]: 🧑‍🍳
+              - generic [ref=e68]: APIs & REST
+            - link "🗄️ Databases 101" [ref=e69] [cursor=pointer]:
+              - /url: /learn/beginner/databases-101
+              - generic [ref=e70]: 🗄️
+              - generic [ref=e71]: Databases 101
+            - link "⚡ Caching Basics" [ref=e72] [cursor=pointer]:
+              - /url: /learn/beginner/caching-basics
+              - generic [ref=e73]: ⚡
+              - generic [ref=e74]: Caching Basics
+            - link "🔤 JSON & Data Formats" [ref=e75] [cursor=pointer]:
+              - /url: /learn/beginner/json-data-formats
+              - generic [ref=e76]: 🔤
+              - generic [ref=e77]: JSON & Data Formats
+        - generic [ref=e78]:
+          - button "IntermediateYellow Belt 0/8" [ref=e79] [cursor=pointer]:
+            - generic [ref=e81]: IntermediateYellow Belt
+            - generic [ref=e82]: 0/8
+            - img [ref=e83]
+          - generic [ref=e87]:
+            - link "⚖️ Load Balancing" [ref=e88] [cursor=pointer]:
+              - /url: /learn/intermediate/load-balancing
+              - generic [ref=e89]: ⚖️
+              - generic [ref=e90]: Load Balancing
+            - link "🐎 Database Scaling" [ref=e91] [cursor=pointer]:
+              - /url: /learn/intermediate/database-scaling
+              - generic [ref=e92]: 🐎
+              - generic [ref=e93]: Database Scaling
+            - link "🗂️ Caching Strategies" [ref=e94] [cursor=pointer]:
+              - /url: /learn/intermediate/caching-strategies
+              - generic [ref=e95]: 🗂️
+              - generic [ref=e96]: Caching Strategies
+            - link "🎫 Message Queues" [ref=e97] [cursor=pointer]:
+              - /url: /learn/intermediate/message-queues
+              - generic [ref=e98]: 🎫
+              - generic [ref=e99]: Message Queues
+            - link "🆚 SQL vs NoSQL" [ref=e100] [cursor=pointer]:
+              - /url: /learn/intermediate/sql-vs-nosql
+              - generic [ref=e101]: 🆚
+              - generic [ref=e102]: SQL vs NoSQL
+            - link "🛡️ API Gateway" [ref=e103] [cursor=pointer]:
+              - /url: /learn/intermediate/api-gateway
+              - generic [ref=e104]: 🛡️
+              - generic [ref=e105]: API Gateway
+            - link "🌍 Content Delivery Networks" [ref=e106] [cursor=pointer]:
+              - /url: /learn/intermediate/cdn
+              - generic [ref=e107]: 🌍
+              - generic [ref=e108]: Content Delivery Networks
+            - link "🚦 Rate Limiting" [ref=e109] [cursor=pointer]:
+              - /url: /learn/intermediate/rate-limiting
+              - generic [ref=e110]: 🚦
+              - generic [ref=e111]: Rate Limiting
+        - button "AdvancedGreen Belt 0/8" [ref=e113] [cursor=pointer]:
+          - generic [ref=e115]: AdvancedGreen Belt
+          - generic [ref=e116]: 0/8
+          - img [ref=e117]
+        - button "ExpertBlack Belt 0/7" [ref=e121] [cursor=pointer]:
+          - generic [ref=e123]: ExpertBlack Belt
+          - generic [ref=e124]: 0/7
+          - img [ref=e125]
+        - button "AI & AgentsRed Belt 0/17" [ref=e129] [cursor=pointer]:
+          - generic [ref=e131]: AI & AgentsRed Belt
+          - generic [ref=e132]: 0/17
+          - img [ref=e133]
+  - generic [ref=e136]:
+    - banner [ref=e137]:
+      - navigation [ref=e138]:
+        - link "Dojo" [ref=e140] [cursor=pointer]:
+          - /url: /
+        - generic [ref=e141]:
+          - img [ref=e142]
+          - link "Learn" [ref=e144] [cursor=pointer]:
+            - /url: /learn
+        - generic [ref=e145]:
+          - img [ref=e146]
+          - link "AI & Agents" [ref=e148] [cursor=pointer]:
+            - /url: /learn
+        - generic [ref=e149]:
+          - img [ref=e150]
+          - generic [ref=e152]: Model Context Protocol (MCP)
+      - button "Mark Complete" [ref=e153] [cursor=pointer]:
+        - img [ref=e154]
+        - generic [ref=e156]: Mark Complete
+    - main [ref=e157]:
+      - article [ref=e160]:
+        - generic [ref=e161]:
+          - generic [ref=e162]:
+            - generic [ref=e163]: Red Belt
+            - generic [ref=e164]:
+              - img [ref=e165]
+              - text: 13 min
+            - generic [ref=e168]: Agents
+            - generic [ref=e169]: API
+          - heading "🔌 Model Context Protocol (MCP)" [level=1] [ref=e170]:
+            - generic [ref=e171]: 🔌
+            - generic [ref=e172]: Model Context Protocol (MCP)
+          - paragraph [ref=e173]: The USB-C for AI tools. One protocol to plug agents into everything.
+        - generic [ref=e175]:
+          - generic [ref=e176]: 🔌
+          - generic [ref=e177]: Think of it like…
+          - generic [ref=e178]:
+            - text: You learned how an agent
+            - emphasis [ref=e179]: calls
+            - text: tools. But who writes all those integrations? Before MCP, every app built a custom connector to every data source and tool — an
+            - strong [ref=e180]: N×M
+            - text: mess. The
+            - strong [ref=e181]: Model Context Protocol
+            - text: is an open standard — think
+            - strong [ref=e182]: USB-C for AI
+            - text: — so any compliant app can plug into any compliant tool with no bespoke glue.
+          - button "2 more analogies" [ref=e183] [cursor=pointer]:
+            - img [ref=e184]
+            - text: 2 more analogies
+        - generic [ref=e186]:
+          - generic [ref=e188]:
+            - generic [ref=e189]: The problem it kills
+            - heading "The N×M integration explosion" [level=2] [ref=e190]
+            - paragraph [ref=e191]:
+              - text: Say you have a few AI apps and a few systems they need (GitHub, your database, Slack, the filesystem). Without a standard, that's a custom integration for
+              - emphasis [ref=e192]: every pair
+              - text: — and each new tool means re-wiring every app. Toggle MCP on and watch the spaghetti collapse into a hub.
+            - generic [ref=e193]:
+              - generic [ref=e194]:
+                - generic [ref=e195]:
+                  - button "❌ Without MCP" [ref=e196] [cursor=pointer]
+                  - button "🔌 With MCP" [ref=e197] [cursor=pointer]
+                - generic [ref=e198]:
+                  - generic [ref=e199]:
+                    - generic [ref=e200]: apps
+                    - button [ref=e201] [cursor=pointer]:
+                      - img [ref=e202]
+                    - generic [ref=e203]: "3"
+                    - button [ref=e204] [cursor=pointer]:
+                      - img [ref=e205]
+                  - generic [ref=e206]:
+                    - generic [ref=e207]: tools
+                    - button [ref=e208] [cursor=pointer]:
+                      - img [ref=e209]
+                    - generic [ref=e210]: "4"
+                    - button [ref=e211] [cursor=pointer]:
+                      - img [ref=e212]
+              - generic [ref=e213]:
+                - img [ref=e214]
+                - generic [ref=e227]: app1
+                - generic [ref=e228]: app2
+                - generic [ref=e229]: app3
+                - generic [ref=e230]: tool1
+                - generic [ref=e231]: tool2
+                - generic [ref=e232]: tool3
+                - generic [ref=e233]: tool4
+              - generic [ref=e234]:
+                - generic [ref=e235]: "Connectors to build & maintain: 12"
+                - generic [ref=e236]: 3 × 4 = N×M
+              - paragraph [ref=e237]:
+                - text: "Without a standard, every app needs a bespoke integration for every tool — the wiring explodes as N×M. MCP is a common plug: each app and each tool implements it once, so the cost grows as N+M. Add a tool and"
+                - emphasis [ref=e238]: every
+                - text: MCP app can use it for free.
+          - generic [ref=e240]:
+            - generic [ref=e241]: The shape
+            - heading "Hosts, clients, and servers" [level=2] [ref=e242]
+            - paragraph [ref=e243]:
+              - text: An MCP
+              - strong [ref=e244]: host
+              - text: (your agent app) speaks the protocol to MCP
+              - strong [ref=e245]: servers
+              - text: — small adapters that expose a tool or data source in the standard format. Write a server once; every MCP host can use it. Click a node.
+            - generic [ref=e246]:
+              - img [ref=e247]
+              - generic [ref=e249] [cursor=pointer]:
+                - img [ref=e251]
+                - generic [ref=e254]: Agent (Host)
+              - generic [ref=e256] [cursor=pointer]:
+                - img [ref=e258]
+                - generic [ref=e260]: MCP
+              - generic [ref=e262] [cursor=pointer]:
+                - img [ref=e264]
+                - generic [ref=e266]: GitHub
+              - generic [ref=e268] [cursor=pointer]:
+                - img [ref=e270]
+                - generic [ref=e280]: Postgres
+              - generic [ref=e282] [cursor=pointer]:
+                - img [ref=e284]
+                - generic [ref=e286]: Filesystem
+              - generic [ref=e288] [cursor=pointer]:
+                - img [ref=e290]
+                - generic [ref=e292]: Slack
+          - generic [ref=e294]:
+            - generic [ref=e295]: What a server exposes
+            - heading "Three things, one protocol" [level=2] [ref=e296]
+            - generic [ref=e297]:
+              - generic [ref=e298]:
+                - generic [ref=e299]: 🛠️
+                - generic [ref=e300]: Tools
+                - paragraph [ref=e301]: Actions the agent can invoke — create_issue, run_query, send_message. The verbs, in a standard schema.
+              - generic [ref=e302]:
+                - generic [ref=e303]: 📄
+                - generic [ref=e304]: Resources
+                - paragraph [ref=e305]: Read-only data the agent can pull into context — files, DB rows, docs. The nouns.
+              - generic [ref=e306]:
+                - generic [ref=e307]: 💬
+                - generic [ref=e308]: Prompts
+                - paragraph [ref=e309]: Reusable prompt templates the server offers, so common workflows are one click, not re-invented each time.
+            - generic [ref=e310]:
+              - generic [ref=e311]: 🛡️
+              - paragraph [ref=e312]: "Security note: an MCP server is code with access to real systems, and tool results are untrusted input. Only connect servers you trust, scope their permissions, and keep the human-approval guardrails from the security lesson on for anything destructive."
+          - generic [ref=e314]:
+            - generic [ref=e316]:
+              - img [ref=e317]
+              - heading "Belt Check" [level=3] [ref=e323]
+            - generic [ref=e329]:
+              - paragraph [ref=e330]:
+                - generic [ref=e331]: Q1.
+                - text: What core problem does MCP solve?
+              - generic [ref=e332]:
+                - button "A Making models bigger" [ref=e333] [cursor=pointer]:
+                  - generic [ref=e334]: A
+                  - generic [ref=e335]: Making models bigger
+                - button "B The N×M explosion of custom integrations between AI apps and tools/data" [ref=e336] [cursor=pointer]:
+                  - generic [ref=e337]: B
+                  - generic [ref=e338]: The N×M explosion of custom integrations between AI apps and tools/data
+                - button "C Lowering temperature" [ref=e339] [cursor=pointer]:
+                  - generic [ref=e340]: C
+                  - generic [ref=e341]: Lowering temperature
+                - button "D Tokenization" [ref=e342] [cursor=pointer]:
+                  - generic [ref=e343]: D
+                  - generic [ref=e344]: Tokenization
+        - generic [ref=e345]:
+          - generic [ref=e346]:
+            - paragraph [ref=e347]: Got it? Lock it in.
+            - button "Mark Complete" [ref=e348] [cursor=pointer]:
+              - img [ref=e349]
+              - text: Mark Complete
+          - navigation [ref=e351]:
+            - link "Previous · P 🛠️ Tool Use & Function Calling" [ref=e352] [cursor=pointer]:
+              - /url: /learn/ai/tool-use
+              - img [ref=e353]
+              - generic [ref=e355]:
+                - generic [ref=e356]: Previous · P
+                - generic [ref=e357]: 🛠️ Tool Use & Function Calling
+            - link "Next · N What Is an AI Agent? 🤖" [ref=e358] [cursor=pointer]:
+              - /url: /learn/ai/ai-agents
+              - generic [ref=e359]:
+                - generic [ref=e360]: Next · N
+                - generic [ref=e361]: What Is an AI Agent? 🤖
+              - img [ref=e362]
+          - paragraph [ref=e364]:
+            - img [ref=e365]
+            - text: "Tip: press"
+            - generic [ref=e367]: "N"
+            - text: /
+            - generic [ref=e368]: P
+            - text: to navigate

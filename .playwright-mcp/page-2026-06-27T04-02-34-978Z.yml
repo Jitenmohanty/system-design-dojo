@@ -1,0 +1,299 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - link "DOJO System Design" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img [ref=e8]
+          - generic [ref=e10]:
+            - text: DOJO
+            - generic [ref=e11]: System Design
+        - generic [ref=e17]:
+          - generic [ref=e18]: White Belt
+          - generic [ref=e19]: Rank
+      - generic [ref=e20]:
+        - link "Home" [ref=e21] [cursor=pointer]:
+          - /url: /
+          - img [ref=e22]
+          - text: Home
+        - link "Map" [ref=e25] [cursor=pointer]:
+          - /url: /learn
+          - img [ref=e26]
+          - text: Map
+        - link "Play" [ref=e31] [cursor=pointer]:
+          - /url: /playground
+          - img [ref=e32]
+          - text: Play
+        - link "Compare" [ref=e34] [cursor=pointer]:
+          - /url: /compare
+          - img [ref=e35]
+          - text: Compare
+        - link "Blog" [ref=e40] [cursor=pointer]:
+          - /url: /blog
+          - img [ref=e41]
+          - text: Blog
+      - generic [ref=e43]:
+        - generic [ref=e44]:
+          - img
+          - textbox "Search concepts…" [ref=e45]
+        - button "Filter by topic" [ref=e46] [cursor=pointer]:
+          - img [ref=e47]
+          - text: Filter by topic
+      - navigation [ref=e49]:
+        - generic [ref=e50]:
+          - button "BeginnerWhite Belt 0/6" [ref=e51] [cursor=pointer]:
+            - generic [ref=e53]: BeginnerWhite Belt
+            - generic [ref=e54]: 0/6
+            - img [ref=e55]
+          - generic [ref=e59]:
+            - link "🍽️ Client–Server Model" [ref=e60] [cursor=pointer]:
+              - /url: /learn/beginner/client-server
+              - generic [ref=e61]: 🍽️
+              - generic [ref=e62]: Client–Server Model
+            - link "📖 DNS & How the Internet Works" [ref=e63] [cursor=pointer]:
+              - /url: /learn/beginner/dns-how-internet-works
+              - generic [ref=e64]: 📖
+              - generic [ref=e65]: DNS & How the Internet Works
+            - link "🧑‍🍳 APIs & REST" [ref=e66] [cursor=pointer]:
+              - /url: /learn/beginner/apis-rest
+              - generic [ref=e67]: 🧑‍🍳
+              - generic [ref=e68]: APIs & REST
+            - link "🗄️ Databases 101" [ref=e69] [cursor=pointer]:
+              - /url: /learn/beginner/databases-101
+              - generic [ref=e70]: 🗄️
+              - generic [ref=e71]: Databases 101
+            - link "⚡ Caching Basics" [ref=e72] [cursor=pointer]:
+              - /url: /learn/beginner/caching-basics
+              - generic [ref=e73]: ⚡
+              - generic [ref=e74]: Caching Basics
+            - link "🔤 JSON & Data Formats" [ref=e75] [cursor=pointer]:
+              - /url: /learn/beginner/json-data-formats
+              - generic [ref=e76]: 🔤
+              - generic [ref=e77]: JSON & Data Formats
+        - generic [ref=e78]:
+          - button "IntermediateYellow Belt 0/8" [ref=e79] [cursor=pointer]:
+            - generic [ref=e81]: IntermediateYellow Belt
+            - generic [ref=e82]: 0/8
+            - img [ref=e83]
+          - generic [ref=e87]:
+            - link "⚖️ Load Balancing" [ref=e88] [cursor=pointer]:
+              - /url: /learn/intermediate/load-balancing
+              - generic [ref=e89]: ⚖️
+              - generic [ref=e90]: Load Balancing
+            - link "🐎 Database Scaling" [ref=e91] [cursor=pointer]:
+              - /url: /learn/intermediate/database-scaling
+              - generic [ref=e92]: 🐎
+              - generic [ref=e93]: Database Scaling
+            - link "🗂️ Caching Strategies" [ref=e94] [cursor=pointer]:
+              - /url: /learn/intermediate/caching-strategies
+              - generic [ref=e95]: 🗂️
+              - generic [ref=e96]: Caching Strategies
+            - link "🎫 Message Queues" [ref=e97] [cursor=pointer]:
+              - /url: /learn/intermediate/message-queues
+              - generic [ref=e98]: 🎫
+              - generic [ref=e99]: Message Queues
+            - link "🆚 SQL vs NoSQL" [ref=e100] [cursor=pointer]:
+              - /url: /learn/intermediate/sql-vs-nosql
+              - generic [ref=e101]: 🆚
+              - generic [ref=e102]: SQL vs NoSQL
+            - link "🛡️ API Gateway" [ref=e103] [cursor=pointer]:
+              - /url: /learn/intermediate/api-gateway
+              - generic [ref=e104]: 🛡️
+              - generic [ref=e105]: API Gateway
+            - link "🌍 Content Delivery Networks" [ref=e106] [cursor=pointer]:
+              - /url: /learn/intermediate/cdn
+              - generic [ref=e107]: 🌍
+              - generic [ref=e108]: Content Delivery Networks
+            - link "🚦 Rate Limiting" [ref=e109] [cursor=pointer]:
+              - /url: /learn/intermediate/rate-limiting
+              - generic [ref=e110]: 🚦
+              - generic [ref=e111]: Rate Limiting
+        - button "AdvancedGreen Belt 0/8" [ref=e113] [cursor=pointer]:
+          - generic [ref=e115]: AdvancedGreen Belt
+          - generic [ref=e116]: 0/8
+          - img [ref=e117]
+        - button "ExpertBlack Belt 0/7" [ref=e121] [cursor=pointer]:
+          - generic [ref=e123]: ExpertBlack Belt
+          - generic [ref=e124]: 0/7
+          - img [ref=e125]
+        - button "AI & AgentsRed Belt 0/17" [ref=e129] [cursor=pointer]:
+          - generic [ref=e131]: AI & AgentsRed Belt
+          - generic [ref=e132]: 0/17
+          - img [ref=e133]
+  - generic [ref=e136]:
+    - banner [ref=e137]:
+      - navigation [ref=e138]:
+        - link "Dojo" [ref=e140] [cursor=pointer]:
+          - /url: /
+        - generic [ref=e141]:
+          - img [ref=e142]
+          - link "Learn" [ref=e144] [cursor=pointer]:
+            - /url: /learn
+        - generic [ref=e145]:
+          - img [ref=e146]
+          - link "AI & Agents" [ref=e148] [cursor=pointer]:
+            - /url: /learn
+        - generic [ref=e149]:
+          - img [ref=e150]
+          - generic [ref=e152]: Structured Outputs & JSON Mode
+      - button "Mark Complete" [ref=e153] [cursor=pointer]:
+        - img [ref=e154]
+        - generic [ref=e156]: Mark Complete
+    - main [ref=e157]:
+      - article [ref=e160]:
+        - generic [ref=e161]:
+          - generic [ref=e162]:
+            - generic [ref=e163]: Red Belt
+            - generic [ref=e164]:
+              - img [ref=e165]
+              - text: 11 min
+            - generic [ref=e168]: LLMs
+            - generic [ref=e169]: API
+          - heading "🧩 Structured Outputs & JSON Mode" [level=1] [ref=e170]:
+            - generic [ref=e171]: 🧩
+            - generic [ref=e172]: Structured Outputs & JSON Mode
+          - paragraph [ref=e173]: Force the model to fill a form. Schemas, JSON mode, validate & retry.
+        - generic [ref=e175]:
+          - generic [ref=e176]: 📋
+          - generic [ref=e177]: Think of it like…
+          - generic [ref=e178]:
+            - text: Prose is lovely for humans and useless for code. The moment an LLM's output has to feed another program — a database, an API, the next step of an agent — you need it in a
+            - strong [ref=e179]: predictable shape
+            - text: . Structured outputs make the model fill a
+            - strong [ref=e180]: schema
+            - text: (a typed form) instead of free-styling, so you can trust result.party_size exists and is a number.
+          - button "2 more analogies" [ref=e181] [cursor=pointer]:
+            - img [ref=e182]
+            - text: 2 more analogies
+        - generic [ref=e184]:
+          - generic [ref=e186]:
+            - generic [ref=e187]: The problem
+            - heading "\"Sure, here's your data!\" is not data" [level=2] [ref=e188]
+            - paragraph [ref=e189]:
+              - text: "Ask a plain model for JSON and it might wrap it in chatty text, use the wrong key, add a trailing comma, or return a number as a word. Your parser explodes in production. The whole point of structured outputs is to remove that gamble: constrain generation so the result is"
+              - emphasis [ref=e190]: guaranteed
+              - text: to match a shape your code can rely on.
+          - generic [ref=e192]:
+            - generic [ref=e193]: Try it
+            - heading "Messy text in, clean fields out" [level=2] [ref=e194]
+            - generic [ref=e195]:
+              - generic [ref=e196]:
+                - button "Example 1" [ref=e197] [cursor=pointer]
+                - button "Example 2" [ref=e198] [cursor=pointer]
+              - generic [ref=e199]:
+                - generic [ref=e200]:
+                  - text: Messy human text
+                  - paragraph [ref=e201]: Book a table for 4 at 7pm tomorrow under Alex, somewhere quiet please.
+                - generic [ref=e202]: →
+                - generic [ref=e203]:
+                  - text: Validated JSON
+                  - paragraph [ref=e205]: Hit extract →
+              - button "Extract to schema" [ref=e206] [cursor=pointer]:
+                - img [ref=e207]
+                - text: Extract to schema
+              - paragraph [ref=e212]:
+                - text: Same idea powers classification, data entry from emails/PDFs, and the
+                - emphasis [ref=e213]: arguments
+                - text: of every tool call. The model fills a predefined form instead of writing a paragraph you'd have to parse with regex and prayer.
+          - generic [ref=e215]:
+            - generic [ref=e216]: How it's enforced
+            - heading "The validate-and-retry loop" [level=2] [ref=e217]
+            - paragraph [ref=e218]: You pass a schema alongside the prompt. The model emits JSON; a validator checks it against the schema. If it's malformed or out of range, you reject and ask again — the model rarely makes the same mistake twice. Only valid data reaches your app. Click a node.
+            - generic [ref=e219]:
+              - img [ref=e220]:
+                - generic [ref=e222]: + schema
+                - generic [ref=e224]: JSON
+                - generic [ref=e226]: valid ✓
+                - generic [ref=e228]: invalid
+              - generic [ref=e230] [cursor=pointer]:
+                - img [ref=e232]
+                - generic [ref=e234]: Prompt + Schema
+              - generic [ref=e236] [cursor=pointer]:
+                - img [ref=e238]
+                - generic [ref=e246]: LLM
+              - generic [ref=e248] [cursor=pointer]:
+                - img [ref=e250]
+                - generic [ref=e252]: Validator
+              - generic [ref=e254] [cursor=pointer]:
+                - img [ref=e256]
+                - generic [ref=e259]: Your app
+              - generic [ref=e261] [cursor=pointer]:
+                - img [ref=e263]
+                - generic [ref=e271]: Retry
+          - generic [ref=e273]:
+            - generic [ref=e274]: Where you'll use it
+            - heading "It's everywhere once you look" [level=2] [ref=e275]
+            - generic [ref=e276]:
+              - generic [ref=e277]:
+                - generic [ref=e278]:
+                  - generic [ref=e279]: 🏷️
+                  - generic [ref=e280]: Classification & routing
+                - paragraph [ref=e281]: Force the output to one of a fixed set of labels (enum). No 'well, it could be either…' — just a clean category.
+              - generic [ref=e282]:
+                - generic [ref=e283]:
+                  - generic [ref=e284]: 📤
+                  - generic [ref=e285]: Extraction
+                - paragraph [ref=e286]: Pull fields out of emails, PDFs, or chat into typed records — the demo above. The death of manual data entry.
+              - generic [ref=e287]:
+                - generic [ref=e288]:
+                  - generic [ref=e289]: 🛠️
+                  - generic [ref=e290]: Tool arguments
+                - paragraph [ref=e291]: "Every function call is structured output: the model fills the tool's parameter schema. Same machinery."
+              - generic [ref=e292]:
+                - generic [ref=e293]:
+                  - generic [ref=e294]: 🧱
+                  - generic [ref=e295]: UI generation
+                - paragraph [ref=e296]: Return a JSON spec your frontend renders into cards, forms, or charts — generative UI without free-text parsing.
+            - generic [ref=e297]:
+              - img [ref=e298]
+              - paragraph [ref=e300]:
+                - text: "Tip: keep schemas"
+                - strong [ref=e301]: small and flat
+                - text: ", name fields clearly, and use enums for fixed choices. The model follows a tight, well-described schema far more reliably than a sprawling nested one."
+          - generic [ref=e303]:
+            - generic [ref=e305]:
+              - img [ref=e306]
+              - heading "Belt Check" [level=3] [ref=e312]
+            - generic [ref=e318]:
+              - paragraph [ref=e319]:
+                - generic [ref=e320]: Q1.
+                - text: Why ask an LLM for structured output instead of free text?
+              - generic [ref=e321]:
+                - button "A It's cheaper" [ref=e322] [cursor=pointer]:
+                  - generic [ref=e323]: A
+                  - generic [ref=e324]: It's cheaper
+                - button "B So another program can reliably consume it — guaranteed fields, types, and shape" [ref=e325] [cursor=pointer]:
+                  - generic [ref=e326]: B
+                  - generic [ref=e327]: So another program can reliably consume it — guaranteed fields, types, and shape
+                - button "C It uses fewer tokens always" [ref=e328] [cursor=pointer]:
+                  - generic [ref=e329]: C
+                  - generic [ref=e330]: It uses fewer tokens always
+                - button "D Free text is impossible" [ref=e331] [cursor=pointer]:
+                  - generic [ref=e332]: D
+                  - generic [ref=e333]: Free text is impossible
+        - generic [ref=e334]:
+          - generic [ref=e335]:
+            - paragraph [ref=e336]: Got it? Lock it in.
+            - button "Mark Complete" [ref=e337] [cursor=pointer]:
+              - img [ref=e338]
+              - text: Mark Complete
+          - navigation [ref=e340]:
+            - link "Previous · P 🪜 Reasoning & Advanced Prompting" [ref=e341] [cursor=pointer]:
+              - /url: /learn/ai/reasoning-prompting
+              - img [ref=e342]
+              - generic [ref=e344]:
+                - generic [ref=e345]: Previous · P
+                - generic [ref=e346]: 🪜 Reasoning & Advanced Prompting
+            - link "Next · N Retrieval-Augmented Generation 📚" [ref=e347] [cursor=pointer]:
+              - /url: /learn/ai/rag
+              - generic [ref=e348]:
+                - generic [ref=e349]: Next · N
+                - generic [ref=e350]: Retrieval-Augmented Generation 📚
+              - img [ref=e351]
+          - paragraph [ref=e353]:
+            - img [ref=e354]
+            - text: "Tip: press"
+            - generic [ref=e356]: "N"
+            - text: /
+            - generic [ref=e357]: P
+            - text: to navigate

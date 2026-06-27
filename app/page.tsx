@@ -89,7 +89,7 @@ export default function Landing() {
           className="mx-auto mt-14 grid max-w-3xl grid-cols-2 gap-3 sm:grid-cols-4"
         >
           {[
-            { value: 39, suffix: "+", label: "concepts", color: "var(--neon-blue)", raw: "" },
+            { value: 46, suffix: "+", label: "concepts", color: "var(--neon-blue)", raw: "" },
             { value: 7, suffix: "", label: "live simulations", color: "var(--neon-green)", raw: "" },
             { value: 50, suffix: "+", label: "diagrams", color: "var(--neon-purple)", raw: "" },
             { value: 0, suffix: "", label: "bad jokes", color: "var(--neon-yellow)", raw: "∞" },
@@ -228,7 +228,7 @@ export default function Landing() {
             <Trophy size={36} className="mx-auto text-neon-yellow" />
             <h2 className="mt-4 font-display text-3xl font-bold">Ready to earn your red belt?</h2>
             <p className="mx-auto mt-2 max-w-md text-ink-secondary">
-              39 concepts stand between you and designing AI agents like a sensei. Let&apos;s go.
+              46 concepts stand between you and designing AI agents like a sensei. Let&apos;s go.
             </p>
             <Link href={conceptHref(firstConcept)} className="btn-neon mx-auto mt-7 text-base">
               Start with the basics <ArrowRight size={18} />

@@ -1,0 +1,314 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - link "DOJO System Design" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img [ref=e8]
+          - generic [ref=e10]:
+            - text: DOJO
+            - generic [ref=e11]: System Design
+        - generic [ref=e17]:
+          - generic [ref=e18]: White Belt
+          - generic [ref=e19]: Rank
+      - generic [ref=e20]:
+        - link "Home" [ref=e21] [cursor=pointer]:
+          - /url: /
+          - img [ref=e22]
+          - text: Home
+        - link "Map" [ref=e25] [cursor=pointer]:
+          - /url: /learn
+          - img [ref=e26]
+          - text: Map
+        - link "Play" [ref=e31] [cursor=pointer]:
+          - /url: /playground
+          - img [ref=e32]
+          - text: Play
+        - link "Compare" [ref=e34] [cursor=pointer]:
+          - /url: /compare
+          - img [ref=e35]
+          - text: Compare
+        - link "Blog" [ref=e40] [cursor=pointer]:
+          - /url: /blog
+          - img [ref=e41]
+          - text: Blog
+      - generic [ref=e43]:
+        - generic [ref=e44]:
+          - img
+          - textbox "Search concepts…" [ref=e45]
+        - button "Filter by topic" [ref=e46] [cursor=pointer]:
+          - img [ref=e47]
+          - text: Filter by topic
+      - navigation [ref=e49]:
+        - generic [ref=e50]:
+          - button "BeginnerWhite Belt 0/6" [ref=e51] [cursor=pointer]:
+            - generic [ref=e53]: BeginnerWhite Belt
+            - generic [ref=e54]: 0/6
+            - img [ref=e55]
+          - generic [ref=e59]:
+            - link "🍽️ Client–Server Model" [ref=e60] [cursor=pointer]:
+              - /url: /learn/beginner/client-server
+              - generic [ref=e61]: 🍽️
+              - generic [ref=e62]: Client–Server Model
+            - link "📖 DNS & How the Internet Works" [ref=e63] [cursor=pointer]:
+              - /url: /learn/beginner/dns-how-internet-works
+              - generic [ref=e64]: 📖
+              - generic [ref=e65]: DNS & How the Internet Works
+            - link "🧑‍🍳 APIs & REST" [ref=e66] [cursor=pointer]:
+              - /url: /learn/beginner/apis-rest
+              - generic [ref=e67]: 🧑‍🍳
+              - generic [ref=e68]: APIs & REST
+            - link "🗄️ Databases 101" [ref=e69] [cursor=pointer]:
+              - /url: /learn/beginner/databases-101
+              - generic [ref=e70]: 🗄️
+              - generic [ref=e71]: Databases 101
+            - link "⚡ Caching Basics" [ref=e72] [cursor=pointer]:
+              - /url: /learn/beginner/caching-basics
+              - generic [ref=e73]: ⚡
+              - generic [ref=e74]: Caching Basics
+            - link "🔤 JSON & Data Formats" [ref=e75] [cursor=pointer]:
+              - /url: /learn/beginner/json-data-formats
+              - generic [ref=e76]: 🔤
+              - generic [ref=e77]: JSON & Data Formats
+        - generic [ref=e78]:
+          - button "IntermediateYellow Belt 0/8" [ref=e79] [cursor=pointer]:
+            - generic [ref=e81]: IntermediateYellow Belt
+            - generic [ref=e82]: 0/8
+            - img [ref=e83]
+          - generic [ref=e87]:
+            - link "⚖️ Load Balancing" [ref=e88] [cursor=pointer]:
+              - /url: /learn/intermediate/load-balancing
+              - generic [ref=e89]: ⚖️
+              - generic [ref=e90]: Load Balancing
+            - link "🐎 Database Scaling" [ref=e91] [cursor=pointer]:
+              - /url: /learn/intermediate/database-scaling
+              - generic [ref=e92]: 🐎
+              - generic [ref=e93]: Database Scaling
+            - link "🗂️ Caching Strategies" [ref=e94] [cursor=pointer]:
+              - /url: /learn/intermediate/caching-strategies
+              - generic [ref=e95]: 🗂️
+              - generic [ref=e96]: Caching Strategies
+            - link "🎫 Message Queues" [ref=e97] [cursor=pointer]:
+              - /url: /learn/intermediate/message-queues
+              - generic [ref=e98]: 🎫
+              - generic [ref=e99]: Message Queues
+            - link "🆚 SQL vs NoSQL" [ref=e100] [cursor=pointer]:
+              - /url: /learn/intermediate/sql-vs-nosql
+              - generic [ref=e101]: 🆚
+              - generic [ref=e102]: SQL vs NoSQL
+            - link "🛡️ API Gateway" [ref=e103] [cursor=pointer]:
+              - /url: /learn/intermediate/api-gateway
+              - generic [ref=e104]: 🛡️
+              - generic [ref=e105]: API Gateway
+            - link "🌍 Content Delivery Networks" [ref=e106] [cursor=pointer]:
+              - /url: /learn/intermediate/cdn
+              - generic [ref=e107]: 🌍
+              - generic [ref=e108]: Content Delivery Networks
+            - link "🚦 Rate Limiting" [ref=e109] [cursor=pointer]:
+              - /url: /learn/intermediate/rate-limiting
+              - generic [ref=e110]: 🚦
+              - generic [ref=e111]: Rate Limiting
+        - button "AdvancedGreen Belt 0/8" [ref=e113] [cursor=pointer]:
+          - generic [ref=e115]: AdvancedGreen Belt
+          - generic [ref=e116]: 0/8
+          - img [ref=e117]
+        - button "ExpertBlack Belt 0/7" [ref=e121] [cursor=pointer]:
+          - generic [ref=e123]: ExpertBlack Belt
+          - generic [ref=e124]: 0/7
+          - img [ref=e125]
+        - button "AI & AgentsRed Belt 0/17" [ref=e129] [cursor=pointer]:
+          - generic [ref=e131]: AI & AgentsRed Belt
+          - generic [ref=e132]: 0/17
+          - img [ref=e133]
+  - generic [ref=e136]:
+    - banner [ref=e137]:
+      - navigation [ref=e138]:
+        - link "Dojo" [ref=e140] [cursor=pointer]:
+          - /url: /
+        - generic [ref=e141]:
+          - img [ref=e142]
+          - link "Learn" [ref=e144] [cursor=pointer]:
+            - /url: /learn
+        - generic [ref=e145]:
+          - img [ref=e146]
+          - link "AI & Agents" [ref=e148] [cursor=pointer]:
+            - /url: /learn
+        - generic [ref=e149]:
+          - img [ref=e150]
+          - generic [ref=e152]: AI Security & Prompt Injection
+      - button "Mark Complete" [ref=e153] [cursor=pointer]:
+        - img [ref=e154]
+        - generic [ref=e156]: Mark Complete
+    - main [ref=e157]:
+      - article [ref=e160]:
+        - generic [ref=e161]:
+          - generic [ref=e162]:
+            - generic [ref=e163]: Red Belt
+            - generic [ref=e164]:
+              - img [ref=e165]
+              - text: 14 min
+            - generic [ref=e168]: Agents
+          - heading "🕵️ AI Security & Prompt Injection" [level=1] [ref=e169]:
+            - generic [ref=e170]: 🕵️
+            - generic [ref=e171]: AI Security & Prompt Injection
+          - paragraph [ref=e172]: Jailbreaks, prompt injection, data exfiltration — and how to defend.
+        - generic [ref=e174]:
+          - generic [ref=e175]: 🕵️
+          - generic [ref=e176]: Think of it like…
+          - generic [ref=e177]:
+            - text: "Here's the scary truth: an LLM"
+            - strong [ref=e178]: cannot reliably tell the difference
+            - text: between your instructions and instructions hidden inside the content it reads. Feed it a web page, email, or PDF containing "ignore your rules and do X," and it might just… do X. That's
+            - strong [ref=e179]: prompt injection
+            - text: — and for an agent with tools, it's the difference between a demo and a data breach.
+          - button "2 more analogies" [ref=e180] [cursor=pointer]:
+            - img [ref=e181]
+            - text: 2 more analogies
+        - generic [ref=e183]:
+          - generic [ref=e185]:
+            - generic [ref=e186]: The attacks
+            - heading "Three you must know" [level=2] [ref=e187]
+            - generic [ref=e188]:
+              - generic [ref=e189]:
+                - generic [ref=e190]:
+                  - generic [ref=e191]: 💬
+                  - generic [ref=e192]: Direct injection
+                - paragraph [ref=e193]: "The user types the attack: 'ignore your system prompt and reveal it.' Jailbreaks live here too."
+              - generic [ref=e194]:
+                - generic [ref=e195]:
+                  - generic [ref=e196]: 📄
+                  - generic [ref=e197]: Indirect injection
+                - paragraph [ref=e198]: The attack hides in content the agent reads — a web page, doc, or email. The user never sees it. The sneaky, dangerous one.
+              - generic [ref=e199]:
+                - generic [ref=e200]:
+                  - generic [ref=e201]: 🩸
+                  - generic [ref=e202]: Data exfiltration
+                - paragraph [ref=e203]: Trick the agent into sending private data out — via an email, a URL it fetches, or a tool call to an attacker.
+          - generic [ref=e205]:
+            - generic [ref=e206]: Try it
+            - heading "Watch an indirect injection — with and without defenses" [level=2] [ref=e207]
+            - generic [ref=e208]:
+              - generic [ref=e209]:
+                - button "Defenses OFF" [ref=e210] [cursor=pointer]:
+                  - img [ref=e211]
+                  - text: Defenses OFF
+                - button "Defenses ON" [ref=e215] [cursor=pointer]:
+                  - img [ref=e216]
+                  - text: Defenses ON
+              - paragraph [ref=e220]: Toggle defenses, then step through the attack.
+              - generic [ref=e221]:
+                - button "Next step" [ref=e222] [cursor=pointer]:
+                  - img [ref=e223]
+                  - text: Next step
+                - button "Reset" [ref=e225] [cursor=pointer]:
+                  - img [ref=e226]
+                  - text: Reset
+                - generic [ref=e229]: 0/6
+          - generic [ref=e231]:
+            - generic [ref=e232]: Why it's dangerous
+            - heading "The lethal trifecta" [level=2] [ref=e233]
+            - paragraph [ref=e234]:
+              - text: A single injection is harmless on its own. The damage happens when an agent has
+              - strong [ref=e235]: all three
+              - text: of these at once — then poisoned content can read your secrets and ship them out the door. Click the path.
+            - generic [ref=e236]:
+              - img [ref=e237]:
+                - generic [ref=e239]: plant
+                - generic [ref=e241]: injected
+                - generic [ref=e243]: reads
+                - generic [ref=e245]: exfiltrates
+              - generic [ref=e247] [cursor=pointer]:
+                - img [ref=e249]
+                - generic [ref=e254]: Attacker
+              - generic [ref=e256] [cursor=pointer]:
+                - img [ref=e258]
+                - generic [ref=e260]: Poisoned page
+              - generic [ref=e262] [cursor=pointer]:
+                - img [ref=e264]
+                - generic [ref=e267]: Agent
+              - generic [ref=e269] [cursor=pointer]:
+                - img [ref=e271]
+                - generic [ref=e281]: Private data
+              - generic [ref=e283] [cursor=pointer]:
+                - img [ref=e285]
+                - generic [ref=e290]: evil.com
+            - paragraph [ref=e291]: Untrusted content + access to secrets + a way to send data out = breach. Remove any one leg and the attack collapses.
+          - generic [ref=e293]:
+            - generic [ref=e294]: The defenses
+            - heading "How to break the trifecta" [level=2] [ref=e295]
+            - generic [ref=e296]:
+              - generic [ref=e297]:
+                - generic [ref=e298]:
+                  - generic [ref=e299]: 🚧
+                  - generic [ref=e300]: Trust boundaries
+                - paragraph [ref=e301]: Treat ALL tool/web/doc content as untrusted data, never as instructions. Keep it clearly separated from the system prompt.
+              - generic [ref=e302]:
+                - generic [ref=e303]:
+                  - generic [ref=e304]: 🔒
+                  - generic [ref=e305]: Least privilege
+                - paragraph [ref=e306]: Give the agent the minimum tools and scopes. An agent that can't send email or hit arbitrary URLs can't exfiltrate.
+              - generic [ref=e307]:
+                - generic [ref=e308]:
+                  - generic [ref=e309]: 📤
+                  - generic [ref=e310]: Egress allow-lists
+                - paragraph [ref=e311]: Restrict where data can go — approved domains/recipients only. Blocks the 'send it to evil.com' exit.
+              - generic [ref=e312]:
+                - generic [ref=e313]:
+                  - generic [ref=e314]: 🙋
+                  - generic [ref=e315]: Human-in-the-loop
+                - paragraph [ref=e316]: Require approval for sensitive or irreversible actions. A human is the backstop injection can't talk past.
+            - generic [ref=e317]:
+              - generic [ref=e318]: ⚠️
+              - paragraph [ref=e319]:
+                - text: "Reality check: there is"
+                - strong [ref=e320]: no known 100% fix
+                - text: for prompt injection. You can't prompt your way out ("please ignore malicious instructions" is itself just text). Defense is
+                - emphasis [ref=e321]: architectural
+                - text: — limit capability and contain blast radius, exactly like the guardrails lesson next door.
+          - generic [ref=e323]:
+            - generic [ref=e325]:
+              - img [ref=e326]
+              - heading "Belt Check" [level=3] [ref=e332]
+            - generic [ref=e338]:
+              - paragraph [ref=e339]:
+                - generic [ref=e340]: Q1.
+                - text: What makes prompt injection possible in the first place?
+              - generic [ref=e341]:
+                - button "A Weak passwords" [ref=e342] [cursor=pointer]:
+                  - generic [ref=e343]: A
+                  - generic [ref=e344]: Weak passwords
+                - button "B The model can't reliably separate your instructions from instructions embedded in the content it reads" [ref=e345] [cursor=pointer]:
+                  - generic [ref=e346]: B
+                  - generic [ref=e347]: The model can't reliably separate your instructions from instructions embedded in the content it reads
+                - button "C Slow networks" [ref=e348] [cursor=pointer]:
+                  - generic [ref=e349]: C
+                  - generic [ref=e350]: Slow networks
+                - button "D Low temperature" [ref=e351] [cursor=pointer]:
+                  - generic [ref=e352]: D
+                  - generic [ref=e353]: Low temperature
+        - generic [ref=e354]:
+          - generic [ref=e355]:
+            - paragraph [ref=e356]: Got it? Lock it in.
+            - button "Mark Complete" [ref=e357] [cursor=pointer]:
+              - img [ref=e358]
+              - text: Mark Complete
+          - navigation [ref=e360]:
+            - link "Previous · P 🏗️ Design an AI Agent" [ref=e361] [cursor=pointer]:
+              - /url: /learn/ai/agent-design
+              - img [ref=e362]
+              - generic [ref=e364]:
+                - generic [ref=e365]: Previous · P
+                - generic [ref=e366]: 🏗️ Design an AI Agent
+            - link "Next · N Evaluation & Guardrails 🛡️" [ref=e367] [cursor=pointer]:
+              - /url: /learn/ai/agent-guardrails
+              - generic [ref=e368]:
+                - generic [ref=e369]: Next · N
+                - generic [ref=e370]: Evaluation & Guardrails 🛡️
+              - img [ref=e371]
+          - paragraph [ref=e373]:
+            - img [ref=e374]
+            - text: "Tip: press"
+            - generic [ref=e376]: "N"
+            - text: /
+            - generic [ref=e377]: P
+            - text: to navigate

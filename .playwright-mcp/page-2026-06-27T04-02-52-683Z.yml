@@ -1,0 +1,303 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - link "DOJO System Design" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img [ref=e8]
+          - generic [ref=e10]:
+            - text: DOJO
+            - generic [ref=e11]: System Design
+        - generic [ref=e17]:
+          - generic [ref=e18]: White Belt
+          - generic [ref=e19]: Rank
+      - generic [ref=e20]:
+        - link "Home" [ref=e21] [cursor=pointer]:
+          - /url: /
+          - img [ref=e22]
+          - text: Home
+        - link "Map" [ref=e25] [cursor=pointer]:
+          - /url: /learn
+          - img [ref=e26]
+          - text: Map
+        - link "Play" [ref=e31] [cursor=pointer]:
+          - /url: /playground
+          - img [ref=e32]
+          - text: Play
+        - link "Compare" [ref=e34] [cursor=pointer]:
+          - /url: /compare
+          - img [ref=e35]
+          - text: Compare
+        - link "Blog" [ref=e40] [cursor=pointer]:
+          - /url: /blog
+          - img [ref=e41]
+          - text: Blog
+      - generic [ref=e43]:
+        - generic [ref=e44]:
+          - img
+          - textbox "Search concepts…" [ref=e45]
+        - button "Filter by topic" [ref=e46] [cursor=pointer]:
+          - img [ref=e47]
+          - text: Filter by topic
+      - navigation [ref=e49]:
+        - generic [ref=e50]:
+          - button "BeginnerWhite Belt 0/6" [ref=e51] [cursor=pointer]:
+            - generic [ref=e53]: BeginnerWhite Belt
+            - generic [ref=e54]: 0/6
+            - img [ref=e55]
+          - generic [ref=e59]:
+            - link "🍽️ Client–Server Model" [ref=e60] [cursor=pointer]:
+              - /url: /learn/beginner/client-server
+              - generic [ref=e61]: 🍽️
+              - generic [ref=e62]: Client–Server Model
+            - link "📖 DNS & How the Internet Works" [ref=e63] [cursor=pointer]:
+              - /url: /learn/beginner/dns-how-internet-works
+              - generic [ref=e64]: 📖
+              - generic [ref=e65]: DNS & How the Internet Works
+            - link "🧑‍🍳 APIs & REST" [ref=e66] [cursor=pointer]:
+              - /url: /learn/beginner/apis-rest
+              - generic [ref=e67]: 🧑‍🍳
+              - generic [ref=e68]: APIs & REST
+            - link "🗄️ Databases 101" [ref=e69] [cursor=pointer]:
+              - /url: /learn/beginner/databases-101
+              - generic [ref=e70]: 🗄️
+              - generic [ref=e71]: Databases 101
+            - link "⚡ Caching Basics" [ref=e72] [cursor=pointer]:
+              - /url: /learn/beginner/caching-basics
+              - generic [ref=e73]: ⚡
+              - generic [ref=e74]: Caching Basics
+            - link "🔤 JSON & Data Formats" [ref=e75] [cursor=pointer]:
+              - /url: /learn/beginner/json-data-formats
+              - generic [ref=e76]: 🔤
+              - generic [ref=e77]: JSON & Data Formats
+        - generic [ref=e78]:
+          - button "IntermediateYellow Belt 0/8" [ref=e79] [cursor=pointer]:
+            - generic [ref=e81]: IntermediateYellow Belt
+            - generic [ref=e82]: 0/8
+            - img [ref=e83]
+          - generic [ref=e87]:
+            - link "⚖️ Load Balancing" [ref=e88] [cursor=pointer]:
+              - /url: /learn/intermediate/load-balancing
+              - generic [ref=e89]: ⚖️
+              - generic [ref=e90]: Load Balancing
+            - link "🐎 Database Scaling" [ref=e91] [cursor=pointer]:
+              - /url: /learn/intermediate/database-scaling
+              - generic [ref=e92]: 🐎
+              - generic [ref=e93]: Database Scaling
+            - link "🗂️ Caching Strategies" [ref=e94] [cursor=pointer]:
+              - /url: /learn/intermediate/caching-strategies
+              - generic [ref=e95]: 🗂️
+              - generic [ref=e96]: Caching Strategies
+            - link "🎫 Message Queues" [ref=e97] [cursor=pointer]:
+              - /url: /learn/intermediate/message-queues
+              - generic [ref=e98]: 🎫
+              - generic [ref=e99]: Message Queues
+            - link "🆚 SQL vs NoSQL" [ref=e100] [cursor=pointer]:
+              - /url: /learn/intermediate/sql-vs-nosql
+              - generic [ref=e101]: 🆚
+              - generic [ref=e102]: SQL vs NoSQL
+            - link "🛡️ API Gateway" [ref=e103] [cursor=pointer]:
+              - /url: /learn/intermediate/api-gateway
+              - generic [ref=e104]: 🛡️
+              - generic [ref=e105]: API Gateway
+            - link "🌍 Content Delivery Networks" [ref=e106] [cursor=pointer]:
+              - /url: /learn/intermediate/cdn
+              - generic [ref=e107]: 🌍
+              - generic [ref=e108]: Content Delivery Networks
+            - link "🚦 Rate Limiting" [ref=e109] [cursor=pointer]:
+              - /url: /learn/intermediate/rate-limiting
+              - generic [ref=e110]: 🚦
+              - generic [ref=e111]: Rate Limiting
+        - button "AdvancedGreen Belt 0/8" [ref=e113] [cursor=pointer]:
+          - generic [ref=e115]: AdvancedGreen Belt
+          - generic [ref=e116]: 0/8
+          - img [ref=e117]
+        - button "ExpertBlack Belt 0/7" [ref=e121] [cursor=pointer]:
+          - generic [ref=e123]: ExpertBlack Belt
+          - generic [ref=e124]: 0/7
+          - img [ref=e125]
+        - button "AI & AgentsRed Belt 0/17" [ref=e129] [cursor=pointer]:
+          - generic [ref=e131]: AI & AgentsRed Belt
+          - generic [ref=e132]: 0/17
+          - img [ref=e133]
+  - generic [ref=e136]:
+    - banner [ref=e137]:
+      - navigation [ref=e138]:
+        - link "Dojo" [ref=e140] [cursor=pointer]:
+          - /url: /
+        - generic [ref=e141]:
+          - img [ref=e142]
+          - link "Learn" [ref=e144] [cursor=pointer]:
+            - /url: /learn
+        - generic [ref=e145]:
+          - img [ref=e146]
+          - link "AI & Agents" [ref=e148] [cursor=pointer]:
+            - /url: /learn
+        - generic [ref=e149]:
+          - img [ref=e150]
+          - generic [ref=e152]: Fine-tuning vs RAG vs Prompting
+      - button "Mark Complete" [ref=e153] [cursor=pointer]:
+        - img [ref=e154]
+        - generic [ref=e156]: Mark Complete
+    - main [ref=e157]:
+      - article [ref=e160]:
+        - generic [ref=e161]:
+          - generic [ref=e162]:
+            - generic [ref=e163]: Red Belt
+            - generic [ref=e164]:
+              - img [ref=e165]
+              - text: 13 min
+            - generic [ref=e168]: LLMs
+          - heading "🎛️ Fine-tuning vs RAG vs Prompting" [level=1] [ref=e169]:
+            - generic [ref=e170]: 🎛️
+            - generic [ref=e171]: Fine-tuning vs RAG vs Prompting
+          - paragraph [ref=e172]: The customization decision tree. Teach style, or feed knowledge?
+        - generic [ref=e174]:
+          - generic [ref=e175]: 🎓
+          - generic [ref=e176]: Think of it like…
+          - generic [ref=e177]:
+            - text: "\"The model isn't good enough\" has three very different fixes, and picking the wrong one wastes months. The trick is to diagnose the gap first: is it a"
+            - strong [ref=e178]: knowledge
+            - text: problem (it doesn't
+            - emphasis [ref=e179]: know
+            - text: something) or a
+            - strong [ref=e180]: behavior
+            - text: problem (it doesn't
+            - emphasis [ref=e181]: act
+            - text: the way you want)? Knowledge → RAG. Behavior → prompting, then fine-tuning.
+          - button "2 more analogies" [ref=e182] [cursor=pointer]:
+            - img [ref=e183]
+            - text: 2 more analogies
+        - generic [ref=e185]:
+          - generic [ref=e187]:
+            - generic [ref=e188]: The mental model
+            - heading "Three different levers on the same model" [level=2] [ref=e189]
+            - paragraph [ref=e190]:
+              - text: Each technique touches a different part of the system. Prompting shapes the
+              - emphasis [ref=e191]: input
+              - text: . RAG enriches the
+              - emphasis [ref=e192]: context
+              - text: with retrieved facts. Fine-tuning alters the
+              - emphasis [ref=e193]: weights
+              - text: themselves. Click each lever.
+            - generic [ref=e194]:
+              - img [ref=e195]:
+                - generic [ref=e197]: input
+                - generic [ref=e199]: context
+                - generic [ref=e201]: retrain
+              - generic [ref=e203] [cursor=pointer]:
+                - img [ref=e205]
+                - generic [ref=e207]: Prompt
+              - generic [ref=e209] [cursor=pointer]:
+                - img [ref=e211]
+                - generic [ref=e221]: Retrieved docs
+              - generic [ref=e223] [cursor=pointer]:
+                - img [ref=e225]
+                - generic [ref=e233]: LLM
+              - generic [ref=e235] [cursor=pointer]:
+                - img [ref=e237]
+                - generic [ref=e239]: Fine-tune weights
+              - generic [ref=e241] [cursor=pointer]:
+                - img [ref=e243]
+                - generic [ref=e245]: Output
+          - generic [ref=e247]:
+            - generic [ref=e248]: Try it
+            - heading "Diagnose your gap, get a recommendation" [level=2] [ref=e249]
+            - generic [ref=e250]:
+              - generic [ref=e251]: Step 1
+              - paragraph [ref=e252]: What kind of gap are you trying to close?
+              - generic [ref=e253]:
+                - button "📚 Knowledge — it lacks facts (our docs, fresh data)" [ref=e254] [cursor=pointer]
+                - button "🎭 Behavior — wrong format, tone, or style" [ref=e255] [cursor=pointer]
+                - button "🔀 Both" [ref=e256] [cursor=pointer]
+          - generic [ref=e258]:
+            - generic [ref=e259]: Side by side
+            - heading "The cheat sheet" [level=2] [ref=e260]
+            - table [ref=e262]:
+              - rowgroup [ref=e263]:
+                - row "Prompting RAG Fine-tuning" [ref=e264]:
+                  - columnheader [ref=e265]
+                  - columnheader "Prompting" [ref=e266]
+                  - columnheader "RAG" [ref=e267]
+                  - columnheader "Fine-tuning" [ref=e268]
+              - rowgroup [ref=e269]:
+                - row "What it changes The input you send The context (adds retrieved facts) The model's weights" [ref=e270]:
+                  - cell "What it changes" [ref=e271]
+                  - cell "The input you send" [ref=e272]
+                  - cell "The context (adds retrieved facts)" [ref=e273]
+                  - cell "The model's weights" [ref=e274]
+                - row "Best for Behavior, format, tone Knowledge, fresh & private data Consistent specialized skill at scale" [ref=e275]:
+                  - cell "Best for" [ref=e276]
+                  - cell "Behavior, format, tone" [ref=e277]
+                  - cell "Knowledge, fresh & private data" [ref=e278]
+                  - cell "Consistent specialized skill at scale" [ref=e279]
+                - row "Cost & effort ≈ free, instant Medium (build a pipeline) High (data + training + upkeep)" [ref=e280]:
+                  - cell "Cost & effort" [ref=e281]
+                  - cell "≈ free, instant" [ref=e282]
+                  - cell "Medium (build a pipeline)" [ref=e283]
+                  - cell "High (data + training + upkeep)" [ref=e284]
+                - row "Update facts by Editing the prompt Updating the index (no retrain) Re-training (slow)" [ref=e285]:
+                  - cell "Update facts by" [ref=e286]
+                  - cell "Editing the prompt" [ref=e287]
+                  - cell "Updating the index (no retrain)" [ref=e288]
+                  - cell "Re-training (slow)" [ref=e289]
+                - row "Gives citations? No Yes 🎯 No" [ref=e290]:
+                  - cell "Gives citations?" [ref=e291]
+                  - cell "No" [ref=e292]
+                  - cell "Yes 🎯" [ref=e293]
+                  - cell "No" [ref=e294]
+            - paragraph [ref=e295]:
+              - text: "The golden order:"
+              - strong [ref=e296]: prompt
+              - text: →
+              - strong [ref=e297]: RAG
+              - text: →
+              - strong [ref=e298]: fine-tune
+              - text: . Climb the ladder only when the cheaper rung genuinely fails. Most "we need to fine-tune" instincts are solved by a better prompt or better retrieval.
+          - generic [ref=e300]:
+            - generic [ref=e302]:
+              - img [ref=e303]
+              - heading "Belt Check" [level=3] [ref=e309]
+            - generic [ref=e315]:
+              - paragraph [ref=e316]:
+                - generic [ref=e317]: Q1.
+                - text: Your bot needs to answer from your company's internal docs. Best first tool?
+              - generic [ref=e318]:
+                - button "A Fine-tuning" [ref=e319] [cursor=pointer]:
+                  - generic [ref=e320]: A
+                  - generic [ref=e321]: Fine-tuning
+                - button "B RAG" [ref=e322] [cursor=pointer]:
+                  - generic [ref=e323]: B
+                  - generic [ref=e324]: RAG
+                - button "C A higher temperature" [ref=e325] [cursor=pointer]:
+                  - generic [ref=e326]: C
+                  - generic [ref=e327]: A higher temperature
+                - button "D A bigger context window only" [ref=e328] [cursor=pointer]:
+                  - generic [ref=e329]: D
+                  - generic [ref=e330]: A bigger context window only
+        - generic [ref=e331]:
+          - generic [ref=e332]:
+            - paragraph [ref=e333]: Got it? Lock it in.
+            - button "Mark Complete" [ref=e334] [cursor=pointer]:
+              - img [ref=e335]
+              - text: Mark Complete
+          - navigation [ref=e337]:
+            - link "Previous · P 📚 Retrieval-Augmented Generation" [ref=e338] [cursor=pointer]:
+              - /url: /learn/ai/rag
+              - img [ref=e339]
+              - generic [ref=e341]:
+                - generic [ref=e342]: Previous · P
+                - generic [ref=e343]: 📚 Retrieval-Augmented Generation
+            - link "Next · N Multimodal & Generative Media 👁️" [ref=e344] [cursor=pointer]:
+              - /url: /learn/ai/multimodal
+              - generic [ref=e345]:
+                - generic [ref=e346]: Next · N
+                - generic [ref=e347]: Multimodal & Generative Media 👁️
+              - img [ref=e348]
+          - paragraph [ref=e350]:
+            - img [ref=e351]
+            - text: "Tip: press"
+            - generic [ref=e353]: "N"
+            - text: /
+            - generic [ref=e354]: P
+            - text: to navigate
