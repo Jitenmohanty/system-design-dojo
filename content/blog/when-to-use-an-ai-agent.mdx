@@ -1,0 +1,104 @@
+---
+title: "When to actually use an AI agent (and when a script is fine)"
+description: "Agents are the right tool for a narrow, valuable slice of problems: messy, judgment-heavy manual work that a fixed script can't handle. Here's a decision framework, real before/after automations, and the trap of reaching for an agent when an if-statement would do."
+date: "2026-06-27"
+author: "System Design Dojo"
+emoji: "🤖"
+accent: "var(--neon-pink)"
+tags: ["ai", "agents", "automation"]
+minutes: 9
+---
+
+Every team has a list of soul-crushing manual tasks: triaging the same support tickets, copying numbers between two systems that refuse to talk, reading a long doc to pull out three facts, chasing down why a report doesn't reconcile. The pitch for [AI agents](/learn/ai/ai-agents) is intoxicating: *point one at the task and it just... does it.*
+
+Sometimes that's exactly right. Often it's a `for` loop with a thousand-dollar API bill attached. The skill isn't knowing how to build an agent — it's knowing **when the task actually needs one.**
+
+## What an agent automates that a script can't
+
+A script automates a task whose steps you can write down in advance. `if status == 'paid', send receipt`. Deterministic, cheap, debuggable. If your manual task is really just "the same five steps every time," **you don't have an AI problem — you have a cron job you haven't written yet.**
+
+An [agent](/learn/ai/ai-agents) earns its keep when the task has the three properties a script chokes on:
+
+- **Judgment** — each case needs a decision a fixed rule can't capture. *"Is this a refund request or a complaint about a refund?"*
+- **Unstructured input** — the work starts from messy human language, documents, or screenshots, not clean fields. This is where the [LLM](/learn/ai/llm-fundamentals) earns its seat.
+- **An open-ended path** — you can't pre-list the steps because they depend on what's found along the way. *Look it up → if X, check Y → otherwise escalate.* That branching is the [agent loop](/learn/ai/ai-agents): think, act, observe, repeat.
+
+<Callout type="tip" title="The one-line test">
+If you can write the steps as a flowchart that never changes, build the flowchart. If the steps depend on judgment about messy input, that's where an agent starts to pay off.
+</Callout>
+
+## The before / after that makes it click
+
+Take support ticket triage — the canonical manual grind. The "before" is a human reading every ticket, deciding the category, looking up the order, checking the knowledge base, and either replying or escalating. It's high-volume, judgment-heavy, and built on unstructured text. Textbook agent territory.
+
+Here's the "after" — the manual judgment loop, turned into a bounded agent:
+
+<AnimatedDiagram
+  height={340}
+  nodes={[
+    { id: "ticket", type: "client", label: "New ticket", position: { x: 8, y: 50 }, status: "active", info: "Unstructured human text: 'hey my order never showed up and the tracking is frozen??'. No clean fields to switch on." },
+    { id: "agent", type: "agent", label: "Triage Agent", position: { x: 34, y: 50 }, status: "busy", info: "The judgment core. Classifies intent, decides which tools to call, and chooses resolve-or-escalate based on what it finds." },
+    { id: "kb", type: "vector", label: "Help docs", position: { x: 62, y: 20 }, status: "active", info: "Retrieval over your knowledge base (RAG). Grounds the reply in real policy instead of a guessed answer." },
+    { id: "order", type: "tool", label: "lookup_order()", position: { x: 62, y: 80 }, status: "idle", info: "A tool call into your real systems. Pulls the actual order + shipping status the reply depends on." },
+    { id: "resolve", type: "client", label: "Auto-reply", position: { x: 90, y: 30 }, status: "active", info: "~70% of tickets: a grounded, cited answer sent automatically. The boring majority, handled." },
+    { id: "human", type: "gateway", label: "Escalate", position: { x: 90, y: 70 }, status: "active", info: "Low confidence, angry customer, or money involved → hand to a human with a summary. Match oversight to blast radius." }
+  ]}
+  edges={[
+    { from: "ticket", to: "agent", animated: true },
+    { from: "agent", to: "kb", animated: true, color: "var(--neon-green)", label: "retrieve" },
+    { from: "agent", to: "order", animated: true, color: "var(--neon-orange)", label: "tool call" },
+    { from: "agent", to: "resolve", animated: true, color: "var(--neon-pink)", label: "confident" },
+    { from: "agent", to: "human", dashed: true, color: "var(--neon-red)", label: "unsure" }
+  ]}
+/>
+
+Notice what's doing the work: [retrieval](/learn/ai/rag) for grounded answers, [tool use](/learn/ai/tool-use) to touch real systems, and a [loop](/learn/ai/ai-agents) that decides resolve-vs-escalate per ticket. None of those steps were hard-coded — the agent chose them from the messy input. That's the part a script genuinely cannot do.
+
+## A map of manual tasks → the pattern that automates them
+
+Most "can an agent do this?" questions fall into a handful of shapes:
+
+| Manual task | Why it resists scripting | Agent pattern |
+| --- | --- | --- |
+| Support / inbox triage | Unstructured text, per-case judgment | [Tool use](/learn/ai/tool-use) + [RAG](/learn/ai/rag), confidence-gated |
+| "Read these 40 docs and summarize X" | Open-ended search, synthesis | [Deep-research agent](/learn/ai/agent-design) |
+| Reconcile two systems that disagree | Fuzzy matching, exceptions | Agent + tools, [human-in-the-loop](/learn/ai/agent-guardrails) on writes |
+| Migrate / refactor across a codebase | Each file differs, needs judgment | Per-item agent with verify step |
+| Data entry from emails/PDFs | Messy input → structured output | LLM extraction + schema [validation](/learn/ai/agent-guardrails) |
+
+The common thread: a human currently makes a **small judgment call, repeatedly, over messy input.** That's the sweet spot.
+
+## When NOT to reach for an agent
+
+This is the half everyone skips. An agent is the most expensive, least predictable, hardest-to-debug way to automate anything. Don't pay for it unless the task demands it.
+
+<Callout type="danger" title="Smells that you're over-engineering">
+Reaching for an agent when the task is deterministic, high-volume-cheap-per-item, or has zero tolerance for a wrong answer is how you turn a 5ms function call into a flaky, 8-second, $0.04 round trip.
+</Callout>
+
+- **The steps never change.** A fixed sequence is a [workflow](/learn/ai/ai-agents), not an agent. Script it — it's cheaper, faster, and you can actually unit-test it.
+- **The volume is huge and the margin is thin.** A million items at several cents and a few seconds each is a budget and latency disaster. Reserve the LLM for the judgment step only.
+- **Being wrong is catastrophic and unrecoverable.** Agents are probabilistic. For irreversible actions, the agent should *propose* and a human (or a hard rule) should *commit*.
+- **You haven't written down what "good" looks like.** If you can't [evaluate](/learn/ai/agent-guardrails) the output, you can't ship it — you're just hoping.
+
+The pro move from the [agent design lesson](/learn/ai/agent-design): **use the least autonomy that solves the problem.** Most production "agents" are mostly plain workflows with one or two genuinely agentic steps where judgment is unavoidable.
+
+## How to actually roll one out without regretting it
+
+The pattern that works is boring on purpose:
+
+1. **Start with a human in the loop.** The agent drafts; a person approves. You get the automation's leverage and a free stream of labeled corrections.
+2. **Gate on confidence.** Auto-resolve the easy 70%, escalate the messy 30%. You don't need full autonomy to capture most of the value — and the easy cases are where scripts already struggle on unstructured input.
+3. **Bound everything.** Max steps, max cost, validated outputs, and least-privilege tools. An [unguarded agent](/learn/ai/agent-guardrails) is an unbounded bill and an unbounded blast radius.
+4. **Trace every run.** Log each thought, tool call, and decision with a run ID. When it does something dumb — it will — you need to replay it, not guess.
+5. **Widen the autonomy as the evals earn it.** Let measured quality, not optimism, decide how much rope the agent gets.
+
+<Callout type="info" title="The honest framing">
+An agent doesn't replace the manual task on day one. It eats the boring, high-confidence majority and routes the rest to a human — who now spends their time only on the cases that actually needed a brain.
+</Callout>
+
+## The takeaway
+
+AI agents are not "automation for everything." They're a precision tool for a specific, valuable shape of problem: **repeated human judgment over messy input where the path isn't fixed.** Match the task to that shape and an agent quietly deletes a category of tedious work. Reach for one because it's the exciting option, and you've built the most expensive `if` statement in the company.
+
+When you're ready to build one properly — the loop, the tools, the memory, and the guardrails that keep it from going feral — start with [What Is an AI Agent?](/learn/ai/ai-agents) and work through to [Design an AI Agent](/learn/ai/agent-design).
